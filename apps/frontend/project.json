@@ -19,7 +19,7 @@
         "styles": ["apps/frontend/src/styles.css"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack",
-        "postcssConfig": "apps/{your app here}/postcss.config.js"
+        "postcssConfig": "apps/frontend/postcss.config.js"
       },
       "configurations": {
         "development": {
