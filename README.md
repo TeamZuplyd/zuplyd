@@ -53,7 +53,8 @@ Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The 
 
 ## Code scaffolding
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+Run `nx g component <component-name> --directory=app/components --project=frontend --export` to generate a new component.
+when asked for css chose `none`
 
 ## Build
 
