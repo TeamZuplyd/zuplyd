@@ -34,7 +34,7 @@ export function SideNav({ username, userNum }: SideNavProps) {
 
       {/* Logo section - Start  */}
       <div className="logoContainer">
-        <img src="./assets/svg/logoLight.svg" className="" alt="appLogo" />
+        <img src="./assets/svg/logoLight.svg" className="logo" alt="appLogo" />
       </div>
       {/* Logo section - End  */}
 

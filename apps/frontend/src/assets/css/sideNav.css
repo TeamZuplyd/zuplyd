@@ -42,27 +42,43 @@
   padding: 0.75rem;
   padding-bottom: 1.75rem;
   border-bottom: 1px solid var(--white);
+  overflow: hidden;
 }
 
-/* TODO  */
-/* .sideNav.collapsed .logoContainer {
-} */
+.sideNav.collapsed .logoContainer {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+}
+
+.sideNav .logo {
+  height: 3.55rem;
+  margin-top: auto;
+  margin-bottom: auto;
+  /* transform-origin: left 0px; */
+  transition-duration: 400ms;
+}
+
+.sideNav.collapsed .logo {
+  transition-duration: 300ms;
+  position: relative;
+  transform: translateX(-1.95rem);
+}
 
 .sideNav .optionsContainer {
   padding-top: 2rem;
 }
+
 .sideNav .sideNav-option {
   display: flex;
   height: 3.5rem;
   padding: 1rem;
-  /* padding-left: 1rem;
-  padding-right: 1rem; */
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
   border-radius: 0.5rem;
   cursor: default;
-  transition-duration: 200ms;
-  /* animation-delay: 1000ms; */
+  transition-duration: 300ms;
   font-size: 1rem;
   line-height: 1.5rem;
   color: var(--gray-300);
