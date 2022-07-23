@@ -28,9 +28,7 @@ export function SideNav({ username, userNum }: SideNavProps) {
     <div className={`sideNav ${collapsed && 'collapsed'}`}>
       <ChevronLeftIcon
         className="collapseBtn"
-        onClick={() =>
-          `${collapsed ? setCollapsed(false) : setCollapsed(true)}`
-        }
+        onClick={() => setCollapsed(!collapsed)}
       />
 
       {/* Logo section - Start  */}
