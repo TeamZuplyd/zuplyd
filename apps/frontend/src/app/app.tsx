@@ -1,13 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.css';
 import NxWelcome from './nx-welcome';
+import SideNav from './components/side-nav/side-nav';
 
 import { Route, Routes, Link } from 'react-router-dom';
 
 export function App() {
   return (
     <>
-      <NxWelcome title="frontend" />
+      <SideNav username={'Amarabandu Rupasingheeeee'} userNum={0} />
       <div />
 
       {/* START: routes */}
