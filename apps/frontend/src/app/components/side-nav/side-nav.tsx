@@ -1,4 +1,7 @@
 /* eslint-disable-next-line */
+import { useState } from 'react';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+
 import {
   ChevronLeftIcon,
   CogIcon,
@@ -10,8 +13,6 @@ import {
   TruckIcon,
   ArchiveIcon,
 } from '@heroicons/react/outline';
-
-import { useState } from 'react';
 
 export interface SideNavProps {
   username: string;
@@ -40,13 +41,15 @@ export function SideNav({ username, userNum }: SideNavProps) {
       {/* Options section - Start  */}
       <div className="optionsContainer">
         {providedOpts.map((option: string, index: number) => (
-          <div
-            className={`sideNav-option ${selected == index && 'selected'}`}
-            onClick={() => setSelected(index)}
-          >
-            {option[0]}
-            <span className="optionName">{option[1]}</span>
-          </div>
+          <Link to={option[2]}>
+            <div
+              className={`sideNav-option ${selected == index && 'selected'}`}
+              onClick={() => setSelected(index)}
+            >
+              {option[0]}
+              <span className="optionName">{option[1]}</span>
+            </div>
+          </Link>
         ))}
       </div>
       {/* Options section - End  */}
@@ -88,21 +91,25 @@ const coreData: { [key: number]: any } = {
   0: {
     userRole: 'Company Admin',
     options: [
-      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard'],
-      [<LinkIcon className="sideNav-icon" />, 'Supply Chain'],
-      [<OfficeBuildingIcon className="sideNav-icon" />, 'Company'],
-      [<DocumentReportIcon className="sideNav-icon" />, 'Reports'],
+      /**
+       * Structure of options array
+       * [ iconComponent, optionName, redirectedPath]
+       */
+      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/page1'],
+      [<LinkIcon className="sideNav-icon" />, 'Supply Chain', '/page2'],
+      [<OfficeBuildingIcon className="sideNav-icon" />, 'Company', '/page1'],
+      [<DocumentReportIcon className="sideNav-icon" />, 'Reports', '/page1'],
     ],
   },
   1: {
     userRole: 'Procurement Manager',
     options: [
-      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Goods Requests'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Procurements'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Products'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Issues'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Reports'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/page1'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Goods Requests', '/page1'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Procurements', '/page1'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Products', '/page1'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Issues', '/page1'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/page1'],
     ],
   },
   2: {

@@ -26,4 +26,33 @@
   font-family: Inter, Roboto, sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
+/* Layout styles - Start */
+.outerContainer {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: 100px 1fr;
+  grid-template-areas: 'sidenav header' 'sidenav content';
+}
+
+.sideNav {
+  grid-area: sidenav;
+}
+
+.header {
+  grid-area: header;
+  width: 100vw;
+  background-color: coral; /* Remove later */
+}
+
+.content {
+  width: 100vw;
+  grid-area: content;
+  background-color: crimson; /* Remove later */
+}
+/* Layout styles - End */
+
 /* You can add global styles to this file, and also import other style files */

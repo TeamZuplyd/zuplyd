@@ -3,51 +3,25 @@ import styles from './app.module.css';
 import NxWelcome from './nx-welcome';
 import SideNav from './components/side-nav/side-nav';
 
-import { Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+
+// Pages
+import TestPage1 from './pages/testPage1';
+import TestPage2 from './pages/testPage2';
 
 export function App() {
   return (
-    <>
+    <div className="outerContainer">
       <SideNav username={'Amarabandu Rupasingheeeee'} userNum={0} />
-      <div />
-
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
+      <div className="header">Header goes here</div>
+      <div className="content">
+        <Routes>
+          {/* <Route path="/" element={} /> */}
+          <Route path="/page1" element={<TestPage1 />} />
+          <Route path="/page2" element={<TestPage2 />} />
+        </Routes>
       </div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
-      </Routes>
-      {/* END: routes */}
-    </>
+    </div>
   );
 }
 
