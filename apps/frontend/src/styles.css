@@ -34,6 +34,8 @@ a {
 .outerContainer {
   display: grid;
   min-height: 100vh;
+  max-width: 100vw;
+  grid-template-columns: 1fr minmax(calc(100vw - 18.8rem), calc(100vw - 6.8rem));
   grid-template-rows: 100px 1fr;
   grid-template-areas: 'sidenav header' 'sidenav content';
 }
@@ -44,12 +46,10 @@ a {
 
 .header {
   grid-area: header;
-  width: 100vw;
   background-color: coral; /* Remove later */
 }
 
 .content {
-  width: 100vw;
   grid-area: content;
   background-color: crimson; /* Remove later */
 }

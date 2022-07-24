@@ -18,7 +18,7 @@
 .sideNav .collapseBtn {
   padding: 0.1rem;
   position: absolute;
-  top: 2.75rem;
+  top: 3.1rem;
   right: -0.75rem;
   height: 1.75rem;
   width: 1.75rem;
@@ -43,6 +43,7 @@
   padding-bottom: 1.75rem;
   border-bottom: 1px solid var(--white);
   overflow: hidden;
+  transition-duration: 300ms;
 }
 
 .sideNav.collapsed .logoContainer {
@@ -50,20 +51,19 @@
   padding-right: 0;
   margin-left: 0.3rem;
   margin-right: 0.3rem;
+  transition-duration: 300ms;
 }
 
 .sideNav .logo {
   height: 3.55rem;
   margin-top: auto;
   margin-bottom: auto;
-  /* transform-origin: left 0px; */
   transition-duration: 400ms;
 }
 
 .sideNav.collapsed .logo {
   transition-duration: 300ms;
-  position: relative;
-  transform: translateX(-1.95rem);
+  transform: translateX(-1.8rem);
 }
 
 .sideNav .optionsContainer {
@@ -93,11 +93,10 @@
   white-space: nowrap;
   overflow: hidden;
   font-weight: 400;
-  width: 80%;
+  max-width: 80%;
   margin-left: 1rem;
   margin-top: auto;
   margin-bottom: auto;
-  transform-origin: left;
 }
 
 .sideNav-icon {
@@ -106,10 +105,6 @@
   max-width: 20px;
   margin-top: auto;
   margin-bottom: auto;
-}
-
-.sideNav.collapsed .optionName {
-  display: none;
 }
 
 .sideNav .selected .optionName {
@@ -154,10 +149,6 @@
   margin-bottom: auto;
   white-space: nowrap;
   overflow: hidden;
-}
-
-.sideNav.collapsed .usernameContainer {
-  display: none;
 }
 
 .sideNav .username {
