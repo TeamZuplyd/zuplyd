@@ -51,18 +51,18 @@ a {
 
 .content {
   grid-area: content;
-  background-color: crimson; /* Remove later */
+  /* background-color: crimson; Remove later */
 }
 /* Layout styles - End */
 
 /* Custom typography styles - Start */
 .primaryText {
-  color: "#374151";
+  color: #374151;
   font-size: "18px";
 }
 
 .secondaryText {
-  color: "#94A3B8";
+  color: #94A3B8;
   font-size: "16px";
 }
 
