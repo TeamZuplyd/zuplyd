@@ -55,4 +55,17 @@ a {
 }
 /* Layout styles - End */
 
+/* Custom typography styles - Start */
+.primaryText {
+  color: "#374151";
+  font-size: "18px";
+}
+
+.secondaryText {
+  color: "#94A3B8";
+  font-size: "16px";
+}
+
+/* Custom typography styles - End  */
+
 /* You can add global styles to this file, and also import other style files */
