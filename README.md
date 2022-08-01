@@ -60,11 +60,17 @@ Before creating the relevent Module, Service and Controller the folder to which 
 ## Generate Module
 Run `nx g @nrwl/nest:module <folder path where the file is created>` then follow on screen instructions.
 
+ex: `nx g @nrwl/nest:module /app/users`
+
 ## Generate Service
 Run `nx g @nrwl/nest:service <folder path where the file is created>` then follow on screen instructions.
 
+ex: `nx g @nrwl/nest:service /app/users`
+
 ## Generate Controller
 Run `nx g @nrwl/nest:controller <folder path where the file is created>` then follow on screen instructions.
+
+ex: `nx g @nrwl/nest:controller /app/users`
 
 
 ## Further help
