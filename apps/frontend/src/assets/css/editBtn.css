@@ -1,0 +1,28 @@
+.editBtn{
+    background-color: #9ca3af;
+}
+  
+.editBtn:hover{
+    background-color: #9ca3af !important;
+}
+
+.addnewBtn{
+    box-shadow:none !important;
+}
+.addnewBtn:hover{
+    background-color: transparent !important;
+}
+
+
+.saveChangesBtn{
+    background-color: #0eb54e !important;
+
+}
+.saveChangesBtn:hover{
+    background-color: #0eb54e !important;
+}
+
+
+
+
+

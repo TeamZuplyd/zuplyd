@@ -4,6 +4,8 @@
 
 @import './assets/css/sideNav.css';
 
+@import './assets/css/editBtn.css';
+
 :root {
   --white: #ffffff;
   --theme-orange: #fd8f02;
@@ -54,13 +56,6 @@ a {
   background-color: crimson; /* Remove later */
 }
 
-.editBtn{
-  background-color: #9ca3af;
-}
-
-.editBtn:hover{
-  background-color: #9ca3af;
-}
 /* Layout styles - End */
 
 /* You can add global styles to this file, and also import other style files */
