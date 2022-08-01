@@ -53,6 +53,14 @@ a {
   grid-area: content;
   background-color: crimson; /* Remove later */
 }
+
+.editBtn{
+  background-color: #9ca3af;
+}
+
+.editBtn:hover{
+  background-color: #9ca3af;
+}
 /* Layout styles - End */
 
 /* You can add global styles to this file, and also import other style files */
