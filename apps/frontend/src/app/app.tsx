@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 // Pages
 import TestPage1 from './pages/testPage1';
 import TestPage2 from './pages/testPage2';
-import RegPage from './pages/company-admin/regPage2';
+import RegPage from './pages/company-admin/regPage3';
 import Header from './components/header/header';
 
 
