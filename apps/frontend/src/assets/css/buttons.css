@@ -40,6 +40,18 @@
 }
 
 
+.goBack{
+    background-color: #d8d8d8 !important;
+    color: #656565 !important;
+    font-size: 12px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.goBack:hover{
+    background-color: #c4c2c2 !important;
+}
+
 
 
 
