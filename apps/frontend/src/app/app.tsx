@@ -8,14 +8,14 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 // Pages
 import TestPage1 from './pages/testPage1';
 import TestPage2 from './pages/testPage2';
-import RegPage from './pages/company-admin/regPage3';
+import Signup from './pages/home-page/signup';
 import Header from './components/header/header';
 
 
 export function App() {
   return (
 
-  <RegPage/>
+  <Signup/>
 
     // <div className="outerContainer">
     //   <SideNav username={'Amarabandu Rupasingheeeee'} userNum={0} />
