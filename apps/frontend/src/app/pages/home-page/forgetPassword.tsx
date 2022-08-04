@@ -31,7 +31,7 @@ function forgetPassword() {
             </Typography>
 
 
-            <TextField id="standard-basic" label="Company Name" variant="standard" sx={{mt:8}} />
+            <TextField id="standard-basic" label="Company Email" variant="standard" sx={{mt:8}} />
 
             <Button variant="contained" className='createAcc' style={{width: "100%",marginTop:"10%"}}>
                 Send Link
