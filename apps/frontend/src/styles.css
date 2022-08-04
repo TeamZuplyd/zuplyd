@@ -4,6 +4,8 @@
 
 @import './assets/css/sideNav.css';
 
+@import './assets/css/buttons.css';
+
 :root {
   --white: #ffffff;
   --theme-orange: #fd8f02;
@@ -51,16 +53,22 @@ a {
 
 .content {
   grid-area: content;
-  background-color: crimson; /* Remove later */
+  /* background-color: crimson; Remove later */
 }
 
-.editBtn{
-  background-color: #9ca3af;
-}
-
-.editBtn:hover{
-  background-color: #9ca3af;
-}
 /* Layout styles - End */
+
+/* Custom typography styles - Start */
+.primaryText {
+  color: #374151;
+  font-size: "18px";
+}
+
+.secondaryText {
+  color: #94A3B8;
+  font-size: "16px";
+}
+
+/* Custom typography styles - End  */
 
 /* You can add global styles to this file, and also import other style files */

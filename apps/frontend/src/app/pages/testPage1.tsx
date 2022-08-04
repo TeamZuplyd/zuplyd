@@ -1,10 +1,9 @@
 import React from 'react';
-import FormComponent from '../components/form-component/form-component';
+import SideOver from '../components/side-over/side-over';
 
 function testPage1() {
   return (
     <div>
-      <FormComponent/>
       Welcome to testPage One
     </div>
   );

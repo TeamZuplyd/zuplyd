@@ -1,0 +1,59 @@
+.editBtn{
+    background-color: #9ca3af;
+}
+  
+.editBtn:hover{
+    background-color: #9ca3af !important;
+}
+
+.addnewBtn{
+    box-shadow:none !important;
+}
+.addnewBtn:hover{
+    background-color: transparent !important;
+}
+
+
+.saveChangesBtn{
+    background-color: #0eb54e !important;
+
+}
+.saveChangesBtn:hover{
+    background-color: #0eb54e !important;
+}
+
+.signupWithGoogle{
+    background-color: #4884f4 !important;
+    line-height: 0 !important;
+}
+
+.signupWithGoogle:hover{
+    background-color: #3268cf !important;
+}
+
+.createAcc{
+    background-color: #ff8c04 !important;
+}
+
+.createAcc:hover{
+    background-color: #f18304 !important;
+}
+
+
+.goBack{
+    background-color: #d8d8d8 !important;
+    color: #656565 !important;
+    font-size: 12px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.goBack:hover{
+    background-color: #c4c2c2 !important;
+}
+
+
+
+
+
+
