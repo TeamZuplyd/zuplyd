@@ -14,8 +14,7 @@ import Header from './components/header/header';
 
 export function App() {
   return (
-
-  <RegPage2/>
+    // <ForgetPassword/>
 
     // <div className="outerContainer">
     //   <SideNav username={'Amarabandu Rupasingheeeee'} userNum={0} />
@@ -29,6 +28,20 @@ export function App() {
     //     </Routes>
     //   </div>
     // </div>
+
+  <div className="outerContainer">
+      <SideNav username={'Amarabandu Rupasingheeeee'} userNum={0} />
+      {/* <div className="header">Header goes here</div> */}
+      <Header title={'Dashboard'} />
+      <div className="content">
+        <Routes>
+          {/* <Route path="/" element={} /> */}
+          <Route path="/page1" element={<TestPage1 />} />
+          <Route path="/page2" element={<TestPage2 />} />
+          {/* <Route path="/company" element={<TestPage3 />} /> */}
+        </Routes>
+      </div>
+    </div>
   );
 }
 
