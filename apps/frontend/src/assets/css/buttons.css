@@ -53,7 +53,24 @@
 }
 
 
+.addNumber{
+    background-color: #1F2937 !important;
+    /* padding-top: 0 !important;
+    padding-bottom: 0 !important; */
+    font-size: 12px !important;
+    position:relative;
+    top: 15px;
+}
 
+.addNumber:hover{
+    background-color: #000000 !important;
+}
 
+.spanBtn{
+    background-color: transparent;
+    position: relative;
+    top:3px;
+    cursor: pointer;
+}
 
 
