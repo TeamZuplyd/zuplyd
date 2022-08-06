@@ -10,10 +10,27 @@ export class CompaniesService {
     @InjectModel(Company.name) private companyModel: Model<CompanyDocument>
   ) {}
 
-  async register(createCompanyDto: CreateCompanyDto): Promise<Company> {
-    console.log(createCompanyDto);
+  // registration of a company
+  async registerInit(createCompanyDto: CreateCompanyDto): Promise<Company> {
     const registeredCompany = await this.companyModel.create(createCompanyDto);
 
     return registeredCompany;
+  }
+
+  async registerStepUpdate(
+    id: string,
+    createCompanyDto: CreateCompanyDto
+  ): Promise<Company> {
+    const registeredCompany = await this.companyModel.findByIdAndUpdate(
+      id,
+      createCompanyDto
+    );
+
+    return registeredCompany;
+  }
+
+  // find a company by id
+  async findOne(id: string) {
+    return this.companyModel.findById({ _id: id }).exec();
   }
 }
