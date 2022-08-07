@@ -11,26 +11,30 @@ export class CompaniesService {
   ) {}
 
   // registration of a company
-  async registerInit(createCompanyDto: CreateCompanyDto): Promise<Company> {
-    const registeredCompany = await this.companyModel.create(createCompanyDto);
-
-    return registeredCompany;
-  }
-
-  async registerStepUpdate(
+  async register(
     id: string,
     createCompanyDto: CreateCompanyDto
   ): Promise<Company> {
-    const registeredCompany = await this.companyModel.findByIdAndUpdate(
-      id,
-      createCompanyDto
-    );
+    let registeredCompany = null;
+    if (id == null) {
+      registeredCompany = await this.companyModel.create(createCompanyDto);
+    } else {
+      registeredCompany = await this.companyModel.findByIdAndUpdate(
+        id,
+        createCompanyDto
+      );
+    }
 
     return registeredCompany;
   }
 
   // find a company by id
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Company> {
     return this.companyModel.findById({ _id: id }).exec();
+  }
+
+  // find all companies
+  async findAll(): Promise<Company[]> {
+    return this.companyModel.find().exec();
   }
 }

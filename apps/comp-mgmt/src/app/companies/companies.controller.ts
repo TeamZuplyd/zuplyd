@@ -21,26 +21,27 @@ export class CompaniesController {
   // }
 
   @Post('register')
-  async registerSteps(@Body() data: any) {
-    if (data.step == 1) {
-      let registeredCompany = await this.companyService.registerInit(
-        data.comp_data
-      );
-      console.log(registeredCompany);
-      return registeredCompany['_id'].valueOf();
-    } else {
-      let registeredCompany = await this.companyService.registerStepUpdate(
-        data.id,
-        data.comp_data
-      );
-      console.log(registeredCompany);
-      return registeredCompany['_id'].valueOf();
-    }
+  async register(@Body() data: any) {
+    data.comp_data.init_completed = data.step != 4 ? false : true;
+    console.log(data.comp_data);
+
+    let registeredCompany = await this.companyService.register(
+      data.id,
+      data.comp_data
+    );
+    // console.log(registeredCompany);
+    return registeredCompany['_id'].valueOf();
   }
 
-  @Get(':id')
-  async findById(@Param('id') id: string): Promise<Company> {
+  @Get(':compId')
+  async findById(@Param('compId') id: string): Promise<Company> {
     let company = await this.companyService.findOne(id);
     return company;
+  }
+
+  @Get()
+  async findAll(): Promise<Company[]> {
+    let companies = await this.companyService.findAll();
+    return companies;
   }
 }
