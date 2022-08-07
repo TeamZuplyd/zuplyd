@@ -6,6 +6,8 @@
 
 @import './assets/css/buttons.css';
 
+@import './assets/css/spans.css';
+
 :root {
   --white: #ffffff;
   --theme-orange: #fd8f02;
