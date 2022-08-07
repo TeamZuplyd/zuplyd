@@ -7,4 +7,5 @@ export enum ROLE {
   wh_mngr = 'Warehouse Manager',
   sh_mngr = 'Shop Manager',
   supl = 'Supplier',
+  proc_mngr = 'Procurement Manager',
 }
