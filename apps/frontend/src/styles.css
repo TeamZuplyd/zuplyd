@@ -8,6 +8,7 @@
 
 @import './assets/css/spans.css';
 
+@import './assets/css/tierPage.css';
 :root {
   --white: #ffffff;
   --theme-orange: #fd8f02;
