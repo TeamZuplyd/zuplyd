@@ -11,11 +11,16 @@ import TestPage2 from './pages/testPage2';
 import ForgetPassword from './pages/home-page/forgetPassword';
 import Header from './components/header/header';
 
+import SignUp from './pages/home-page/signup';
+
+
 
 export function App() {
   return (
 
-  <ForgetPassword/>
+  //<ForgetPassword/>
+
+  <SignUp/>
 
     // <div className="outerContainer">
     //   <SideNav username={'Amarabandu Rupasingheeeee'} userNum={0} />
