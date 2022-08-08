@@ -31,6 +31,7 @@ export function InitialAddForm({ addEmail }: InitialAddFormProps) {
       console.log(input);
       setInput('');
     }
+    console.log()
   };
 
   return (
@@ -57,7 +58,7 @@ export function InitialAddForm({ addEmail }: InitialAddFormProps) {
                 type="email"
                 error={emailError}
                 helperText={!emailError ? ' ' : 'Invalid Email'}
-                // value={emails[index]}
+                value={input}
               />
             </Grid>
             <Grid item xs={4}>
