@@ -2,6 +2,8 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 
+import { Auth0Provider } from "@auth0/auth0-react";
+
 import App from './app/app';
 import Home from './app/pages/home/Home';
 
@@ -11,10 +13,13 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/app" element={<App />} />
-        </Routes>
+      <Auth0Provider
+        domain={'https://dev-x98dzbui.us.auth0.com'}
+        clientId={'mH911eWXFxL1Y2tZ1dxXf8FCi34wie2v'}
+        redirectUri={'http://localhost:4200/'}
+      >
+        <App />
+      </Auth0Provider>  
     </BrowserRouter>
   </StrictMode>
 );
