@@ -1,24 +1,51 @@
-import React from 'react'
+import React from 'react';
 import { Typography, Grid, Box, Button, Card } from '@mui/material';
 import { useState } from 'react';
 import EmailList from '../../components/email-list/email-list';
 import InitialAddForm from '../../components/initial-add-form/initial-add-form';
-type Props = {}
+type Props = {};
 
 const RegPage5 = (props: Props) => {
-    const [shopManagerEmails, setShopManagerEmails] = useState<string[]>([]);
+  const [shopManagerEmails, setShopManagerEmails] = useState<string[]>([]);
   const [warehouseManagerEmails, setWarehouseManagerEmails] = useState<
     string[]
   >([]);
+  const [procurementManagerEmails, setProcurementManagerEmails] = useState<string[]>([]);
 
   const addShopManagerEmail = (email: string) => {
     setShopManagerEmails([...shopManagerEmails, email]);
   };
+  
   const addWarehouseManagerEmail = (email: string) => {
     setWarehouseManagerEmails([...warehouseManagerEmails, email]);
   };
+
+  const addProcurementManagerEmail = (email: string) => {
+    setProcurementManagerEmails([...procurementManagerEmails, email]);
+  };
+
+  const deleteShopManagerEmail = (index: number) => {
+    console.log('delete ' + index);
+    setShopManagerEmails((shopManagerEmails) =>
+      shopManagerEmails.filter((_, i) => i !== index)
+    );
+    console.log('delete ' + index);
+  };
+
+  const deleteWarehouseManagerEmail = (index: number) => {
+    setWarehouseManagerEmails((warehouseManagerEmails) =>
+      warehouseManagerEmails.filter((_, i) => i !== index)
+    );
+  };
+
+  const deleteProcurementManagerEmail = (index: number) => {
+    setProcurementManagerEmails((procurementManagerEmails) =>
+      procurementManagerEmails.filter((_, i) => i !== index)
+    );
+  };
+
   return (
-     <Grid container rowGap={0} columnGap={0}>
+    <Grid container rowGap={0} columnGap={0} sx={{py:1}}>
       <Grid
         container
         item
@@ -33,13 +60,13 @@ const RegPage5 = (props: Props) => {
           xs={12}
           direction="column"
           rowSpacing={1}
-          style={{ maxWidth: '50%' }}
+          style={{ maxWidth: '75%' }}
         >
           <Grid item xs={12}>
             <Button
               variant="contained"
               className="goBack"
-              style={{ width: '30%' }}
+              style={{ width: '15%' }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -66,14 +93,44 @@ const RegPage5 = (props: Props) => {
               sx={{ fontWeight: 500, fontSize: 36 }}
               style={{ textAlign: 'center' }}
             >
-              Add warehouse & shop managers.
+              Add procurement, warehouse & shop managers.
             </Typography>
           </Grid>
           <Grid container item xs={12} spacing={1}>
+            {/* pm */}
             <Grid
               container
               item
-              xs={5.5}
+              xs={12}
+              md={4}
+              sx={{ mt: 1 }}
+              alignItems="center"
+              justifyContent="space-evenly"
+              direction="column"
+            >
+              <Typography
+                variant="h6"
+                style={{ textAlign: 'start', paddingBottom: '1rem' }}
+              >
+                Procurement Managers
+              </Typography>
+              <Box
+                sx={{ bgcolor: '#CBCBCB' }}
+                style={{ maxHeight: 350, minHeight: 350, overflow: 'auto' }}
+              >
+                <InitialAddForm addEmail={addProcurementManagerEmail} />
+                <EmailList
+                  emails={procurementManagerEmails}
+                  handleDelete={deleteProcurementManagerEmail}
+                />
+              </Box>
+            </Grid>
+            {/* wm */}
+            <Grid
+              container
+              item
+              xs={12}
+              md={4}
               sx={{ mt: 1 }}
               alignItems="center"
               justifyContent="space-evenly"
@@ -90,14 +147,18 @@ const RegPage5 = (props: Props) => {
                 style={{ maxHeight: 350, minHeight: 350, overflow: 'auto' }}
               >
                 <InitialAddForm addEmail={addWarehouseManagerEmail} />
-                <EmailList emails={warehouseManagerEmails} />
+                <EmailList
+                  emails={warehouseManagerEmails}
+                  handleDelete={deleteWarehouseManagerEmail}
+                />
               </Box>
             </Grid>
-
+            {/* SM */}
             <Grid
               container
               item
-              xs={5.5}
+              xs={12}
+              md={4}
               sx={{ mt: 1 }}
               alignItems="center"
               justifyContent="space-evenly"
@@ -114,7 +175,10 @@ const RegPage5 = (props: Props) => {
                 style={{ maxHeight: 350, minHeight: 350, overflow: 'auto' }}
               >
                 <InitialAddForm addEmail={addShopManagerEmail} />
-                <EmailList emails={shopManagerEmails} />
+                <EmailList
+                  emails={shopManagerEmails}
+                  handleDelete={deleteShopManagerEmail}
+                />
               </Box>
             </Grid>
           </Grid>
@@ -122,7 +186,7 @@ const RegPage5 = (props: Props) => {
           <Button
             variant="contained"
             className="createAcc"
-            style={{ width: '50%', marginTop: '5%', alignSelf: 'center' }}
+            style={{ width: '25%', marginTop: '5%', alignSelf: 'center' }}
           >
             Continue
             <svg
@@ -145,6 +209,5 @@ const RegPage5 = (props: Props) => {
       </Grid>
     </Grid>
   );
-  
-}
+};
 export default RegPage5;
