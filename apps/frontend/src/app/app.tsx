@@ -15,14 +15,15 @@ import AppRoute from './app-route/app-route';
 import ProfileSetUp from './pages/procurement-manager/initialization/profileSetUp';
 
 import SignUp from './pages/home-page/signup';
+import LocationSetUp from './pages/procurement-manager/initialization/locationSetUp';
 
 
 
 export function App() {
   return (
 
-  //<ForgetPassword/>
-
+    //<ForgetPassword/>
+    // <LocationSetUp/>
   //<SignUp/>
 
     <AppRoute/>
