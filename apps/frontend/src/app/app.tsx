@@ -12,6 +12,7 @@ import RegPage2 from './pages/company-admin/regPage2';
 import Header from './components/header/header';
 import CompanyAdmin from './pages/company-admin/companyAdmin';
 import AppRoute from './app-route/app-route';
+import ProfileSetUp from './pages/procurement-manager/initialization/profileSetUp';
 
 import SignUp from './pages/home-page/signup';
 
@@ -25,6 +26,7 @@ export function App() {
   //<SignUp/>
 
     <AppRoute/>
+    // <ProfileSetUp />
   // <div className="outerContainer">
   //     <SideNav username={'Amarabandu Rupasingheeeee'} userNum={1} />
   //     {/* <div className="header">Header goes here</div> */}
