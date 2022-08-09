@@ -56,10 +56,12 @@ export function SideNav({ username, userNum }: SideNavProps) {
 
       {/* Profile operations section - Start  */}
       <div className="profileOperations">
-        <div className="sideNav-option">
-          <CogIcon className="sideNav-icon" />
-          <span className="optionName">Settings</span>
-        </div>
+            <Link to="settings">
+                <div className="sideNav-option">
+                    <CogIcon className="sideNav-icon" />
+                    <span className="optionName">Settings</span>
+                </div>
+            </Link>
         <div className="sideNav-option">
           <LogoutIcon className="sideNav-icon" />
           <span className="optionName">Logout</span>
@@ -95,56 +97,52 @@ const coreData: { [key: number]: any } = {
        * Structure of options array
        * [ iconComponent, optionName, redirectedPath]
        */
-      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/page1'],
-      [<LinkIcon className="sideNav-icon" />, 'Supply Chain', '/page2'],
-      [<OfficeBuildingIcon className="sideNav-icon" />, 'Company', '/page1'],
-      [<DocumentReportIcon className="sideNav-icon" />, 'Reports', '/page1'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/company-admin/dashboard'],
+      [<LinkIcon className="sideNav-icon" />, 'Supply Chain', '/company-admin/Supply-Chain'],
+      [<OfficeBuildingIcon className="sideNav-icon" />, 'Company', '/company-admin/company'],
+      [<DocumentReportIcon className="sideNav-icon" />, 'Reports', '/company-admin/reports'],
     ],
   },
   1: {
     userRole: 'Procurement Manager',
     options: [
-      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/page1'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Goods Requests', '/page1'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Procurements', '/page1'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Products', '/page1'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Issues', '/page1'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/page1'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/procurement-manager/dashboard'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Good Requests', '/procurement-manager/goodRequests'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Procurement', '/procurement-manager/procurement'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Products', '/procurement-manager/products'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Issues', '/procurement-manager/issues'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/procurement-manager/reports'],
     ],
   },
   2: {
     userRole: 'Warehouse Manager',
     options: [
-      'Dashboard',
-      'Inventory',
-      'Orders',
-      'Issues',
-      'Shops',
-      'Reports',
-      'EzPz',
+      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/warehouse-manager/dashboard'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Inventory', '/warehouse-manager/inventory'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Orders', '/warehouse-manager/orders'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Issues', '/warehouse-manager/issues'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/warehouse-manager/reports'],
     ],
   },
   3: {
     userRole: 'Shop Manager',
     options: [
-      'Dashboard',
-      'Inventory',
-      'Orders',
-      'Issues',
-      'Shops',
-      'Reports',
-      'EzPz',
+      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/shop-manager/dashboard'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Inventory', '/shop-manager/inventory'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Orders', '/shop-manager/orders'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Issues', '/shop-manager/issues'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/shop-manager/reports'],
     ],
   },
   4: {
     userRole: 'Supplier',
     options: [
-      'Dashboard',
-      'Products',
-      'Quotations',
-      'Orders',
-      'Companiess',
-      'Reports',
+      [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/supplier/dashboard'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Products', '/supplier/products'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Orders', '/supplier/orders'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Quotations', '/supplier/quotations'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Companies', '/supplier/companies'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/supplier/reports'],
     ],
   },
 };

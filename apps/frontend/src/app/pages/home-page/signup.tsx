@@ -5,7 +5,23 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 
+import {useAuth0} from "@auth0/auth0-react";
+import LoginButton from '../../components/login-button/login-button';
+import LogoutButton from '../../components/logout-button/logout-button';
+import SignupButton from '../../components/signup-button/signup-button';
+
 function signup() {
+    
+
+    let { user } = useAuth0();
+
+    if (!user) {
+        user = {
+            "username": "not logged in",
+            "email": "notLoggedInEmail.email.com"
+        }
+    }
+
   return (
     <Grid container rowGap={0} columnGap={0}>
 
@@ -26,16 +42,15 @@ function signup() {
                 </Typography>
             </Grid>
 
-
-            <TextField id="standard-basic" label="Company Name" variant="standard" sx={{mt:4}} />
-            <TextField id="standard-basic" label="Passwrd" variant="standard" sx={{mt:3}} />
             <Typography variant="h4" sx={{ fontSize: 14, mt:0.5, color:"blue",cursor:"pointer", textAlign:"right"}} >
                 Forgot password?
             </Typography>
 
-            <Button variant="contained" className='createAcc' style={{width: "100%",marginTop:"10%"}}>
-                Login
-            </Button>
+            <LoginButton/>
+
+            <LogoutButton/>
+
+            <SignupButton/>
 
             <Divider sx={{mt: 4, mb:2}} style={{color:"#b5bec9"}}> OR </Divider>
 
@@ -62,9 +77,11 @@ function signup() {
 
     <Grid container item xs={6} alignItems="center"  justifyContent="center" style={{backgroundColor:"#DBDBDB"}}>  
 
-        <Grid item xs={8} >  
+        {/* <Grid item xs={8} >  
                 <img src="../../assets/svg/signup.svg" alt="" style={{width:500}} />
-        </Grid>
+        </Grid> */}
+
+        <div>{JSON.stringify(user, null, 2)}</div>
 
     </Grid>
 
