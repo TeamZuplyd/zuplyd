@@ -21,8 +21,6 @@ function profileSetUp() {
 
                 <TextField id="standard-basic" label="Name" variant="standard" sx={{mt:6}}/>
                 <TextField id="standard-basic" label="Phone Number" variant="standard" sx={{mt:3}} />
-                <TextField id="standard-basic" label="Password" variant="standard" sx={{mt:3}} />
-                <TextField id="standard-basic" label="Confirm Password" variant="standard" sx={{mt:3}} />
 
                 <Button variant="contained" className='createAcc' style={{width: "100%",marginTop:"20%"}}>
                     Continue
