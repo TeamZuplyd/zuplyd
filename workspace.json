@@ -6,6 +6,7 @@
     "comp-mgmt": "apps/comp-mgmt",
     "frontend": "apps/frontend",
     "frontend-e2e": "apps/frontend-e2e",
+    "procurement": "apps/procurement",
     "user-mgmt": "apps/user-mgmt"
   }
 }

@@ -23,14 +23,14 @@ export class CompaniesController {
   @Post('register')
   async register(@Body() data: any) {
     data.comp_data.init_completed = data.step != 4 ? false : true;
-    console.log(data.comp_data);
 
     let registeredCompany = await this.companyService.register(
-      data.id,
+      data.comp_id,
       data.comp_data
     );
-    // console.log(registeredCompany);
-    return registeredCompany['_id'].valueOf();
+
+    const ret = { comp_id: registeredCompany['id'] };
+    return ret;
   }
 
   @Get(':compId')
