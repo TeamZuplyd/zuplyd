@@ -44,7 +44,7 @@ export function CompanyAdminCard({
         data={data}
       />
       <Card
-        sx={{ minWidth: 400, width: 400, maxHeight: 141, height: 141, ml: 2 }}
+        sx={{ minWidth: 300, width: 300, maxHeight: 141, height: 141, ml: 2 }}
       >
         <CardContent sx={{ pl: 3 }}>
           <Typography variant="h6" sx={{ mb: 1 }}>
@@ -95,7 +95,7 @@ export function CompanyAdminCard({
         <CardActions>
           <Button
             size="small"
-            style={{ position: 'relative', left: 300, bottom: 50 }}
+            style={{ position: 'relative', left: 200, bottom: 50 }}
             onClick={toggleDrawer(true)}
           >
             More Info
