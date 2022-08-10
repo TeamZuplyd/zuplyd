@@ -41,10 +41,9 @@ import SupCompanies from "../pages/supplier/companies"
 import SupReports from "../pages/supplier/reports"
 import SupSettings from "../pages/supplier/settings"
 
-import { Routes, Route } from "react-router-dom";
-export interface AppRouteProps {}
+import { Routes, Route } from 'react-router-dom';
 
-export function AppRoute(props: AppRouteProps) {
+export function AppRoute() {
   return (
     <Routes>
 
@@ -55,53 +54,53 @@ export function AppRoute(props: AppRouteProps) {
         <Route path="login" element=(<Login />)/>
       </Route> 
       */}
-    
+
       <Route path="/company-admin" element={<CompanyAdmin />}>
-          <Route path="dashboard" element={<CAdashboard />}/>
-          <Route path="supply-Chain" element={<SupplyChain />}/>
-          <Route path="company" element={<Company />}/>
-          <Route path="reports" element={<CAReports />}/>
-          <Route path="settings" element={<CASettings />}/>
-      </Route>  
+        <Route path="dashboard" element={<CAdashboard />} />
+        <Route path="supply-Chain" element={<SupplyChain />}>
+        </Route>
+        <Route path="company" element={<Company />} />
+        <Route path="reports" element={<CAReports />} />
+        <Route path="settings" element={<CASettings />} />
+      </Route>
 
       <Route path="/procurement-manager" element={<ProcurementManager />}>
-          <Route path="dashboard" element={<PDashboard />}/>
-          <Route path="goodRequests" element={<PGoodRequests />}/>
-          <Route path="issues" element={<PIssues />}/>
-          <Route path="procurement" element={<PProcurement />}/>
-          <Route path="products" element={<PProducts />}/>
-          <Route path="reports" element={<PReports />} />
-          <Route path="settings" element={<PSettings />} />
-      </Route>  
-      
+        <Route path="dashboard" element={<PDashboard />} />
+        <Route path="goodRequests" element={<PGoodRequests />} />
+        <Route path="issues" element={<PIssues />} />
+        <Route path="procurement" element={<PProcurement />} />
+        <Route path="products" element={<PProducts />} />
+        <Route path="reports" element={<PReports />} />
+        <Route path="settings" element={<PSettings />} />
+      </Route>
+
       <Route path="/warehouse-manager" element={<WarehouseManager />}>
-          <Route path="dashboard" element={<WHMdashboard />}/>
-          <Route path="inventory" element={<WHMinventory />}/>
-          <Route path="orders" element={<WHMOrders />}/>
-          <Route path="issues" element={<WHMissues />}/>
-          <Route path="reports" element={<WHMReports />}/>
-          <Route path="settings" element={<WHMSettings />} />
-      </Route>  
+        <Route path="dashboard" element={<WHMdashboard />} />
+        <Route path="inventory" element={<WHMinventory />} />
+        <Route path="orders" element={<WHMOrders />} />
+        <Route path="issues" element={<WHMissues />} />
+        <Route path="reports" element={<WHMReports />} />
+        <Route path="settings" element={<WHMSettings />} />
+      </Route>
 
       <Route path="/shop-manager" element={<ShopManager />}>
-          <Route path="dashboard" element={<SMdashboard />}/>
-          <Route path="inventory" element={<SMinventory />}/>
-          <Route path="orders" element={<SMOrders />}/>
-          <Route path="issues" element={<SMissues />}/>
-          <Route path="reports" element={<SMReports />}/>
-          <Route path="settings" element={<SMSettings />} />
-      </Route>  
+        <Route path="dashboard" element={<SMdashboard />} />
+        <Route path="inventory" element={<SMinventory />} />
+        <Route path="orders" element={<SMOrders />} />
+        <Route path="issues" element={<SMissues />} />
+        <Route path="reports" element={<SMReports />} />
+        <Route path="settings" element={<SMSettings />} />
+      </Route>
 
       <Route path="/supplier" element={<Supplier />}>
-          <Route path="dashboard" element={<SupDashboard />}/>
-          <Route path="products" element={<SupProducts />}/>
-          <Route path="orders" element={<SupOrders />}/>
-          <Route path="quotations" element={<SupQuotations />}/>
-          <Route path="companies" element={<SupCompanies />}/>
-          <Route path="reports" element={<SupReports />}/>
-          <Route path="settings" element={<SupSettings />} />
-      </Route>  
-
+        <Route path="dashboard" element={<SupDashboard />} />
+        <Route path="products" element={<SupProducts />} />
+        <Route path="orders" element={<SupOrders />} />
+        <Route path="quotations" element={<SupQuotations />} />
+        <Route path="companies" element={<SupCompanies />} />
+        <Route path="reports" element={<SupReports />} />
+        <Route path="settings" element={<SupSettings />} />
+      </Route>
     </Routes>
   );
 }
