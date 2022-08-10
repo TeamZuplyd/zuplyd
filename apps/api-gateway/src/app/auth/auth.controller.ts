@@ -48,8 +48,6 @@ export class AuthController {
 
   @Put('login')
   private async login(@Body() body: LoginRequest): Promise<any> {
-    console.log(body);
-    console.log(firstValueFrom(this.svc.login(body)));
     return await this.svc.login(body).pipe(
       map((res) => {
         const response: LoginResponse = {
@@ -62,7 +60,6 @@ export class AuthController {
 
   @Get('findall')
   private async findAll(): Promise<any> {
-    console.log('findAll');
     console.log(this.svc.findAll({}));
     return await this.svc.findAll({});
   }
@@ -71,7 +68,6 @@ export class AuthController {
   private async findByUsername(
     @Param() userRequest: UserRequest
   ): Promise<any> {
-    console.log(userRequest);
     return await this.svc.findByUsername(userRequest).pipe(
       map((res) => {
         const response: User = {
