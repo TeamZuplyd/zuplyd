@@ -16,6 +16,7 @@ import ProfileSetUp from './pages/procurement-manager/initialization/profileSetU
 
 import SignUp from './pages/home-page/signup';
 import LocationSetUp from './pages/procurement-manager/initialization/locationSetUp';
+import DashboardCard from './components/dashboard-card/dashboard-card';
 
 
 
@@ -26,7 +27,8 @@ export function App() {
     // <LocationSetUp/>
   //<SignUp/>
 
-    <AppRoute/>
+  <DashboardCard theKey="warehouses" theValue="52"/>
+    // <AppRoute/>
     // <ProfileSetUp />
   // <div className="outerContainer">
   //     <SideNav username={'Amarabandu Rupasingheeeee'} userNum={1} />
