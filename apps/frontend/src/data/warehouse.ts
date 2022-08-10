@@ -22,7 +22,7 @@ export const warehouses = [
   {
     'Warehouse Info': {
       'Warehouse ID': 'W0002',
-      Location: 'Kottawa',
+      Location: 'Maharagama',
       'Contact No': '0771425632',
       Address: 'No 9, Temple Road, Maharagama, 10280 ',
     },
