@@ -15,35 +15,23 @@ export interface DashboardCardProps {
 export function DashboardCard({theKey, theValue}: DashboardCardProps) {
 
   return (
-    <Card sx={{ minWidth: 226, width:226, maxHeight:141, height:150, ml:2, mt:2 }}>
-    <CardContent sx={{textAlign:"center"}}>
+    <Card sx={{ minWidth: 226, width:226, maxHeight:141, height:150, ml:0, mt:2 }}>
+        <CardContent sx={{textAlign:"center"}}>
 
-          <Grid xs={12} sx={{mb:3}}> 
-              <Typography variant='h6' sx={{mb:1, textAlign:"center"}}>
-                  {theKey}
-              </Typography>
-          </Grid>
+              <Grid xs={12} sx={{mb:3}}> 
+                  <Typography variant='h6' sx={{mb:1, textAlign:"center"}}>
+                      {theKey}
+                  </Typography>
+              </Grid>
 
-          <Grid xs={12} style={{wordBreak: "break-word"}}>
-              <Typography variant='h6' sx={{textAlign:"center"}}>
-                  {theValue}
-              </Typography>
-          </Grid>
-           
-        {/* <Grid xs={12} sx={{mb:3}}> 
-          <Typography variant='h6' sx={{mb:1, textAlign:"center"}}>
-              {Warehouse A}
-          </Typography>
-        </Grid>
-
-        <Grid xs={12} style={{wordBreak: "break-word"}}>
-                <Typography variant='h6' sx={{textAlign:"center"}}>
-                    Warehouse A
-                </Typography>
-        </Grid> */}
-    
-    </CardContent>
-</Card>
+              <Grid xs={12} style={{wordBreak: "break-word"}}>
+                  <Typography variant='h6' sx={{textAlign:"center"}}>
+                      {theValue}
+                  </Typography>
+              </Grid>
+                      
+        </CardContent>
+    </Card>
   );
 }
 
