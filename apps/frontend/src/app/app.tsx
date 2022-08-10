@@ -27,8 +27,8 @@ export function App() {
     // <LocationSetUp/>
   //<SignUp/>
 
-  <DashboardCard theKey="warehouses" theValue="52"/>
-    // <AppRoute/>
+  // <DashboardCard theKey="warehouses" theValue="52"/>
+    <AppRoute/>
     // <ProfileSetUp />
   // <div className="outerContainer">
   //     <SideNav username={'Amarabandu Rupasingheeeee'} userNum={1} />

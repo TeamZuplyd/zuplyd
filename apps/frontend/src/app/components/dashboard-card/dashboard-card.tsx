@@ -7,23 +7,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 
-export interface DashboardCardProps {}
-
-const jsonArr: { [key: string]: any } = {
-  "Warehouses": 10,
-
-  "Shops" : 25,
-
-  "Tier": "Free",
-
-  "Shop Managers": 2,
-
-  "Warehouse Managers": 2,
-  
-  "Procument Managers": 2
-} 
-
-
 export interface DashboardCardProps {
   theKey: string;
   theValue: any;
