@@ -1,16 +1,16 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/user-mgmt/src",
+  "sourceRoot": "apps/api-gateway/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/node:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/user-mgmt",
-        "main": "apps/user-mgmt/src/main.ts",
-        "tsConfig": "apps/user-mgmt/tsconfig.app.json",
-        "assets": ["apps/user-mgmt/src/assets"]
+        "outputPath": "dist/apps/api-gateway",
+        "main": "apps/api-gateway/src/main.ts",
+        "tsConfig": "apps/api-gateway/tsconfig.app.json",
+        "assets": ["apps/api-gateway/src/assets"]
       },
       "configurations": {
         "production": {
@@ -19,8 +19,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/user-mgmt/src/environments/environment.ts",
-              "with": "apps/user-mgmt/src/environments/environment.prod.ts"
+              "replace": "apps/api-gateway/src/environments/environment.ts",
+              "with": "apps/api-gateway/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -29,11 +29,11 @@
     "serve": {
       "executor": "@nrwl/node:node",
       "options": {
-        "buildTarget": "user-mgmt:build"
+        "buildTarget": "api-gateway:build"
       },
       "configurations": {
         "production": {
-          "buildTarget": "user-mgmt:build:production"
+          "buildTarget": "api-gateway:build:production"
         }
       }
     },
@@ -41,21 +41,21 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/user-mgmt/**/*.ts"]
+        "lintFilePatterns": ["apps/api-gateway/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/user-mgmt"],
+      "outputs": ["coverage/apps/api-gateway"],
       "options": {
-        "jestConfig": "apps/user-mgmt/jest.config.ts",
+        "jestConfig": "apps/api-gateway/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "proto-auth": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/zuplyd-proto/proto --ts_proto_out=apps/user-mgmt/src/app node_modules/zuplyd-proto/proto/user_mgmt.proto --ts_proto_opt=snakeToCamel=false --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
+        "command": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/zuplyd-proto/proto --ts_proto_out=apps/api-gateway/src/app/auth node_modules/zuplyd-proto/proto/user_mgmt.proto --ts_proto_opt=snakeToCamel=false --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
       }
     }
   },
