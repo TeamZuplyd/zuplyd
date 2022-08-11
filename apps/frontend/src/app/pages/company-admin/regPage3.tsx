@@ -6,8 +6,15 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
+import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-dom';
+// import { useQuery } from 'react-query';
+
+
 
 function regPage3() {
+  const navigate = useNavigate();
+ 
+ 
   return (
     <Grid container rowGap={0} columnGap={0}>
 
@@ -15,7 +22,7 @@ function regPage3() {
     
         <Grid container item xs={6} direction="column"  rowSpacing={2} style={{ maxWidth: '50%' }}>  
             <Grid  item xs={6}>  
-                <Button variant="contained" className='goBack' style={{width: "30%"}}>
+                <Button onClick={() => navigate('/comp-init-1', {replace:true})} variant="contained" className='goBack' style={{width: "30%"}}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{width:"25"}}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                 </svg>
@@ -71,13 +78,14 @@ function regPage3() {
             </Grid>
 
         
-
+            {/* <Link to="/comp-init-3"> */}
             <Button variant="contained" className='createAcc' style={{width: "100%",marginTop:"20%"}}>
                 Continue
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{width:"25", marginLeft:"20"}}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
             </Button>
+            {/* </Link> */}
         </Grid>
     </Grid>
 
