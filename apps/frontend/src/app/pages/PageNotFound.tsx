@@ -1,4 +1,4 @@
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const PageNotFound = () => {
@@ -7,17 +7,18 @@ const PageNotFound = () => {
       container
       alignItems="center"
       justifyContent="space-around"
-          direction="column"
-          padding="3rem"
+      direction="column"
+      padding="2rem"
     >
-      <Grid item padding={5}>
+      <Grid item padding={4.55}>
         <img src="../../assets/svg/404.svg" alt="" style={{ width: 500 }} />
       </Grid>
-      <Grid item padding={5}>
+      <Grid item padding={4.5}>
+        <Typography variant="h4">Page Not Found</Typography>
+      </Grid>
+      <Grid item padding={4.5}>
         <Link to="/">
-          <Button
-            variant="contained" style={{ backgroundColor: '#fd8f02' }}
-          >
+          <Button variant="contained" style={{ backgroundColor: '#fd8f02' }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
