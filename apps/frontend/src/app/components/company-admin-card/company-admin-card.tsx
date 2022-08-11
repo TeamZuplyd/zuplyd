@@ -52,7 +52,7 @@ export function CompanyAdminCard({
           </Typography>
 
           <Grid container rowGap={2}>
-            <Grid item xs={1}>
+            <Grid item xs={1.5}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 sideNav-icon"
@@ -74,7 +74,7 @@ export function CompanyAdminCard({
           </Grid>
 
           <Grid container sx={{ mt: 1 }}>
-            <Grid item xs={1}>
+            <Grid item xs={1.5}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 sideNav-icon"
