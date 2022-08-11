@@ -1,4 +1,5 @@
 /* eslint-disable-next-line */
+import Signup from '../pages/home-page/signup';
 
 import RegPage1 from '../pages/company-admin/regPage2';
 import RegPage2 from '../pages/company-admin/regPage3';
@@ -46,72 +47,131 @@ import SupCompanies from '../pages/supplier/companies';
 import SupReports from '../pages/supplier/reports';
 import SupSettings from '../pages/supplier/settings';
 
-import { Routes, Route } from 'react-router-dom';
+import PageNotFound from '../pages/PageNotFound';
+
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useAuth0, User } from '@auth0/auth0-react';
+
 export interface AppRouteProps {}
 
+// const defaultLinkForUser = new Map<string, string>([
+//   ['comp_admin', '/company-admin'],
+//   ['proc_mngr', '/procurement-manager'],
+//   ['wh_mngr', '/warehouse-manager'],
+//   ['sh_mngr', '/shop-manager'],
+//   ['supl', '/supplier'],
+//   ['default', '/']
+// ]);
+
+// const ProtectedRoute = ({ user, role, children }: {user?: {}, role: string, children?: JSX.Element}) => {
+//   const auth = useAuth0();
+//   let roleFromUserMgmt: string = 'default';
+//   if (!auth.isLoading){
+//     //TO DO: call the user management microcservice to get the user role based on the user email
+//     roleFromUserMgmt = 'comp_admin';
+//     if (auth.isAuthenticated && user && role === roleFromUserMgmt) {
+//       return children ? children : <Outlet/>;
+//     }
+//   }
+//   return <Navigate to={defaultLinkForUser.get(roleFromUserMgmt)!} replace />;
+// };
+
+// const RoleBasedDefaultRouting = ({ user, children }: {user?: {}, children?: JSX.Element, redirectPath?: string}) => {
+//   const auth = useAuth0();
+//   let roleFromUserMgmt: string = 'default';
+//   if (!auth.isLoading){
+//     //TO DO: call the user management microcservice to get the user role based on the user email
+//     roleFromUserMgmt = 'comp_admin';
+//     if (auth.isAuthenticated && user) {
+//       return <Navigate to={defaultLinkForUser.get(roleFromUserMgmt)!} replace />;
+//     }
+//   }
+//   return children ? children : <Outlet/>;
+// };
+
 export function AppRoute(props: AppRouteProps) {
-    return (
-        <Routes>
-            {/* landing page */}
-            {/* 
+  //   const [user, setUser] = React.useState<User>();
+
+  //   const auth = useAuth0();
+
+  //   useEffect(() => {
+  //     setUser(auth.user);
+  //   },[auth.user])
+
+  return (
+    <Routes>
+      {/* landing page */}
+      {/* 
       <Route path="/" element=( <LandingPage />)>
         <Route path="signup" element=(<Signup />)/>
         <Route path="login" element=(<Login />)/>
       </Route> 
       */}
 
-            <Route path="comp-init-1" element={<RegPage1 />} />
-            <Route path="comp-init-2" element={<RegPage2 />} />
-            <Route path="comp-init-3" element={<RegPage3 />} />
-            <Route path="comp-init-4" element={<RegPage4 />} />
+      {/* <Route element={<RoleBasedDefaultRouting user={user}/>}> */}
+      <Route path="/" element={<Signup />}></Route>
+      {/* </Route> */}
 
-            <Route path="/company-admin" element={<CompanyAdmin />}>
-                <Route path="dashboard" element={<CAdashboard />} />
-                <Route path="supply-Chain" element={<SupplyChain />} />
-                <Route path="company" element={<Company />} />
-                <Route path="reports" element={<CAReports />} />
-                <Route path="settings" element={<CASettings />} />
-            </Route>
+      {/* <Route element={<ProtectedRoute user={user} role={'comp_admin'}/>}> */}
+      <Route path="/company-admin" element={<CompanyAdmin />}>
+        <Route path="dashboard" element={<CAdashboard />} />
+        <Route path="supply-Chain" element={<SupplyChain />} />
+        <Route path="company" element={<Company />} />
+        <Route path="reports" element={<CAReports />} />
+        <Route path="settings" element={<CASettings />} />
+      </Route>
+      {/* </Route>   */}
 
-            <Route path="/procurement-manager" element={<ProcurementManager />}>
-                <Route path="dashboard" element={<PDashboard />} />
-                <Route path="goodRequests" element={<PGoodRequests />} />
-                <Route path="issues" element={<PIssues />} />
-                <Route path="procurement" element={<PProcurement />} />
-                <Route path="products" element={<PProducts />} />
-                <Route path="reports" element={<PReports />} />
-                <Route path="settings" element={<PSettings />} />
-            </Route>
+      {/* <Route element={<ProtectedRoute user={user} role={'proc_mngr'}/>}> */}
+      <Route path="/procurement-manager" element={<ProcurementManager />}>
+        <Route path="dashboard" element={<PDashboard />} />
+        <Route path="goodRequests" element={<PGoodRequests />} />
+        <Route path="issues" element={<PIssues />} />
+        <Route path="procurement" element={<PProcurement />} />
+        <Route path="products" element={<PProducts />} />
+        <Route path="reports" element={<PReports />} />
+        <Route path="settings" element={<PSettings />} />
+      </Route>
+      {/* </Route>   */}
 
-            <Route path="/warehouse-manager" element={<WarehouseManager />}>
-                <Route path="dashboard" element={<WHMdashboard />} />
-                <Route path="inventory" element={<WHMinventory />} />
-                <Route path="orders" element={<WHMOrders />} />
-                <Route path="issues" element={<WHMissues />} />
-                <Route path="reports" element={<WHMReports />} />
-                <Route path="settings" element={<WHMSettings />} />
-            </Route>
+      {/* <Route element={<ProtectedRoute user={user} role={'wh_mngr'}/>}> */}
+      <Route path="/warehouse-manager" element={<WarehouseManager />}>
+        <Route path="dashboard" element={<WHMdashboard />} />
+        <Route path="inventory" element={<WHMinventory />} />
+        <Route path="orders" element={<WHMOrders />} />
+        <Route path="issues" element={<WHMissues />} />
+        <Route path="reports" element={<WHMReports />} />
+        <Route path="settings" element={<WHMSettings />} />
+      </Route>
+      {/* </Route>   */}
 
-            <Route path="/shop-manager" element={<ShopManager />}>
-                <Route path="dashboard" element={<SMdashboard />} />
-                <Route path="inventory" element={<SMinventory />} />
-                <Route path="orders" element={<SMOrders />} />
-                <Route path="issues" element={<SMissues />} />
-                <Route path="reports" element={<SMReports />} />
-                <Route path="settings" element={<SMSettings />} />
-            </Route>
+      {/* <Route element={<ProtectedRoute user={user} role={'sh_mngr'}/>}> */}
+      <Route path="/shop-manager" element={<ShopManager />}>
+        <Route path="dashboard" element={<SMdashboard />} />
+        <Route path="inventory" element={<SMinventory />} />
+        <Route path="orders" element={<SMOrders />} />
+        <Route path="issues" element={<SMissues />} />
+        <Route path="reports" element={<SMReports />} />
+        <Route path="settings" element={<SMSettings />} />
+      </Route>
+      {/* </Route>   */}
 
-            <Route path="/supplier" element={<Supplier />}>
-                <Route path="dashboard" element={<SupDashboard />} />
-                <Route path="products" element={<SupProducts />} />
-                <Route path="orders" element={<SupOrders />} />
-                <Route path="quotations" element={<SupQuotations />} />
-                <Route path="companies" element={<SupCompanies />} />
-                <Route path="reports" element={<SupReports />} />
-                <Route path="settings" element={<SupSettings />} />
-            </Route>
-        </Routes>
-    );
+      {/* <Route element={<ProtectedRoute user={user} role={'supl'}/>}> */}
+      <Route path="/supplier" element={<Supplier />}>
+        <Route path="dashboard" element={<SupDashboard />} />
+        <Route path="products" element={<SupProducts />} />
+        <Route path="orders" element={<SupOrders />} />
+        <Route path="quotations" element={<SupQuotations />} />
+        <Route path="companies" element={<SupCompanies />} />
+        <Route path="reports" element={<SupReports />} />
+        <Route path="settings" element={<SupSettings />} />
+      </Route>
+      {/* </Route>   */}
+      {/* Catch all route */}
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
+  );
 }
 
 export default AppRoute;
