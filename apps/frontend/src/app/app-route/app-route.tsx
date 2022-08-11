@@ -1,5 +1,10 @@
 /* eslint-disable-next-line */
-import Signup from "../pages/home-page/signup"
+import Signup from '../pages/home-page/signup';
+
+import RegPage2 from '../pages/company-admin/regPage2';
+import RegPage3 from '../pages/company-admin/regPage3';
+import RegPage4 from '../pages/company-admin/regPage4';
+import RegPage5 from '../pages/company-admin/regPage5';
 
 import CompanyAdmin from '../pages/company-admin/companyAdmin';
 import CAdashboard from '../pages/company-admin/dashboard';
@@ -44,12 +49,11 @@ import SupSettings from '../pages/supplier/settings';
 
 import PageNotFound from '../pages/PageNotFound';
 
-import { Routes, Route, Navigate, Outlet } from "react-router-dom";
-import React, { useEffect } from "react"
-import { useAuth0, User } from "@auth0/auth0-react"
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useAuth0, User } from '@auth0/auth0-react';
 
 export interface AppRouteProps {}
-
 
 // const defaultLinkForUser = new Map<string, string>([
 //   ['comp_admin', '/company-admin'],
@@ -87,16 +91,15 @@ export interface AppRouteProps {}
 // };
 
 export function AppRoute(props: AppRouteProps) {
+  //   const [user, setUser] = React.useState<User>();
 
-//   const [user, setUser] = React.useState<User>();
+  //   const auth = useAuth0();
 
-//   const auth = useAuth0();
+  //   useEffect(() => {
+  //     setUser(auth.user);
+  //   },[auth.user])
 
-//   useEffect(() => {
-//     setUser(auth.user);
-//   },[auth.user])
-
-return (
+  return (
     <Routes>
       {/* landing page */}
       {/* 
@@ -107,65 +110,70 @@ return (
       */}
 
       {/* <Route element={<RoleBasedDefaultRouting user={user}/>}> */}
-        <Route path="/" element={ <Signup/> }></Route>
+      <Route path="/" element={<Signup />}></Route>
       {/* </Route> */}
-    
+
+      <Route path="comp-init-1" element={<RegPage2 />} />
+      <Route path="comp-init-2" element={<RegPage3 />} />
+      <Route path="comp-init-3" element={<RegPage4 />} />
+      <Route path="comp-init-4" element={<RegPage5 />} />
+
       {/* <Route element={<ProtectedRoute user={user} role={'comp_admin'}/>}> */}
-        <Route path="/company-admin" element={<CompanyAdmin />}>
-            <Route path="dashboard" element={<CAdashboard />}/>
-            <Route path="supply-Chain" element={<SupplyChain />}/>
-            <Route path="company" element={<Company />}/>
-            <Route path="reports" element={<CAReports />}/>
-            <Route path="settings" element={<CASettings />}/>
-        </Route>  
+      <Route path="/company-admin" element={<CompanyAdmin />}>
+        <Route path="dashboard" element={<CAdashboard />} />
+        <Route path="supply-Chain" element={<SupplyChain />} />
+        <Route path="company" element={<Company />} />
+        <Route path="reports" element={<CAReports />} />
+        <Route path="settings" element={<CASettings />} />
+      </Route>
       {/* </Route>   */}
 
       {/* <Route element={<ProtectedRoute user={user} role={'proc_mngr'}/>}> */}
-        <Route path="/procurement-manager" element={<ProcurementManager />}>
-            <Route path="dashboard" element={<PDashboard />}/>
-            <Route path="goodRequests" element={<PGoodRequests />}/>
-            <Route path="issues" element={<PIssues />}/>
-            <Route path="procurement" element={<PProcurement />}/>
-            <Route path="products" element={<PProducts />}/>
-            <Route path="reports" element={<PReports />} />
-            <Route path="settings" element={<PSettings />} />
-        </Route>  
+      <Route path="/procurement-manager" element={<ProcurementManager />}>
+        <Route path="dashboard" element={<PDashboard />} />
+        <Route path="goodRequests" element={<PGoodRequests />} />
+        <Route path="issues" element={<PIssues />} />
+        <Route path="procurement" element={<PProcurement />} />
+        <Route path="products" element={<PProducts />} />
+        <Route path="reports" element={<PReports />} />
+        <Route path="settings" element={<PSettings />} />
+      </Route>
       {/* </Route>   */}
-      
+
       {/* <Route element={<ProtectedRoute user={user} role={'wh_mngr'}/>}> */}
-        <Route path="/warehouse-manager" element={<WarehouseManager />}>
-            <Route path="dashboard" element={<WHMdashboard />}/>
-            <Route path="inventory" element={<WHMinventory />}/>
-            <Route path="orders" element={<WHMOrders />}/>
-            <Route path="issues" element={<WHMissues />}/>
-            <Route path="reports" element={<WHMReports />}/>
-            <Route path="settings" element={<WHMSettings />} />
-        </Route>  
+      <Route path="/warehouse-manager" element={<WarehouseManager />}>
+        <Route path="dashboard" element={<WHMdashboard />} />
+        <Route path="inventory" element={<WHMinventory />} />
+        <Route path="orders" element={<WHMOrders />} />
+        <Route path="issues" element={<WHMissues />} />
+        <Route path="reports" element={<WHMReports />} />
+        <Route path="settings" element={<WHMSettings />} />
+      </Route>
       {/* </Route>   */}
 
       {/* <Route element={<ProtectedRoute user={user} role={'sh_mngr'}/>}> */}
-        <Route path="/shop-manager" element={<ShopManager />}>
-            <Route path="dashboard" element={<SMdashboard />}/>
-            <Route path="inventory" element={<SMinventory />}/>
-            <Route path="orders" element={<SMOrders />}/>
-            <Route path="issues" element={<SMissues />}/>
-            <Route path="reports" element={<SMReports />}/>
-            <Route path="settings" element={<SMSettings />} />
-        </Route>  
+      <Route path="/shop-manager" element={<ShopManager />}>
+        <Route path="dashboard" element={<SMdashboard />} />
+        <Route path="inventory" element={<SMinventory />} />
+        <Route path="orders" element={<SMOrders />} />
+        <Route path="issues" element={<SMissues />} />
+        <Route path="reports" element={<SMReports />} />
+        <Route path="settings" element={<SMSettings />} />
+      </Route>
       {/* </Route>   */}
 
       {/* <Route element={<ProtectedRoute user={user} role={'supl'}/>}> */}
-        <Route path="/supplier" element={<Supplier />}>
-            <Route path="dashboard" element={<SupDashboard />}/>
-            <Route path="products" element={<SupProducts />}/>
-            <Route path="orders" element={<SupOrders />}/>
-            <Route path="quotations" element={<SupQuotations />}/>
-            <Route path="companies" element={<SupCompanies />}/>
-            <Route path="reports" element={<SupReports />}/>
-            <Route path="settings" element={<SupSettings />} />
-        </Route>  
+      <Route path="/supplier" element={<Supplier />}>
+        <Route path="dashboard" element={<SupDashboard />} />
+        <Route path="products" element={<SupProducts />} />
+        <Route path="orders" element={<SupOrders />} />
+        <Route path="quotations" element={<SupQuotations />} />
+        <Route path="companies" element={<SupCompanies />} />
+        <Route path="reports" element={<SupReports />} />
+        <Route path="settings" element={<SupSettings />} />
+      </Route>
       {/* </Route>   */}
- {/* Catch all route */}
+      {/* Catch all route */}
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
