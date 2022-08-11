@@ -1,10 +1,10 @@
 /* eslint-disable-next-line */
 import Signup from '../pages/home-page/signup';
 
-import RegPage1 from '../pages/company-admin/regPage2';
-import RegPage2 from '../pages/company-admin/regPage3';
-import RegPage3 from '../pages/company-admin/regPage4';
-import RegPage4 from '../pages/company-admin/regPage5';
+import RegPage2 from '../pages/company-admin/regPage2';
+import RegPage3 from '../pages/company-admin/regPage3';
+import RegPage4 from '../pages/company-admin/regPage4';
+import RegPage5 from '../pages/company-admin/regPage5';
 
 import CompanyAdmin from '../pages/company-admin/companyAdmin';
 import CAdashboard from '../pages/company-admin/dashboard';
@@ -112,6 +112,11 @@ export function AppRoute(props: AppRouteProps) {
       {/* <Route element={<RoleBasedDefaultRouting user={user}/>}> */}
       <Route path="/" element={<Signup />}></Route>
       {/* </Route> */}
+
+      <Route path="comp-init-1" element={<RegPage2 />} />
+      <Route path="comp-init-2" element={<RegPage3 />} />
+      <Route path="comp-init-3" element={<RegPage4 />} />
+      <Route path="comp-init-4" element={<RegPage5 />} />
 
       {/* <Route element={<ProtectedRoute user={user} role={'comp_admin'}/>}> */}
       <Route path="/company-admin" element={<CompanyAdmin />}>
