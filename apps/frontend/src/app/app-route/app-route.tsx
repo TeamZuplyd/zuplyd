@@ -96,7 +96,7 @@ export function AppRoute(props: AppRouteProps) {
 //     setUser(auth.user);
 //   },[auth.user])
 
-  return (
+return (
     <Routes>
       {/* landing page */}
       {/* 
@@ -105,6 +105,7 @@ export function AppRoute(props: AppRouteProps) {
         <Route path="login" element=(<Login />)/>
       </Route> 
       */}
+
       {/* <Route element={<RoleBasedDefaultRouting user={user}/>}> */}
         <Route path="/" element={ <Signup/> }></Route>
       {/* </Route> */}
@@ -164,7 +165,6 @@ export function AppRoute(props: AppRouteProps) {
             <Route path="settings" element={<SupSettings />} />
         </Route>  
       {/* </Route>   */}
-
  {/* Catch all route */}
       <Route path="*" element={<PageNotFound />} />
     </Routes>
