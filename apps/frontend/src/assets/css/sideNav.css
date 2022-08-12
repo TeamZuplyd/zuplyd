@@ -7,12 +7,13 @@
   background-color: var(--theme-gray);
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-  margin-right: 0.8rem;
+  /* margin-right: 0.8rem; */
   transition-duration: 400ms;
 }
 
 .sideNav.collapsed {
   width: 6rem;
+  margin-right: 0;
 }
 
 .sideNav .collapseBtn {

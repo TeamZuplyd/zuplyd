@@ -8,9 +8,8 @@ import SideOver from '../components/side-over/side-over';
 function testPage1() {
   return (
     <div>
-      <CompanyAdminCard />
-      {/* <ContactDetailsFormComponent /> */}
-      <ItemCard warehouse='Warehouse A' quantity={200} item="Biscuit" />
+      {/* <CompanyAdminCard /> */}
+      <ItemCard warehouse="Warehouse A" quantity={200} item="Biscuit" />
       <CustomButtonGroup btnNames={['Button 1', 'Button 2', 'Button 3']} />
     </div>
   );
