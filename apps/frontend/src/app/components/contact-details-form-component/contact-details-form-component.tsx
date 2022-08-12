@@ -13,10 +13,7 @@ export interface ContactDetailsFormComponentProps {
   phoneNumbers: string[];
 }
 
-export function ContactDetailsFormComponent({
-  email,
-  phoneNumbers,
-}: ContactDetailsFormComponentProps) {
+export function ContactDetailsFormComponent({ email, phoneNumbers }: ContactDetailsFormComponentProps) {
   const [inputState, setInputState] = useState(true);
   const [newPhoneNumber, setNewPhoneNumber] = useState([]);
 
@@ -66,23 +63,13 @@ export function ContactDetailsFormComponent({
         <CardContent>
           <Grid container rowGap={2} columnGap={2.5}>
             <Grid item xs={10.3}>
-              <Typography
-                variant="h5"
-                component="div"
-                sx={{ fontWeight: 700 }}
-                style={{ color: '#1f2937' }}
-              >
+              <Typography variant="h5" component="div" sx={{ fontWeight: 700 }} style={{ color: '#1f2937' }}>
                 Conatct Details
               </Typography>
             </Grid>
 
             <Grid item xs={1}>
-              <Button
-                variant="contained"
-                sx={{ width: 100, backgroundColor: '#9ca3af' }}
-                className="editBtn"
-                onClick={changeInputState}
-              >
+              <Button variant="contained" sx={{ width: 100, backgroundColor: '#9ca3af' }} className="editBtn" onClick={changeInputState}>
                 <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -107,16 +94,7 @@ export function ContactDetailsFormComponent({
             {allNumbers.map((no, index) => {
               return (
                 <Grid item xs={2.5}>
-                  <TextField
-                    id="outlined-basic"
-                    value={no}
-                    onChange={addPhoneNumber(index)}
-                    disabled={inputState}
-                    label={'Conatct #' + count++}
-                    variant="outlined"
-                    size="small"
-                    sx={{ mt: 4, width: '160px' }}
-                  />
+                  <TextField id="outlined-basic" value={no} onChange={addPhoneNumber(index)} disabled={inputState} label={'Conatct #' + count++} variant="outlined" size="small" sx={{ mt: 4, width: '160px' }} />
                 </Grid>
               );
             })}
@@ -124,16 +102,7 @@ export function ContactDetailsFormComponent({
             {newPhoneNumber.map((no, index) => {
               return (
                 <Grid item xs={2.5}>
-                  <TextField
-                    id="outlined-basic"
-                    value={no}
-                    onChange={addNewPhoneNumber(index)}
-                    disabled={inputState}
-                    label={'Conatct #' + count++}
-                    variant="outlined"
-                    size="small"
-                    sx={{ mt: 4, mb: 5, width: '160px' }}
-                  />
+                  <TextField id="outlined-basic" value={no} onChange={addNewPhoneNumber(index)} disabled={inputState} label={'Conatct #' + count++} variant="outlined" size="small" sx={{ mt: 4, mb: 5, width: '160px' }} />
                 </Grid>
               );
             })}
@@ -176,12 +145,7 @@ export function ContactDetailsFormComponent({
 
           <Grid container rowGap={2} columnGap={4}>
             <Grid item xs={2}>
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ width: 140, mb: 2 }}
-                className="saveChangesBtn"
-              >
+              <Button variant="contained" color="success" sx={{ width: 140, mb: 2 }} className="saveChangesBtn">
                 {' '}
                 Save Changes{' '}
               </Button>

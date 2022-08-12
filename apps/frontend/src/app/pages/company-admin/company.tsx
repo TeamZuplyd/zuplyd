@@ -9,7 +9,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import RegPage4 from '../../pages/company-admin/regPage4';
+import BillingPage from '../../pages/company-admin/billingPage';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -21,13 +21,7 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
@@ -57,11 +51,7 @@ function company() {
 
       <div className="content">
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Details" {...a11yProps(0)} />
             <Tab label="Plan & Billing" {...a11yProps(1)} />
           </Tabs>
@@ -69,14 +59,11 @@ function company() {
         <TabPanel value={value} index={0}>
           <FormComponent companyName="Zuplyd" companyAddress="" />
 
-          <ContactDetailsFormComponent
-            email="zuplyD@gmail.com"
-            phoneNumbers={['0766811254', '0711478525']}
-          />
+          <ContactDetailsFormComponent email="zuplyD@gmail.com" phoneNumbers={['0766811254', '0711478525']} />
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          {/* <RegPage4 /> */}
+          <BillingPage />
         </TabPanel>
       </div>
     </>
