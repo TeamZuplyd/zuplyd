@@ -5,16 +5,46 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
-export interface FormComponentProps {}
+export interface FormComponentProps {
+  companyName: string
+  companyAddress: string
+}
 
-export function FormComponent(props: FormComponentProps) {
+export function FormComponent({companyName, companyAddress}: FormComponentProps) {
   const [inputState, setInputState] = useState(true);
+  const [text1Value, setText1Value] = useState(companyName);
+  const [text2Value, setText2Value] = useState(companyAddress);
+
+  
+
+  const [currentValues, setCurrentValues] = useState([companyName, companyAddress]);
+  const [newValues, setNewValues] = useState([]);
+
+  const refText = useRef();
 
   const changeInputState = () => {
     setInputState(!inputState)
   }
+
+  const discardBtnClick = () =>{
+
+    if(text1Value != companyName){
+        setText1Value(companyName)
+    }
+
+    
+    if(text2Value != companyAddress){
+      setText2Value(companyAddress)
+      console.log(companyAddress);
+      
+      console.log("companyAddress");
+    }
+    
+  }
+
+  //make a function for save --> check with companyName and companyAddress to see if the values have changedifs send the request
 
   return (
     <>
@@ -42,29 +72,26 @@ export function FormComponent(props: FormComponentProps) {
 
                   <Grid container rowGap={2} columnGap={4}>
                       <Grid item xs={5}>
-                          <TextField id="outlined-basic" defaultValue="ZupplyD" disabled = {inputState} label="Company Name" variant="outlined" size="small" sx={{mt:4,  width: '340px'}} />
+                          <TextField onChange={(e) => { setText1Value(e.target.value)}} id="outlined-basic" value={text1Value} disabled = {inputState} label="Company Name" variant="outlined" size="small" sx={{mt:4,  width: '340px'}} />
                       </Grid>
 
                       <Grid item xs={5}>
-                        <TextField id="outlined-multiline-static" multiline label="Address"  disabled = {inputState} rows={4} variant="outlined" sx={{mt:4, width: '449px'}} />
+                        <TextField onChange={(e) => { setText2Value(e.target.value)}} id="outlined-multiline-static" multiline label="Address"  disabled = {inputState} rows={4} variant="outlined" sx={{mt:4, width: '449px'}} value={text2Value} />
                       </Grid>
                   </Grid>
 
                   <Grid container rowGap={2} columnGap={4}>
                       <Grid item xs={2}>
-                          <Button variant="contained" color="success" sx={{width:140}} className="editBtn" > Save Changes </Button>
+                          <Button variant="contained" color="success" sx={{width:140}} className="saveChangesBtn" > Save Changes </Button>
                       </Grid>
 
                       <Grid item xs={5}>
-                          <Button variant="contained" sx={{width:100, backgroundColor:"transparent",color:"black"}} className="editBtn" > Discard </Button>
+                          <Button variant="contained" sx={{width:100, backgroundColor:"transparent",color:"black"}} className="addnewBtn" onClick={discardBtnClick}> Discard </Button>
                       </Grid>
                   </Grid>
                     
               </CardContent>
 
-          {/* <CardActions>
-            <Button size="small">Learn More</Button>
-          </CardActions> */}
         </Card>
     </>
   );
