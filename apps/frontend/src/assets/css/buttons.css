@@ -40,9 +40,12 @@
 .goBack {
   background-color: #d8d8d8 !important;
   color: #656565 !important;
-  font-size: 12px !important;
+  font-size: 10px !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+  padding-right: 5px !important;
+  padding-left: 1px !important;
+  width: 85px !important;
 }
 
 .goBack:hover {

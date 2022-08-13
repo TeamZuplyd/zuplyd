@@ -27,6 +27,7 @@ import WHMdashboard from '../pages/warehouse-manager/dashboard';
 import WHMinventory from '../pages/warehouse-manager/inventory';
 import WHMissues from '../pages/warehouse-manager/issues';
 import WHMOrders from '../pages/warehouse-manager/orders';
+import WHMShops from '../pages/warehouse-manager/shops';
 import WHMReports from '../pages/warehouse-manager/reports';
 import WHMSettings from '../pages/warehouse-manager/settings';
 
@@ -146,6 +147,7 @@ export function AppRoute(props: AppRouteProps) {
         <Route path="inventory" element={<WHMinventory />} />
         <Route path="orders" element={<WHMOrders />} />
         <Route path="issues" element={<WHMissues />} />
+        <Route path="shops" element={<WHMShops />} />
         <Route path="reports" element={<WHMReports />} />
         <Route path="settings" element={<WHMSettings />} />
       </Route>
