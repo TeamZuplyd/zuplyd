@@ -1,6 +1,6 @@
 /* eslint-disable-next-line */
 import * as React from 'react';
-import { Typography, Drawer, Box, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from '@mui/material';
+import { Typography, Drawer, Box, Button, Grid } from '@mui/material';
 
 export interface ItemSideOverProps {
   toggle: boolean;
@@ -13,35 +13,27 @@ export function ItemSideOver({ toggle, toggleDrawer, data, index }: ItemSideOver
   return (
     <React.Fragment key={'right'}>
       <Drawer anchor="right" open={toggle} onClose={toggleDrawer(toggle)}>
-        <Box sx={{ width: 350, p: 3, height: '100%', backgroundColor: '#F3F4F6;' }} role="presentation" onKeyDown={toggleDrawer(toggle)}>
-          <Typography variant="h5" sx={{ textAlign: 'center', mx: 'auto' }}>
+        <Box sx={{ width: 350, p: 3, height: '100%' }} role="presentation" onKeyDown={toggleDrawer(toggle)}>
+          <Typography variant="h4" sx={{ textAlign: 'center', mx: 'auto' }}>
             {data.name}
           </Typography>
-          <TableContainer component={Paper} sx={{mt:3}}>
-            <Table aria-label="simple table" size="small">
-              <TableBody>
-                {Object.keys(data).map((key) => {
-                  return (
-                    <>
-                      {/* <h1>
-                  {key} : {data[key]}
-                </h1> */}
-
-                      {/* {rows.map((row) => ( */}
-                      <TableRow key={key} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell component="th">
-                          {key}
-                        </TableCell>
-                        <TableCell >
-                          {data[key]}
-                        </TableCell>
-                      </TableRow>
-                    </>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <Grid container direction="row" spacing={3} columnGap={0} sx={{ pt: 3, margin: 'auto' }}>
+            {Object.keys(data).map((key) => {
+              return (
+                <>
+                  <Grid item xs={6}>
+                    {key}
+                  </Grid>
+                  <Grid item xs={6}>
+                    {data[key]}
+                  </Grid>
+                </>
+              );
+            })}
+            <Grid item xs={12} textAlign="center">
+              <Button variant='contained' color='success'>Reorder</Button>
+            </Grid>
+          </Grid>
         </Box>
       </Drawer>
     </React.Fragment>

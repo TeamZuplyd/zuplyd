@@ -107,10 +107,10 @@ export function CustomTable({ headerNames, rows }: CustomTableProps) {
                 <TableCell>{row.brand}</TableCell>
                 <TableCell align="right">{row.units}</TableCell>
                 <TableCell>
-                  <Button onClick={toggleDrawer(true)}>More Info</Button>
+                  <Button variant='contained' onClick={toggleDrawer(true)}>More Info</Button>
                 </TableCell>
                 <TableCell>
-                  <Button>Reorder</Button>
+                  <Button variant='contained' color='success'>Reorder</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -125,7 +125,7 @@ export function CustomTable({ headerNames, rows }: CustomTableProps) {
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                colSpan={3}
+                colSpan={7}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
