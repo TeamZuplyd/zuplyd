@@ -1,12 +1,12 @@
 .tier {
   font-weight: bold;
   color: var(--theme-orange);
-  text-transform: uppercase
+  text-transform: uppercase;
 }
 
 .highlightTier {
-  background-color: rgba(253, 143, 2, 0.15)!important;
-  border: 1px solid var(--theme-orange)!important;
+  background-color: rgba(253, 143, 2, 0.15) !important;
+  border: 1px solid var(--theme-orange) !important;
 }
 
 .icon {
@@ -18,5 +18,9 @@
 }
 
 .tierPoints {
-  color: var(--gray-900)
+  color: var(--gray-900);
+}
+
+.selectedTier {
+  background-color: rgb(60, 255, 0) !important;
 }
