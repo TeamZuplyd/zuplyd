@@ -7,7 +7,7 @@ import { INestMicroservice, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
-import { AUTH_PACKAGE_NAME } from './app/user_mgmt.pb';
+import { USER_MGMT_PACKAGE_NAME } from './app/user-mgmt.pb';
 
 async function bootstrap() {
   const app: INestMicroservice = await NestFactory.createMicroservice(
@@ -16,8 +16,8 @@ async function bootstrap() {
       transport: Transport.GRPC,
       options: {
         url: '0.0.0.0:50051',
-        package: AUTH_PACKAGE_NAME,
-        protoPath: 'node_modules\\zuplyd-proto\\proto\\user_mgmt.proto',
+        package: USER_MGMT_PACKAGE_NAME,
+        protoPath: 'node_modules\\zuplyd-proto\\proto\\user-mgmt.proto',
         loader: { keepCase: true },
       },
       logger: ['log', 'error', 'warn', 'debug', 'verbose'],
