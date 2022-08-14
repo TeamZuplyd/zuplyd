@@ -40,7 +40,7 @@ const postData = async (values: any) => {
 function regPage2() {
   //   const { data, status, refetch } = useQuery(['step1'], postData, { enabled: false });
   const navigate = useNavigate();
-  const [numbers, setNumbers] = useState([]);
+  const [numbers, setNumbers] = useState<string[]>([]);
   const [newNumber, setNewNumber] = useState('');
 
   const formik = useFormik({
@@ -57,16 +57,13 @@ function regPage2() {
 
   const addNewPhoneNumber = () => {
     if (newNumber != '') {
-      const arr: any = [...numbers, newNumber];
-      console.log(newNumber);
-      console.log(arr);
+      setNumbers([...numbers, newNumber]);
       setNewNumber('');
-      setNumbers(arr);
     }
   };
 
   const deleteNumber = (delNumber: any) => {
-    let arr: never[] = [];
+    let arr: string[] = [];
 
     for (let index = 0; index < numbers.length; index++) {
       if (numbers[index] != delNumber) {
@@ -96,10 +93,17 @@ function regPage2() {
           </Grid>
 
           <form onSubmit={formik.handleSubmit}>
-            <TextField value={formik.values.name} onChange={formik.handleChange} id="name" label="Company Name" variant="standard" sx={{ mt: 5 }} />
-            <TextField id="address" label="Address" variant="standard" sx={{ mt: 3 }} value={formik.values.address} onChange={formik.handleChange} />
+            <Grid container item xs={13}>
+              <Grid item xs={13}>
+                <TextField value={formik.values.name} onChange={formik.handleChange} id="name" label="Company Name" variant="standard" sx={{ mt: 5, width: '100%' }} />
+              </Grid>
 
-            <Grid container item xs={13} sx={{ mt: 2 }}>
+              <Grid item xs={13}>
+                <TextField id="address" label="Address" variant="standard" sx={{ mt: 3, width: '100%' }} value={formik.values.address} onChange={formik.handleChange} />
+              </Grid>
+            </Grid>
+
+            <Grid container item xs={13} sx={{ mt: 3 }}>
               <Grid item xs={numbers.length == 5 ? 12 : 10}>
                 <TextField id="standard-basic" label="Contact No" variant="standard" sx={{ width: '100%' }} onChange={(e) => setNewNumber(e.target.value)} value={newNumber} />
               </Grid>

@@ -53,6 +53,7 @@ import PageNotFound from '../pages/PageNotFound';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useAuth0, User } from '@auth0/auth0-react';
+import Table from '../pages/warehouse-manager/table';
 
 export interface AppRouteProps {}
 
@@ -121,6 +122,7 @@ export function AppRoute(props: AppRouteProps) {
 
       {/* <Route element={<ProtectedRoute user={user} role={'comp_admin'}/>}> */}
       <Route path="/company-admin" element={<CompanyAdmin />}>
+        <Route index element={<CAdashboard />} />
         <Route path="dashboard" element={<CAdashboard />} />
         <Route path="supply-Chain" element={<SupplyChain />} />
         <Route path="company" element={<Company />} />
@@ -131,6 +133,7 @@ export function AppRoute(props: AppRouteProps) {
 
       {/* <Route element={<ProtectedRoute user={user} role={'proc_mngr'}/>}> */}
       <Route path="/procurement-manager" element={<ProcurementManager />}>
+        <Route index element={<PDashboard />} />
         <Route path="dashboard" element={<PDashboard />} />
         <Route path="goodRequests" element={<PGoodRequests />} />
         <Route path="issues" element={<PIssues />} />
@@ -143,8 +146,10 @@ export function AppRoute(props: AppRouteProps) {
 
       {/* <Route element={<ProtectedRoute user={user} role={'wh_mngr'}/>}> */}
       <Route path="/warehouse-manager" element={<WarehouseManager />}>
+        <Route index element={<WHMdashboard />} />
         <Route path="dashboard" element={<WHMdashboard />} />
         <Route path="inventory" element={<WHMinventory />} />
+        <Route path="inventory/:id" element={<Table />} />
         <Route path="orders" element={<WHMOrders />} />
         <Route path="issues" element={<WHMissues />} />
         <Route path="shops" element={<WHMShops />} />
@@ -155,6 +160,7 @@ export function AppRoute(props: AppRouteProps) {
 
       {/* <Route element={<ProtectedRoute user={user} role={'sh_mngr'}/>}> */}
       <Route path="/shop-manager" element={<ShopManager />}>
+        <Route index element={<SMdashboard />} />
         <Route path="dashboard" element={<SMdashboard />} />
         <Route path="inventory" element={<SMinventory />} />
         <Route path="orders" element={<SMOrders />} />
@@ -166,6 +172,7 @@ export function AppRoute(props: AppRouteProps) {
 
       {/* <Route element={<ProtectedRoute user={user} role={'supl'}/>}> */}
       <Route path="/supplier" element={<Supplier />}>
+        <Route index element={<SupDashboard />} />
         <Route path="dashboard" element={<SupDashboard />} />
         <Route path="products" element={<SupProducts />} />
         <Route path="orders" element={<SupOrders />} />
