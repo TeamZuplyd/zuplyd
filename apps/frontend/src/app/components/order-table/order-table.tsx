@@ -15,6 +15,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import { TableHead } from '@mui/material';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -88,6 +89,18 @@ export function OrderTable(props: OrderTableProps) {
   return (
     <TableContainer component={Paper}>
       <Table stickyHeader sx={{ minWidth: 500 }} aria-label="custom pagination table">
+        <TableHead>
+          <TableRow>
+            <TableCell component="th">Item Code</TableCell>
+            <TableCell component="th">Name </TableCell>
+            <TableCell component="th">Brand</TableCell>
+            <TableCell component="th">Quantity</TableCell>
+            <TableCell component="th">Required By</TableCell>
+            <TableCell component="th">Requested Date</TableCell>
+            <TableCell component="th">Request</TableCell>
+            <TableCell component="th">FulFill</TableCell>
+          </TableRow>
+        </TableHead>
         <TableBody>
           {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row) => (
             <TableRow key={row.name}>
@@ -112,7 +125,7 @@ export function OrderTable(props: OrderTableProps) {
           <TableRow>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
+              colSpan={8}
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
