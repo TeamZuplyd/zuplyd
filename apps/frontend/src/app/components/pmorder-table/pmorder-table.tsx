@@ -62,9 +62,9 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export interface OrderTableProps {}
+export interface PMOrderTableProps {}
 
-export function OrderTable(props: OrderTableProps) {
+export function PMOrderTable(props: PMOrderTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -93,8 +93,6 @@ export function OrderTable(props: OrderTableProps) {
             <TableCell component="th">Required By</TableCell>
             <TableCell component="th">Requested By</TableCell>
             <TableCell component="th">Requested Date</TableCell>
-            <TableCell component="th">Request</TableCell>
-            <TableCell component="th">Fulfill</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -103,37 +101,14 @@ export function OrderTable(props: OrderTableProps) {
               <TableCell component="th" scope="row">
                 {order.item_code}
               </TableCell>
-              <TableCell style={{ }} >
-                {order.name}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.brand}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.quantity}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.status}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.required_by}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.requested_by}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.requested_date}
-              </TableCell>
-              <TableCell style={{ }} >
-                <Button variant="contained" disabled={!order.request}>
-                  Request
-                </Button>
-              </TableCell>
-              <TableCell style={{ }} >
-                <Button variant="contained" color='success' disabled={order.request}>
-                  Fulfill
-                </Button>
-              </TableCell>
+              <TableCell style={{}}>{order.name}</TableCell>
+              <TableCell style={{}}>{order.brand}</TableCell>
+              <TableCell style={{}}>{order.quantity}</TableCell>
+              <TableCell style={{}}>{order.status}</TableCell>
+              <TableCell style={{}}>{order.required_by}</TableCell>
+              <TableCell style={{}}>{order.requested_by}</TableCell>
+              <TableCell style={{}}>{order.requested_date}</TableCell>
+             
             </TableRow>
           ))}
           {emptyRows > 0 && (
@@ -167,4 +142,4 @@ export function OrderTable(props: OrderTableProps) {
   );
 }
 
-export default OrderTable;
+export default PMOrderTable;
