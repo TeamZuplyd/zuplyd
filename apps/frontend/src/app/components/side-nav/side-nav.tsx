@@ -2,17 +2,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 
-import {
-  ChevronLeftIcon,
-  CogIcon,
-  LogoutIcon,
-  ViewGridIcon,
-  OfficeBuildingIcon,
-  DocumentReportIcon,
-  LinkIcon,
-  TruckIcon,
-  ArchiveIcon,
-} from '@heroicons/react/outline';
+import { ChevronLeftIcon, CogIcon, LogoutIcon, ViewGridIcon, OfficeBuildingIcon, DocumentReportIcon, LinkIcon, TruckIcon, ArchiveIcon } from '@heroicons/react/outline';
 
 export interface SideNavProps {
   username: string;
@@ -27,10 +17,7 @@ export function SideNav({ username, userNum }: SideNavProps) {
 
   return (
     <div className={`sideNav ${collapsed && 'collapsed'}`}>
-      <ChevronLeftIcon
-        className="collapseBtn"
-        onClick={() => setCollapsed(!collapsed)}
-      />
+      <ChevronLeftIcon className="collapseBtn" onClick={() => setCollapsed(!collapsed)} />
 
       {/* Logo section - Start  */}
       <div className="logoContainer">
@@ -42,10 +29,7 @@ export function SideNav({ username, userNum }: SideNavProps) {
       <div className="optionsContainer">
         {providedOpts.map((option: string, index: number) => (
           <Link to={option[2]}>
-            <div
-              className={`sideNav-option ${selected == index && 'selected'}`}
-              onClick={() => setSelected(index)}
-            >
+            <div className={`sideNav-option ${selected == index && 'selected'}`} onClick={() => setSelected(index)}>
               {option[0]}
               <span className="optionName">{option[1]}</span>
             </div>
@@ -56,12 +40,12 @@ export function SideNav({ username, userNum }: SideNavProps) {
 
       {/* Profile operations section - Start  */}
       <div className="profileOperations">
-            <Link to="settings">
-                <div className="sideNav-option">
-                    <CogIcon className="sideNav-icon" />
-                    <span className="optionName">Settings</span>
-                </div>
-            </Link>
+        <Link to="settings">
+          <div className="sideNav-option">
+            <CogIcon className="sideNav-icon" />
+            <span className="optionName">Settings</span>
+          </div>
+        </Link>
         <div className="sideNav-option">
           <LogoutIcon className="sideNav-icon" />
           <span className="optionName">Logout</span>
@@ -120,6 +104,7 @@ const coreData: { [key: number]: any } = {
       [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/warehouse-manager/dashboard'],
       [<ViewGridIcon className="sideNav-icon" />, 'Inventory', '/warehouse-manager/inventory'],
       [<ViewGridIcon className="sideNav-icon" />, 'Orders', '/warehouse-manager/orders'],
+      [<ViewGridIcon className="sideNav-icon" />, 'Shops', '/warehouse-manager/shops'],
       [<ViewGridIcon className="sideNav-icon" />, 'Issues', '/warehouse-manager/issues'],
       [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/warehouse-manager/reports'],
     ],

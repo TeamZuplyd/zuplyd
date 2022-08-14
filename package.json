@@ -6,7 +6,8 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git"
+    "proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps",
+    "userMgmt:proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps && nx run user-mgmt:proto-user-mgmt && nx run api-gateway:proto-user-mgmt"
   },
   "private": true,
   "devDependencies": {
@@ -75,6 +76,7 @@
     "bcrypt": "^5.0.1",
     "core-js": "^3.6.5",
     "formik": "^2.2.9",
+    "jwks-rsa": "^2.1.4",
     "mongoose": "^6.4.6",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",

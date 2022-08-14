@@ -1,76 +1,87 @@
-.editBtn{
-    background-color: #9ca3af;
-}
-  
-.editBtn:hover{
-    background-color: #9ca3af !important;
+.editBtn {
+  background-color: #9ca3af;
 }
 
-.addnewBtn{
-    box-shadow:none !important;
-}
-.addnewBtn:hover{
-    background-color: transparent !important;
+.editBtn:hover {
+  background-color: #9ca3af !important;
 }
 
-
-.saveChangesBtn{
-    background-color: #0eb54e !important;
-
+.addnewBtn {
+  box-shadow: none !important;
 }
-.saveChangesBtn:hover{
-    background-color: #0eb54e !important;
+.addnewBtn:hover {
+  background-color: transparent !important;
 }
 
-.signupWithGoogle{
-    background-color: #4884f4 !important;
-    line-height: 0 !important;
+.saveChangesBtn {
+  background-color: #0eb54e !important;
+}
+.saveChangesBtn:hover {
+  background-color: #0eb54e !important;
 }
 
-.signupWithGoogle:hover{
-    background-color: #3268cf !important;
+.signupWithGoogle {
+  background-color: #4884f4 !important;
+  line-height: 0 !important;
 }
 
-.createAcc{
-    background-color: #ff8c04 !important;
+.signupWithGoogle:hover {
+  background-color: #3268cf !important;
 }
 
-.createAcc:hover{
-    background-color: #f18304 !important;
+.createAcc {
+  background-color: #ff8c04 !important;
 }
 
-
-.goBack{
-    background-color: #d8d8d8 !important;
-    color: #656565 !important;
-    font-size: 12px !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+.createAcc:hover {
+  background-color: #f18304 !important;
 }
 
-.goBack:hover{
-    background-color: #c4c2c2 !important;
+.goBack {
+  background-color: #d8d8d8 !important;
+  color: #656565 !important;
+  font-size: 10px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-right: 5px !important;
+  padding-left: 1px !important;
+  width: 85px !important;
 }
 
+.goBack:hover {
+  background-color: #c4c2c2 !important;
+}
 
-.addNumber{
-    background-color: #1F2937 !important;
-    /* padding-top: 0 !important;
+.addNumber {
+  background-color: #1f2937 !important;
+  /* padding-top: 0 !important;
     padding-bottom: 0 !important; */
-    font-size: 12px !important;
-    position:relative;
-    top: 15px;
+  font-size: 12px !important;
+  position: relative;
+  top: 15px;
 }
 
-.addNumber:hover{
-    background-color: #000000 !important;
+.addNumber:hover {
+  background-color: #000000 !important;
 }
 
-.spanBtn{
-    background-color: transparent;
-    position: relative;
-    top:3px;
-    cursor: pointer;
+.spanBtn {
+  background-color: transparent;
+  position: relative;
+  top: 3px;
+  cursor: pointer;
 }
 
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+  background-color: white !important;
+}
 
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  background-color: #1f2937 !important;
+  color: white !important;
+}
+
+.css-1gsv261 {
+  margin-top: 20px;
+  border-bottom: none !important;
+}
