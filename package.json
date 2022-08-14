@@ -62,6 +62,7 @@
     "@grpc/grpc-js": "^1.6.8",
     "@grpc/proto-loader": "^0.7.0",
     "@heroicons/react": "^1.0.6",
+    "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.1",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
