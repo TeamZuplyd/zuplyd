@@ -2,6 +2,7 @@ import * as React from 'react';
 import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent } from '@mui/material';
 import Header from '../../components/header/header';
 import OrderTable from '../../components/order-table/order-table';
+import PMOrderTable from '../../components/pmorder-table/pmorder-table';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -15,7 +16,7 @@ function TabPanel(props: TabPanelProps) {
   return (
     <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ py: 3, pr: 2 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -48,25 +49,22 @@ function orders() {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
               <Tab label="Received Requests" {...a11yProps(0)} />
               <Tab label="Sent Requests" {...a11yProps(1)} />
-              <Tab label="Pending Requests" {...a11yProps(2)} />
-              <Tab label="History" {...a11yProps(3)} />
+              {/* <Tab label="Pending Requests" {...a11yProps(2)} /> */}
+              <Tab label="History" {...a11yProps(2)} />
             </Tabs>
           </Box>
-          {/* warehouses tab */}
+          {/* Received Requests */}
           <TabPanel value={value} index={0}>
             <OrderTable />
           </TabPanel>
 
-          {/* shops tab */}
-          <TabPanel value={value} index={1}></TabPanel>
-
-          {/* procurement managers tab */}
-          <TabPanel value={value} index={2}></TabPanel>
-
-          {/* Hierarchy tab */}
-          <TabPanel value={value} index={3}>
-            Hierarchy
+          {/* Sent Requests */}
+          <TabPanel value={value} index={1}>
+            <PMOrderTable/>
           </TabPanel>
+
+          {/* History */}
+          <TabPanel value={value} index={2}></TabPanel>
         </Box>
       </div>
     </>
