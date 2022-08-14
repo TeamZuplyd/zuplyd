@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 
-import { ChevronLeftIcon, CogIcon, LogoutIcon, ViewGridIcon, OfficeBuildingIcon, DocumentReportIcon, LinkIcon, TruckIcon, ArchiveIcon } from '@heroicons/react/outline';
+import { ChevronLeftIcon, CogIcon, LogoutIcon, ViewGridIcon, OfficeBuildingIcon, DocumentReportIcon, LinkIcon, TruckIcon, ArchiveIcon, CollectionIcon, DocumentTextIcon, QuestionMarkCircleIcon, ClipboardListIcon } from '@heroicons/react/outline';
 
 export interface SideNavProps {
   username: string;
@@ -91,43 +91,43 @@ const coreData: { [key: number]: any } = {
     userRole: 'Procurement Manager',
     options: [
       [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/procurement-manager/dashboard'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Good Requests', '/procurement-manager/goodRequests'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Procurement', '/procurement-manager/procurement'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Products', '/procurement-manager/products'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Issues', '/procurement-manager/issues'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/procurement-manager/reports'],
+      [<DocumentTextIcon className="sideNav-icon" />, 'Good Requests', '/procurement-manager/goodRequests'],
+      [<TruckIcon className="sideNav-icon" />, 'Procurement', '/procurement-manager/procurement'],
+      [<CollectionIcon className="sideNav-icon" />, 'Products', '/procurement-manager/products'],
+      [<QuestionMarkCircleIcon className="sideNav-icon" />, 'Issues', '/procurement-manager/issues'],
+      [<DocumentReportIcon className="sideNav-icon" />, 'Reports', '/procurement-manager/reports'],
     ],
   },
   2: {
     userRole: 'Warehouse Manager',
     options: [
       [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/warehouse-manager/dashboard'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Inventory', '/warehouse-manager/inventory'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Orders', '/warehouse-manager/orders'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Shops', '/warehouse-manager/shops'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Issues', '/warehouse-manager/issues'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/warehouse-manager/reports'],
+      [<DocumentTextIcon className="sideNav-icon" />, 'Inventory', '/warehouse-manager/inventory'],
+      [<ClipboardListIcon className="sideNav-icon" />, 'Orders', '/warehouse-manager/orders'],
+      [<OfficeBuildingIcon className="sideNav-icon" />, 'Shops', '/warehouse-manager/shops'],
+      [<QuestionMarkCircleIcon className="sideNav-icon" />, 'Issues', '/warehouse-manager/issues'],
+      [<DocumentReportIcon className="sideNav-icon" />, 'Reports', '/warehouse-manager/reports'],
     ],
   },
   3: {
     userRole: 'Shop Manager',
     options: [
       [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/shop-manager/dashboard'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Inventory', '/shop-manager/inventory'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Orders', '/shop-manager/orders'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Issues', '/shop-manager/issues'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/shop-manager/reports'],
+      [<DocumentTextIcon className="sideNav-icon" />, 'Inventory', '/shop-manager/inventory'],
+      [<ClipboardListIcon className="sideNav-icon" />, 'Orders', '/shop-manager/orders'],
+      [<QuestionMarkCircleIcon className="sideNav-icon" />, 'Issues', '/shop-manager/issues'],
+      [<DocumentReportIcon className="sideNav-icon" />, 'Reports', '/shop-manager/reports'],
     ],
   },
   4: {
     userRole: 'Supplier',
     options: [
       [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/supplier/dashboard'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Products', '/supplier/products'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Orders', '/supplier/orders'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Quotations', '/supplier/quotations'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Companies', '/supplier/companies'],
-      [<ViewGridIcon className="sideNav-icon" />, 'Reports', '/supplier/reports'],
+      [<CollectionIcon className="sideNav-icon" />, 'Products', '/supplier/products'],
+      [<ClipboardListIcon className="sideNav-icon" />, 'Orders', '/supplier/orders'],
+      [<DocumentTextIcon className="sideNav-icon" />, 'Quotations', '/supplier/quotations'],
+      [<OfficeBuildingIcon className="sideNav-icon" />, 'Companies', '/supplier/companies'],
+      [<DocumentReportIcon className="sideNav-icon" />, 'Reports', '/supplier/reports'],
     ],
   },
 };
