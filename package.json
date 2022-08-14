@@ -7,7 +7,8 @@
     "build": "nx build",
     "test": "nx test",
     "proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps",
-    "userMgmt:proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps && nx run user-mgmt:proto-user-mgmt && nx run api-gateway:proto-user-mgmt"
+    "userMgmt:proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps && nx run user-mgmt:proto-user-mgmt && nx run api-gateway:proto-user-mgmt",
+    "procurement:proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps && nx run procurement:proto-procurement && nx run api-gateway:proto-procurement"
   },
   "private": true,
   "devDependencies": {

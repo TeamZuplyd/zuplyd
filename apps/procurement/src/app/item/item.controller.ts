@@ -1,42 +1,57 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { GrpcMethod } from '@nestjs/microservices';
+import { ItemIDRequest, ItemWithID, ITEM_SERVICE_NAME } from '../procurement.pb';
 import { CreateItemTypeDto } from './dto/create-item-type.dto';
 import { ItemService } from './item.service';
 import { Item } from './schemas/item.schema';
 
 @Controller('item')
 export class ItemController {
-    constructor(private readonly itemService: ItemService){}
+  constructor(private readonly itemService: ItemService) {}
 
-    @Post()
-    async create(@Body() createItemTypeDto: CreateItemTypeDto){
-      if (await this.itemService.findOne(createItemTypeDto.item_name)){
-        throw new BadRequestException("Item alredy exists");
-      }else{
-        let createdItemType = await this.itemService.createItemType(createItemTypeDto);
-        return createdItemType;
-      }
+  @GrpcMethod(ITEM_SERVICE_NAME, 'create')
+  async create(createItemTypeDto: CreateItemTypeDto): Promise<any> {
+    if (await this.itemService.findOne(createItemTypeDto.item_name)) {
+      return { error: 'item_already_exists' };
+    } else {
+      return { item: await this.itemService.createItemType(createItemTypeDto) };
     }
+  }
 
-    @Post(':id')
-    async update(@Param('id') id: string, @Body() item: Item){
-      return await this.itemService.UpdateItemType(id, item)
+  @GrpcMethod(ITEM_SERVICE_NAME, 'update')
+  async update(itemData: ItemWithID) {
+    const item = await this.itemService.UpdateItemType(itemData._id, itemData);
+    if (item) {
+      return { item: item };
+    } else {
+      return { error: 'update_error' };
     }
+  }
 
-    @Get()
-    async findAll(): Promise<Item[]>{
-      let items = await this.itemService.findAll();
-      return items;
-    }
+  @GrpcMethod(ITEM_SERVICE_NAME, 'findAll')
+  async findAll(): Promise<any> {
+    const items = await this.itemService.findAll();
+    const itemList: any = { items: [...items] };
+    return itemList;
+  }
 
-    @Get(':id')
-    async findByIdPublic(@Param('id') id: string): Promise<Item>{
-      let item = await this.itemService.findOneById(id);
-      return item;
+  @GrpcMethod(ITEM_SERVICE_NAME, 'findByIdPublic')
+  async findByIdPublic(id: ItemIDRequest): Promise<any> {
+    let item = await this.itemService.findOneById(id.id);
+    if (item) {
+      return { item: item };
+    } else {
+      return { error: 'no_such_item' };
     }
+  }
 
-    @Delete(':id')
-    async delete(@Param('id') id: string){
-      let item = await this.itemService.delete(id);
-      return item;
+  @GrpcMethod(ITEM_SERVICE_NAME, 'delete')
+  async delete(id: ItemIDRequest) {
+    let item = await this.itemService.delete(id.id);
+    if (item) {
+      return { item: item };
+    } else {
+      return { error: 'delete_error' };
     }
+  }
 }
