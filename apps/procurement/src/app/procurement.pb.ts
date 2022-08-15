@@ -1,0 +1,80 @@
+/* eslint-disable */
+import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
+
+export const protobufPackage = 'procurement';
+
+/** Item */
+export interface Item {
+  item_name: string;
+  company_id: string;
+  company_name: string;
+  attributes_array: string[];
+}
+
+export interface ItemWithID {
+  _id: string;
+  item_name: string;
+  company_id: string;
+  company_name: string;
+  attributes_array: string[];
+  __v: number;
+}
+
+export interface ItemResponse {
+  item: ItemWithID | undefined;
+  error: string | undefined;
+}
+
+export interface ItemIDRequest {
+  id: string;
+}
+
+export interface FindAllRequest {}
+
+export interface FindAllResponse {
+  items: ItemWithID[];
+}
+
+export const PROCUREMENT_PACKAGE_NAME = 'procurement';
+
+export interface ItemServiceClient {
+  create(request: Item): Observable<ItemResponse>;
+
+  update(request: ItemWithID): Observable<ItemResponse>;
+
+  findAll(request: FindAllRequest): Observable<FindAllResponse>;
+
+  findByIdPublic(request: ItemIDRequest): Observable<ItemResponse>;
+
+  delete(request: ItemIDRequest): Observable<ItemResponse>;
+}
+
+export interface ItemServiceController {
+  create(request: Item): Promise<ItemResponse> | Observable<ItemResponse> | ItemResponse;
+
+  update(request: ItemWithID): Promise<ItemResponse> | Observable<ItemResponse> | ItemResponse;
+
+  findAll(request: FindAllRequest): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
+
+  findByIdPublic(request: ItemIDRequest): Promise<ItemResponse> | Observable<ItemResponse> | ItemResponse;
+
+  delete(request: ItemIDRequest): Promise<ItemResponse> | Observable<ItemResponse> | ItemResponse;
+}
+
+export function ItemServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ['create', 'update', 'findAll', 'findByIdPublic', 'delete'];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod('ItemService', method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod('ItemService', method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const ITEM_SERVICE_NAME = 'ItemService';

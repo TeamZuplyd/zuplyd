@@ -30,7 +30,7 @@ export class UserMgmtController {
     );
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  //@UseGuards(AuthGuard('jwt'))
   @Get('findall')
   private async findAll(): Promise<any> {
     return this.svc.findAll({});
