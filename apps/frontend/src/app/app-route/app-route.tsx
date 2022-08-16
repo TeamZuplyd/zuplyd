@@ -55,6 +55,10 @@ import React, { useEffect } from 'react';
 import { useAuth0, User } from '@auth0/auth0-react';
 import Table from '../pages/warehouse-manager/table';
 
+import { useQuery } from 'react-query';
+
+import axios from 'axios';
+
 export interface AppRouteProps {}
 
 // const defaultLinkForUser = new Map<string, string>([
@@ -63,43 +67,64 @@ export interface AppRouteProps {}
 //   ['wh_mngr', '/warehouse-manager'],
 //   ['sh_mngr', '/shop-manager'],
 //   ['supl', '/supplier'],
-//   ['default', '/']
+//   ['default', '/'],
 // ]);
 
-// const ProtectedRoute = ({ user, role, children }: {user?: {}, role: string, children?: JSX.Element}) => {
+// const ProtectedRoute = ({ user, role, children }: { user?: {}; role: string; children?: JSX.Element }) => {
 //   const auth = useAuth0();
 //   let roleFromUserMgmt: string = 'default';
-//   if (!auth.isLoading){
+//   const { data, isLoading } = useQuery(['userRole', user], () => fetchUserRole(user));
+//   if (isLoading) {
+//     return <span>Loading...</span>;
+//   }
+//   if (!auth.isLoading) {
 //     //TO DO: call the user management microcservice to get the user role based on the user email
-//     roleFromUserMgmt = 'comp_admin';
+//     //roleFromUserMgmt = 'comp_admin';
+//     roleFromUserMgmt = data?.data.user.role;
+//     // console.log(data?.data.user.role);
+
 //     if (auth.isAuthenticated && user && role === roleFromUserMgmt) {
-//       return children ? children : <Outlet/>;
+//       return children ? children : <Outlet />;
 //     }
 //   }
 //   return <Navigate to={defaultLinkForUser.get(roleFromUserMgmt)!} replace />;
 // };
 
-// const RoleBasedDefaultRouting = ({ user, children }: {user?: {}, children?: JSX.Element, redirectPath?: string}) => {
+// const RoleBasedDefaultRouting = ({ user, children }: { user?: {}; children?: JSX.Element; redirectPath?: string }) => {
 //   const auth = useAuth0();
 //   let roleFromUserMgmt: string = 'default';
-//   if (!auth.isLoading){
+//   const { data, isLoading } = useQuery(['userRole', user], () => fetchUserRole(user));
+
+//   if (isLoading && user) {
+//     return <span>Loading...</span>;
+//   }
+//   if (!auth.isLoading) {
 //     //TO DO: call the user management microcservice to get the user role based on the user email
-//     roleFromUserMgmt = 'comp_admin';
+//     //console.log(data?.data);
+//     //roleFromUserMgmt = 'comp_admin';
+//     roleFromUserMgmt = data?.data.user.role;
+
 //     if (auth.isAuthenticated && user) {
 //       return <Navigate to={defaultLinkForUser.get(roleFromUserMgmt)!} replace />;
 //     }
 //   }
-//   return children ? children : <Outlet/>;
+//   return children ? children : <Outlet />;
+// };
+
+// const fetchUserRole = (user: any) => {
+//   const email = user.email ? user.email : '';
+
+//   return axios.get('http://localhost:7000/api/user-mgmt/find/' + email, { responseType: 'json' });
 // };
 
 export function AppRoute(props: AppRouteProps) {
-  //   const [user, setUser] = React.useState<User>();
+  // const [user, setUser] = React.useState<User>();
 
-  //   const auth = useAuth0();
+  // const auth = useAuth0();
 
-  //   useEffect(() => {
-  //     setUser(auth.user);
-  //   },[auth.user])
+  // useEffect(() => {
+  //   setUser(auth.user);
+  // }, [auth.user]);
 
   return (
     <Routes>
@@ -111,7 +136,7 @@ export function AppRoute(props: AppRouteProps) {
       </Route> 
       */}
 
-      {/* <Route element={<RoleBasedDefaultRouting user={user}/>}> */}
+      {/* <Route element={<RoleBasedDefaultRouting user={user} />}> */}
       <Route path="/" element={<Signup />}></Route>
       {/* </Route> */}
 
@@ -120,20 +145,20 @@ export function AppRoute(props: AppRouteProps) {
       <Route path="comp-init-3" element={<RegPage4 />} />
       <Route path="comp-init-4" element={<RegPage5 />} />
 
-      {/* <Route element={<ProtectedRoute user={user} role={'comp_admin'}/>}> */}
+      {/* <Route element={<ProtectedRoute user={user} role={'comp_admin'} />}> */}
       <Route path="/company-admin" element={<CompanyAdmin />}>
-        <Route index element={<CAdashboard />} />
+        <Route index element={<Navigate to={'dashboard'} replace />} />
         <Route path="dashboard" element={<CAdashboard />} />
         <Route path="supply-Chain" element={<SupplyChain />} />
         <Route path="company" element={<Company />} />
         <Route path="reports" element={<CAReports />} />
         <Route path="settings" element={<CASettings />} />
       </Route>
-      {/* </Route>   */}
+      {/* </Route> */}
 
-      {/* <Route element={<ProtectedRoute user={user} role={'proc_mngr'}/>}> */}
+      {/* <Route element={<ProtectedRoute user={user} role={'proc_mngr'} />}> */}
       <Route path="/procurement-manager" element={<ProcurementManager />}>
-        <Route index element={<PDashboard />} />
+        <Route index element={<Navigate to={'dashboard'} replace />} />
         <Route path="dashboard" element={<PDashboard />} />
         <Route path="goodRequests" element={<PGoodRequests />} />
         <Route path="issues" element={<PIssues />} />
@@ -142,11 +167,11 @@ export function AppRoute(props: AppRouteProps) {
         <Route path="reports" element={<PReports />} />
         <Route path="settings" element={<PSettings />} />
       </Route>
-      {/* </Route>   */}
+      {/* </Route> */}
 
-      {/* <Route element={<ProtectedRoute user={user} role={'wh_mngr'}/>}> */}
+      {/* <Route element={<ProtectedRoute user={user} role={'wh_mngr'} />}> */}
       <Route path="/warehouse-manager" element={<WarehouseManager />}>
-        <Route index element={<WHMdashboard />} />
+        <Route index element={<Navigate to={'dashboard'} replace />} />
         <Route path="dashboard" element={<WHMdashboard />} />
         <Route path="inventory" element={<WHMinventory />} />
         <Route path="inventory/:id" element={<Table />} />
@@ -156,11 +181,11 @@ export function AppRoute(props: AppRouteProps) {
         <Route path="reports" element={<WHMReports />} />
         <Route path="settings" element={<WHMSettings />} />
       </Route>
-      {/* </Route>   */}
+      {/* </Route> */}
 
-      {/* <Route element={<ProtectedRoute user={user} role={'sh_mngr'}/>}> */}
+      {/* <Route element={<ProtectedRoute user={user} role={'sh_mngr'} />}> */}
       <Route path="/shop-manager" element={<ShopManager />}>
-        <Route index element={<SMdashboard />} />
+        <Route index element={<Navigate to={'dashboard'} replace />} />
         <Route path="dashboard" element={<SMdashboard />} />
         <Route path="inventory" element={<SMinventory />} />
         <Route path="orders" element={<SMOrders />} />
@@ -168,11 +193,11 @@ export function AppRoute(props: AppRouteProps) {
         <Route path="reports" element={<SMReports />} />
         <Route path="settings" element={<SMSettings />} />
       </Route>
-      {/* </Route>   */}
+      {/* </Route> */}
 
-      {/* <Route element={<ProtectedRoute user={user} role={'supl'}/>}> */}
+      {/* <Route element={<ProtectedRoute user={user} role={'supl'} />}> */}
       <Route path="/supplier" element={<Supplier />}>
-        <Route index element={<SupDashboard />} />
+        <Route index element={<Navigate to={'dashboard'} replace />} />
         <Route path="dashboard" element={<SupDashboard />} />
         <Route path="products" element={<SupProducts />} />
         <Route path="orders" element={<SupOrders />} />
@@ -181,7 +206,7 @@ export function AppRoute(props: AppRouteProps) {
         <Route path="reports" element={<SupReports />} />
         <Route path="settings" element={<SupSettings />} />
       </Route>
-      {/* </Route>   */}
+      {/* </Route> */}
       {/* Catch all route */}
       <Route path="*" element={<PageNotFound />} />
     </Routes>

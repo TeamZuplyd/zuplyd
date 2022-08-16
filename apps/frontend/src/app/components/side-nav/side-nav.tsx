@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 
 import { ChevronLeftIcon, CogIcon, LogoutIcon, ViewGridIcon, OfficeBuildingIcon, DocumentReportIcon, LinkIcon, TruckIcon, ArchiveIcon, CollectionIcon, DocumentTextIcon, QuestionMarkCircleIcon, ClipboardListIcon } from '@heroicons/react/outline';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export interface SideNavProps {
   username: string;
@@ -14,6 +15,14 @@ export function SideNav({ username, userNum }: SideNavProps) {
   const [selected, setSelected] = useState(() => 0);
   let providedOpts = coreData[userNum]['options'];
   let userRole = coreData[userNum]['userRole'];
+
+  const { logout } = useAuth0();
+
+  const handleLogout = () => {
+    logout({
+      returnTo: window.location.origin,
+    });
+  };
 
   return (
     <div className={`sideNav ${collapsed && 'collapsed'}`}>
@@ -48,7 +57,9 @@ export function SideNav({ username, userNum }: SideNavProps) {
         </Link>
         <div className="sideNav-option">
           <LogoutIcon className="sideNav-icon" />
-          <span className="optionName">Logout</span>
+          <span onClick={handleLogout} className="optionName">
+            Logout
+          </span>
         </div>
       </div>
       {/* Profile operations section - End  */}
