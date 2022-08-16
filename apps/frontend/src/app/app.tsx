@@ -16,7 +16,8 @@ import ProfileSetUp from './pages/procurement-manager/initialization/profileSetU
 
 import SignUp from './pages/home-page/signup';
 import LocationSetUp from './pages/procurement-manager/initialization/locationSetUp';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+// import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
 const queryClient = new QueryClient();
 
