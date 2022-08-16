@@ -113,7 +113,7 @@ export interface AppRouteProps {}
 
 // const fetchUserRole = (user: any) => {
 //   const email = user.email ? user.email : '';
-
+//   //these axios requests need to be configured correctly and best practices must be followed
 //   return axios.get('http://localhost:7000/api/user-mgmt/find/' + email, { responseType: 'json' });
 // };
 
