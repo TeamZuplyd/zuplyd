@@ -43,7 +43,7 @@ export function CategoryCardPM({ name, itemCount }: CategoryCardPMProps) {
         </CardActions>
       </Card>
 
-      <EditBtnModal openEditForm={openEditForm} handleEditFormClose={handleEditFormClose} textValue={name} textFieldValue={name} setTextFieldValue={setTextFieldValue} />
+      <EditBtnModal openEditForm={openEditForm} handleEditFormClose={handleEditFormClose} textValue={name} textFieldValue={textFieldValue} setTextFieldValue={setTextFieldValue} />
     </>
   );
 }
