@@ -35,22 +35,4 @@ export class ItemService {
     const deletedItem = await this.itemModel.findByIdAndRemove({ _id: id }).exec();
     return deletedItem;
   }
-
-  //item definition need to be in inventory
-  // async customSchemaGenaraterForItems(createdItem: Item): Promise<Schema>{
-  //     const singleItemSchema = new mongoose.Schema({
-  //         item_name: 'string',
-  //         company_id: 'string',
-  //         company_name: 'string'
-  //     }, {strict: false})
-
-  //     createdItem.attributes_array.forEach(element => {
-  //         let jsonObjForSchemaAdd = {};
-  //         jsonObjForSchemaAdd[element] = 'string';
-
-  //         singleItemSchema.add(jsonObjForSchemaAdd)
-  //     });
-  //     //console.log(singleItemSchema);
-  //     return singleItemSchema;
-  // }
 }
