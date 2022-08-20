@@ -16,6 +16,21 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead } from '@mui/material';
 import { orders } from '../../../data/orders';
+import SideOver from '../../components/side-over/side-over';
+import ItemSideOverPM from '../../components/item-side-over-pm/item-side-over-pm';
+// export const orders = [
+//   {
+//     item_code: 'I0001',
+//     name: 'Soap',
+//     brand: 'Dettol',
+//     quantity: 100,
+//     status: 'Pending',
+//     required_by: '2022-09-01',
+//     requested_date: '2022-08-01',
+//     requested_by: 'S0001',
+//     request: true,
+//   },
+// ];
 interface TablePaginationActionsProps {
   count: number;
   page: number;
@@ -61,9 +76,21 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-function items() {
+export interface ItemsProps {}
+
+function Items(props: ItemsProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const [rightSideNav, setrightSideNav] = React.useState(false);
+
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
+      return;
+    }
+
+    setrightSideNav(!rightSideNav);
+  };
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
@@ -77,57 +104,62 @@ function items() {
     setPage(0);
   };
 
+  const [selectedRow, setSelectedRow] = React.useState({});
+
   return (
-    <TableContainer component={Paper}>
-      <Table stickyHeader sx={{ minWidth: 500 }} aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
-            <TableCell component="th">Name </TableCell>
-            <TableCell component="th">Category</TableCell>
-            <TableCell component="th">Other Attritutes</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).map((order) => (
-            <TableRow key={order.item_code}>
-              <TableCell style={{}}>{order.name}</TableCell>
-              <TableCell style={{}}>{order.brand}</TableCell>
-              <TableCell style={{}}>
-                <Button variant="contained" color="success" disabled={order.request}>
-                  Fulfill
-                </Button>
-              </TableCell>
+    <>
+      <ItemSideOverPM toggle={rightSideNav} toggleDrawer={toggleDrawer} data={selectedRow} />
+      <TableContainer component={Paper}>
+        <Table stickyHeader sx={{ minWidth: 500 }} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              <TableCell component="th">Name </TableCell>
+              <TableCell component="th">Category</TableCell>
+              <TableCell component="th">Other Attritutes</TableCell>
             </TableRow>
-          ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).map((order) => (
+              <TableRow key={order.item_code} onClick={() => setSelectedRow(order)}>
+                <TableCell style={{}}>{order.name}</TableCell>
+                <TableCell style={{}}>{order.brand}</TableCell>
+                <TableCell style={{}}>
+                  <Button variant="contained" onClick={toggleDrawer(true)}>
+                    Show More
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={10}
+                count={orders.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    'aria-label': 'rows per page',
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={10}
-              count={orders.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 
-export default items;
+export default Items;
