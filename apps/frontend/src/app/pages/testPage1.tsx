@@ -9,7 +9,7 @@ function testPage1() {
   return (
     <div>
       {/* <CompanyAdminCard /> */}
-      <ItemCard warehouse="Warehouse A" quantity={200} item="Biscuit" />
+      {/* <ItemCard warehouse="Warehouse A" quantity={200} item="Biscuit" /> */}
       <CustomButtonGroup btnNames={['Button 1', 'Button 2', 'Button 3']} />
     </div>
   );
