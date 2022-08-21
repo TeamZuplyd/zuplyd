@@ -190,6 +190,7 @@ export function AppRoute(props: AppRouteProps) {
         <Route index element={<Navigate to={'dashboard'} replace />} />
         <Route path="dashboard" element={<SMdashboard />} />
         <Route path="inventory" element={<SMinventory />} />
+        <Route path="inventory/:id" element={<Table />} />
         <Route path="orders" element={<SMOrders />} />
         <Route path="issues" element={<SMissues />} />
         <Route path="reports" element={<SMReports />} />
