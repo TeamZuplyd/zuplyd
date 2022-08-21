@@ -60,7 +60,7 @@ export function ItemCard({ urgencyLevel = 'High', item, warehouse, quantity, req
                 <Typography className="primaryText">{requiredBy}</Typography>
               </Grid>
               <Grid item xs={7}>
-                {assigned && <Button sx={{ p: 0 }}>Send Quotations</Button>}
+                {assigned && <Button sx={{ p: 0 }}>Request Quotations</Button>}
               </Grid>
               <Grid item xs={5}>
                 {(assigned && <Button sx={{ p: 0 }}>Unassign</Button>) || (!assigned && <Button sx={{ p: 0 }}>Assign to me</Button>)}

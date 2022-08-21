@@ -1,11 +1,11 @@
 export const requestedQuotations = [
   {
-    id: 1,
+    item_code: 1,
     item: 'Biscuits',
     required_by: '2022-10-01',
   },
   {
-    id: 2,
+    item_code: 2,
     item: 'Soap',
     required_by: '2022-10-15',
   },
@@ -13,7 +13,7 @@ export const requestedQuotations = [
 
 export const receivedQuotations = [
   {
-    id: 1,
+    item_code: 1,
     item: 'Shampoo',
     brand: 'Lóreal',
     required_by: '2022-10-01',
@@ -22,19 +22,19 @@ export const receivedQuotations = [
     supplier: 'A K Suppliers',
   },
   {
-    id: 2,
-    item: 'Noodles',
-    brand: 'Prima',
-    required_by: '2022-10-15',
+    item_code: 2,
+    item: 'Shampoo',
+    brand: 'Lóreal',
+    required_by: '2022-10-01',
     quantity: 100,
-    unit_price: 80,
+    unit_price: 800,
     supplier: 'J M Suppliers',
   },
 ];
 
 export const placedPO = [
   {
-    id: 1,
+    item_code: 1,
     item: 'Dhal',
     brand: 'Arpico',
     required_by: '2022-10-01',
@@ -44,7 +44,7 @@ export const placedPO = [
     placed_date: '2022-08-20',
   },
   {
-    id: 2,
+    item_code: 2,
     item: 'Chocolate',
     brand: 'Cadbury',
     required_by: '2022-10-15',
@@ -56,7 +56,7 @@ export const placedPO = [
 ];
 export const acceptedPO = [
   {
-    id: 1,
+    item_code: 1,
     item: 'Dhal',
     brand: 'Arpico',
     required_by: '2022-10-01',
@@ -68,7 +68,7 @@ export const acceptedPO = [
     status: 'Pending Delivery',
   },
   {
-    id: 2,
+    item_code: 2,
     item: 'Chocolate',
     brand: 'Cadbury',
     required_by: '2022-10-15',
