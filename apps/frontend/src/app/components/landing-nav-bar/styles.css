@@ -1,0 +1,52 @@
+.landbtn{
+    padding: 6px 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.dark{
+    background-color: #212B36;
+    color: #fff;
+}
+
+.orange{
+    background-color: #FA541C;
+    color: #fff;
+}
+
+.navlink{
+    font-size: 16px;
+    line-height: 24px;
+    color: #637381;
+    margin-right: 18px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.navlink:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FA541C;
+    transform-origin: bottom center;
+    transition: transform 0.25s ease-out;
+}
+
+.navlink:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom center;
+}
+
+.navlink:hover {
+    color: #212B36;
+}
+
+.highlight{
+    color: #FA541C;
+}

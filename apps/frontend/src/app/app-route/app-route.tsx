@@ -1,5 +1,6 @@
 /* eslint-disable-next-line */
 import Signup from '../pages/home-page/signup';
+import LandingPage from '../pages/landing-page/landing-page';
 
 import RegPage2 from '../pages/company-admin/regPage2';
 import RegPage3 from '../pages/company-admin/regPage3';
@@ -138,6 +139,7 @@ export function AppRoute(props: AppRouteProps) {
 
       {/* <Route element={<RoleBasedDefaultRouting user={user} />}> */}
       <Route path="/" element={<Signup />}></Route>
+      <Route path="/landing" element={<LandingPage />}></Route>
       {/* </Route> */}
 
       <Route path="comp-init-1" element={<RegPage2 />} />
@@ -188,6 +190,7 @@ export function AppRoute(props: AppRouteProps) {
         <Route index element={<Navigate to={'dashboard'} replace />} />
         <Route path="dashboard" element={<SMdashboard />} />
         <Route path="inventory" element={<SMinventory />} />
+        <Route path="inventory/:id" element={<Table />} />
         <Route path="orders" element={<SMOrders />} />
         <Route path="issues" element={<SMissues />} />
         <Route path="reports" element={<SMReports />} />
