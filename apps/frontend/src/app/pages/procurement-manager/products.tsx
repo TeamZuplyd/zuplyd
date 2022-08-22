@@ -46,31 +46,34 @@ function products() {
     <>
       <Header title={'Products'} />
 
-      <Box sx={{ width: '100%', paddingLeft: '2rem' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
-            <Tab label="Items" {...a11yProps(0)} />
-            <Tab label="Add Category" {...a11yProps(1)} />
-            <Tab label="Add Item" {...a11yProps(2)} />
-          </Tabs>
+      <div className="content">
+        <Box sx={{ width: '100%', paddingLeft: '2rem' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
+              <Tab label="Items" {...a11yProps(0)} />
+              <Tab label="Add Category" {...a11yProps(1)} />
+              <Tab label="Add Item" {...a11yProps(2)} />
+            </Tabs>
+          </Box>
+
+          <TabPanel value={value} index={0}>
+            {/* <Item /> */}
+            <AddItem />
+          </TabPanel>
+
+          <TabPanel value={value} index={1}>
+            <AddCategory />
+          </TabPanel>
+
+          <TabPanel value={value} index={2}>
+            <AddItem />
+          </TabPanel>
+
+          <div className="content">
+            <Grid container sx={{}} rowGap={0}></Grid>
+          </div>
         </Box>
-
-        <TabPanel value={value} index={0}>
-          <Item />
-        </TabPanel>
-
-        <TabPanel value={value} index={1}>
-          <AddCategory />
-        </TabPanel>
-
-        <TabPanel value={value} index={2}>
-          <AddItem />
-        </TabPanel>
-
-        <div className="content">
-          <Grid container sx={{}} rowGap={0}></Grid>
-        </div>
-      </Box>
+      </div>
     </>
   );
 }
