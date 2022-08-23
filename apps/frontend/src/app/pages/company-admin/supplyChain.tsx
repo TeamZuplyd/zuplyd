@@ -65,7 +65,7 @@ export default function SupplyChain() {
   return (
     <>
       <Header title={'Supply Chain'} />
-      <Box sx={{ width: '100%', paddingLeft: '2rem' }}>
+      <Box sx={{ width: '100%', paddingLeft: '2rem' }} className='content'>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
             value={value}
@@ -91,6 +91,7 @@ export default function SupplyChain() {
                   telephoneNumber={warehouse['Manager Info']['Contact No']}
                   warehouse={warehouse['Warehouse Info']['Warehouse ID']}
                   data={warehouse}
+                  title='Warehouse'
                 />
               </Grid>
             ))}
@@ -113,6 +114,7 @@ export default function SupplyChain() {
                   telephoneNumber={shop['Manager Info']['Contact No']}
                   warehouse={shop['Shop Info']['Shop ID']}
                   data={shop}
+                  title='Shop'
                 />
               </Grid>
             ))}
