@@ -49,7 +49,7 @@ export function Header({ title }: HeaderProps) {
               {title}
             </Typography> */}
 
-            <Typography variant="h4" noWrap component="div" sx={{ flexGrow: 1, alignSelf: 'center' }} color="#4B5563">
+            <Typography variant="h4" noWrap component="div" sx={{ flexGrow: 1, alignSelf: 'center', fontWeight: 500, fontSize: '35px', fontStyle: 'Poppins', color: '#1F2937' }} color="#4B5563">
               {title}
             </Typography>
 

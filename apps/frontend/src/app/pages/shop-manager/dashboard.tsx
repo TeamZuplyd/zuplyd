@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import Header from '../../components/header/header';
 
 function dashboard() {
-  return (
-    <div>dashboard</div>
-  )
+  return <Header title={'Dashboard'} />;
 }
 
-export default dashboard
+export default dashboard;

@@ -59,6 +59,7 @@ export function ContactDetailsFormComponent({ email, phoneNumbers }: ContactDeta
           maxHeight: '380px',
           mt: 3,
         }}
+        style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}
       >
         <CardContent>
           <Grid container rowGap={2} columnGap={2.5}>

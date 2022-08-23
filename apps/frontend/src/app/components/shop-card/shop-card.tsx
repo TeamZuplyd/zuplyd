@@ -18,7 +18,7 @@ export interface ShopCardProps {
 export function ShopCard({ name, telephoneNumber, warehouse, data }: ShopCardProps) {
   return (
     <>
-      <Card sx={{ minWidth: 300, width: 300, maxHeight: 141, height: 141, ml: 2 }} style={{ cursor: 'pointer' }}>
+      <Card sx={{ minWidth: 300, width: 300, maxHeight: 141, height: 141, ml: 2 }} style={{ cursor: 'pointer', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
         <CardContent sx={{ pl: 3 }}>
           <Typography variant="h6" sx={{ mb: 1 }}>
             {warehouse}

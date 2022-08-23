@@ -15,37 +15,21 @@ export interface CompanyAdminCardProps {
   data: any;
 }
 
-export function CompanyAdminCard({
-  name,
-  telephoneNumber,
-  warehouse,
-  data,
-}: CompanyAdminCardProps) {
+export function CompanyAdminCard({ name, telephoneNumber, warehouse, data }: CompanyAdminCardProps) {
   const [rightSideNav, setrightSideNav] = React.useState(false);
 
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
+      return;
+    }
 
-      setrightSideNav(!rightSideNav);
-    };
+    setrightSideNav(!rightSideNav);
+  };
 
   return (
     <>
-      <SideOver
-        toggle={rightSideNav}
-        toggleDrawer={toggleDrawer}
-        data={data}
-      />
-      <Card
-        sx={{ minWidth: 300, width: 300, maxHeight: 141, height: 141, ml: 2 }}
-      >
+      <SideOver toggle={rightSideNav} toggleDrawer={toggleDrawer} data={data} />
+      <Card sx={{ minWidth: 300, width: 300, maxHeight: 141, height: 141, ml: 2 }} style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
         <CardContent sx={{ pl: 3 }}>
           <Typography variant="h6" sx={{ mb: 1 }}>
             {warehouse}
@@ -53,18 +37,8 @@ export function CompanyAdminCard({
 
           <Grid container rowGap={2}>
             <Grid item xs={1.5}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 sideNav-icon"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                style={{ height: 18 }}
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clipRule="evenodd"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sideNav-icon" viewBox="0 0 20 20" fill="currentColor" style={{ height: 18 }}>
+                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
               </svg>
             </Grid>
 
@@ -75,13 +49,7 @@ export function CompanyAdminCard({
 
           <Grid container sx={{ mt: 1 }}>
             <Grid item xs={1.5}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 sideNav-icon"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                style={{ height: 18, marginRight: 10 }}
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sideNav-icon" viewBox="0 0 20 20" fill="currentColor" style={{ height: 18, marginRight: 10 }}>
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
             </Grid>
@@ -93,11 +61,7 @@ export function CompanyAdminCard({
         </CardContent>
 
         <CardActions>
-          <Button
-            size="small"
-            style={{ position: 'relative', left: 200, bottom: 50 }}
-            onClick={toggleDrawer(true)}
-          >
+          <Button size="small" style={{ position: 'relative', left: 200, bottom: 50 }} onClick={toggleDrawer(true)}>
             More Info
           </Button>
         </CardActions>
