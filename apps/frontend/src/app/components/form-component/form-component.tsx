@@ -43,7 +43,7 @@ export function FormComponent({ companyName, companyAddress }: FormComponentProp
 
   return (
     <>
-      <Card sx={{ width: '899px', maxWidth: '899px', height: '280px', maxHeight: '280px' }} style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+      <Card sx={{ width: '899px', maxWidth: '899px', height: '300px', maxHeight: '300px', p: 2 }} style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
         <CardContent>
           <Grid container rowGap={2} columnGap={2.5}>
             <Grid item xs={10}>
