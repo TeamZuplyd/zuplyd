@@ -57,8 +57,7 @@ function products() {
           </Box>
 
           <TabPanel value={value} index={0}>
-            {/* <Item /> */}
-            <AddItem />
+            <Item />
           </TabPanel>
 
           <TabPanel value={value} index={1}>

@@ -15,7 +15,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead } from '@mui/material';
-import { orders } from '../../../data/orders';
+import { itemInfo } from '../../../data/itemInfo';
 import SideOver from '../../components/side-over/side-over';
 import ItemSideOverPM from '../../components/item-side-over-pm/item-side-over-pm';
 // export const orders = [
@@ -93,7 +93,7 @@ function Items(props: ItemsProps) {
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - itemInfo.length) : 0;
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
@@ -119,10 +119,10 @@ function Items(props: ItemsProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).map((order) => (
-              <TableRow key={order.item_code} onClick={() => setSelectedRow(order)}>
-                <TableCell style={{}}>{order.name}</TableCell>
-                <TableCell style={{}}>{order.brand}</TableCell>
+            {(rowsPerPage > 0 ? itemInfo.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : itemInfo).map((item) => (
+              <TableRow key={item.id} onClick={() => setSelectedRow(item)}>
+                <TableCell style={{}}>{item.name}</TableCell>
+                <TableCell style={{}}>{item.brand}</TableCell>
                 <TableCell style={{}}>
                   <Button variant="contained" onClick={toggleDrawer(true)}>
                     Show More
@@ -141,7 +141,7 @@ function Items(props: ItemsProps) {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={10}
-                count={orders.length}
+                count={itemInfo.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

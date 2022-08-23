@@ -21,12 +21,30 @@ export function ItemSideOverPM({ toggle, toggleDrawer, data, index }: ItemSideOv
             {Object.keys(data).map((key) => {
               return (
                 <>
-                  <Grid item xs={6}>
-                    {key}
-                  </Grid>
-                  <Grid item xs={6}>
-                    {data[key]}
-                  </Grid>
+                  {key != 'attributes' ? (
+                    <>
+                      <Grid item xs={6}>
+                        {key}
+                      </Grid>
+
+                      <Grid item xs={6}>
+                        {data[key]}
+                      </Grid>
+                    </>
+                  ) : (
+                    <>
+                      <Typography variant="h6" sx={{ mt: 5, pl: 3 }}>
+                        Other Attributes
+                      </Typography>
+                      {data[key].map((data2) => {
+                        return (
+                          <Grid item xs={12}>
+                            {data2}
+                          </Grid>
+                        );
+                      })}
+                    </>
+                  )}
                 </>
               );
             })}

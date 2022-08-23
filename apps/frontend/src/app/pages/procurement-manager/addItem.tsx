@@ -123,7 +123,7 @@ function addItem() {
                   }}
                   id="outlined-basic"
                   value={minReleaseQTextFieldValue}
-                  label="Min release quantity"
+                  label="Min release quantity (in kg)"
                   variant="outlined"
                   size="small"
                   sx={{ mt: 1, width: '340px' }}
@@ -258,9 +258,9 @@ function SelectLabels({ categoryTextFieldValue, setCategoryTextFieldValue }: Sel
             setCategoryTextFieldValue(e.target.value);
           }}
         >
-          <MenuItem value={10}>Category1</MenuItem>
-          <MenuItem value={20}>Category2</MenuItem>
-          <MenuItem value={30}>Category3</MenuItem>
+          <MenuItem value={'Category1'}>Category1</MenuItem>
+          <MenuItem value={'Category2'}>Category2</MenuItem>
+          <MenuItem value={'Category3'}>Category3</MenuItem>
         </Select>
       </FormControl>
     </div>
@@ -293,16 +293,10 @@ type ContainerModalProps = {
 };
 
 const ContainerModal = ({ open, handleClose, attributeList, selected, handleClick, unit, setUnit }: ContainerModalProps) => {
-  // const [selected, setSelected] = useState(-1);
-
-  // const handleClick = (index: number) => {
-  //   setSelected(index);
-  // };
-
   return (
     <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={style}>
-        <Typography variant="h6" textAlign="center">
+        <Typography variant="h6" textAlign="center" sx={{ mb: 5 }}>
           Select the attribute of output rule and the unit of it
         </Typography>
         <form>
@@ -325,10 +319,6 @@ const ContainerModal = ({ open, handleClose, attributeList, selected, handleClic
                   ) : (
                     <Grid item xs={4}></Grid>
                   )}
-
-                  {/* <Grid item xs={4}>
-                    <UnitDropDown unit={unit} setUnit={setUnit} />
-                  </Grid> */}
                 </Grid>
               </Card>
             </>

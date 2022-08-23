@@ -5,9 +5,9 @@ import { truncate } from 'fs/promises';
 import CategoryCardPM from '../../components/category-card-pm/category-card-pm';
 
 const allCategories = [
-  ['piti', '2'],
-  ['parippu', '3'],
-  ['bath', '5'],
+  ['Food', '2'],
+  ['Drinks', '3'],
+  ['Ingredients', '5'],
 ];
 
 function addCategory() {
