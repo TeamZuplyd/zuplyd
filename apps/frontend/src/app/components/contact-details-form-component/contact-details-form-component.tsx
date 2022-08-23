@@ -56,14 +56,16 @@ export function ContactDetailsFormComponent({ email, phoneNumbers }: ContactDeta
           width: '899px',
           maxWidth: '899px',
           height: 'fit-content',
-          maxHeight: '380px',
+          maxHeight: '480px',
           mt: 3,
+          p: 2,
         }}
+        style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}
       >
         <CardContent>
           <Grid container rowGap={2} columnGap={2.5}>
             <Grid item xs={10.3}>
-              <Typography variant="h5" component="div" sx={{ fontWeight: 700 }} style={{ color: '#1f2937' }}>
+              <Typography variant="h5" component="div" sx={{ fontWeight: 700, mb: 5 }} style={{ color: '#1f2937' }}>
                 Conatct Details
               </Typography>
             </Grid>
@@ -94,7 +96,7 @@ export function ContactDetailsFormComponent({ email, phoneNumbers }: ContactDeta
             {allNumbers.map((no, index) => {
               return (
                 <Grid item xs={2.5}>
-                  <TextField id="outlined-basic" value={no} onChange={addPhoneNumber(index)} disabled={inputState} label={'Conatct #' + count++} variant="outlined" size="small" sx={{ mt: 4, width: '160px' }} />
+                  <TextField id="outlined-basic" value={no} onChange={addPhoneNumber(index)} disabled={inputState} label={'Conatct #' + count++} variant="outlined" size="small" sx={{ mt: 1, width: '160px' }} />
                 </Grid>
               );
             })}
@@ -102,7 +104,7 @@ export function ContactDetailsFormComponent({ email, phoneNumbers }: ContactDeta
             {newPhoneNumber.map((no, index) => {
               return (
                 <Grid item xs={2.5}>
-                  <TextField id="outlined-basic" value={no} onChange={addNewPhoneNumber(index)} disabled={inputState} label={'Conatct #' + count++} variant="outlined" size="small" sx={{ mt: 4, mb: 5, width: '160px' }} />
+                  <TextField id="outlined-basic" value={no} onChange={addNewPhoneNumber(index)} disabled={inputState} label={'Conatct #' + count++} variant="outlined" size="small" sx={{ mt: 1, mb: 1, width: '160px' }} />
                 </Grid>
               );
             })}
@@ -112,7 +114,7 @@ export function ContactDetailsFormComponent({ email, phoneNumbers }: ContactDeta
                 variant="contained"
                 sx={{
                   width: 120,
-                  mt: 4,
+                  mt: 1,
                   mb: 5,
                   backgroundColor: 'transparent',
                   color: 'blue',
@@ -138,7 +140,7 @@ export function ContactDetailsFormComponent({ email, phoneNumbers }: ContactDeta
                 label="Email"
                 variant="outlined"
                 size="small"
-                sx={{ mb: 5, width: '350px' }}
+                sx={{ mb: 5, mt: 3, width: '350px' }}
               />
             </Grid>
           </Grid>

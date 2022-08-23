@@ -16,7 +16,9 @@ export interface CompanyAdminCardProps {
   title: string;
 }
 
-export function CompanyAdminCard({ name, telephoneNumber, warehouse, data, title }: CompanyAdminCardProps) {
+
+export function CompanyAdminCard({ name, telephoneNumber, warehouse, data }: CompanyAdminCardProps) {
+
   const [rightSideNav, setrightSideNav] = React.useState(false);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -37,8 +39,10 @@ export function CompanyAdminCard({ name, telephoneNumber, warehouse, data, title
   return (
     <>
       <SideOver toggle={rightSideNav} toggleDrawer={toggleDrawer} data={data} />
-      <Card sx={{ minWidth: 300, width: 300, ml: 2 }}>
-        <CardContent sx={{ pl: 3, pr: 3 }}>
+
+      <Card sx={{ minWidth: 300, width: 300, maxHeight: 141, height: 141, ml: 2 }} style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+        <CardContent sx={{ pl: 3 }}>
+
           <Typography variant="h6" sx={{ mb: 1 }}>
             {warehouse}
           </Typography>
@@ -68,8 +72,10 @@ export function CompanyAdminCard({ name, telephoneNumber, warehouse, data, title
           </Grid>
         </CardContent>
 
-        <CardActions sx={{ pl: 3, pr: 3 }}>
-          <Button size="small" onClick={toggleDrawer(true)}>
+
+        <CardActions>
+          <Button size="small" style={{ position: 'relative', left: 200, bottom: 50 }} onClick={toggleDrawer(true)}>
+
             More Info
           </Button>
           <Button size="small" color="success">

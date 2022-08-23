@@ -21,6 +21,7 @@ export function ItemCard({ urgencyLevel = 'High', item, warehouse, quantity, req
         maxHeight: 200,
         height: 200,
       }}
+      style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}
     >
       <CardContent
         sx={{
