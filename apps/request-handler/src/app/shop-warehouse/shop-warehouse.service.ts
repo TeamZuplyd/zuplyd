@@ -13,6 +13,11 @@ export class ShopWarehouseService {
     return createdRequest;
   }
 
+  async createMultipleRequests(creatShopWarehouseReqsArr: CreatShopWarehouseReqDto[]): Promise<any> {
+    const createdRequest = await this.shopWarehouseReqModel.insertMany(creatShopWarehouseReqsArr);
+    return createdRequest;
+  }
+
   async findAllByShopID(shop_id: string): Promise<ShopWarehouseReq[]> {
     return this.shopWarehouseReqModel.find({ requested_by: shop_id }).exec();
   }
