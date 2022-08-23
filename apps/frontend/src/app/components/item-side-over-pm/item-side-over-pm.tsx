@@ -21,7 +21,7 @@ export function ItemSideOverPM({ toggle, toggleDrawer, data, index }: ItemSideOv
             {Object.keys(data).map((key) => {
               return (
                 <>
-                  {key != 'attributes' ? (
+                  {key != 'attributes_array' ? (
                     <>
                       <Grid item xs={6}>
                         {key}

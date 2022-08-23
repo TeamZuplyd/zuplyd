@@ -7,6 +7,11 @@ export const protobufPackage = 'procurement';
 /** Item */
 export interface Item {
   item_name: string;
+  category_name: string;
+  brand_name: string;
+  min_release_quantity: number;
+  output_rule: string;
+  output_rule_unit: string;
   company_id: string;
   company_name: string;
   attributes_array: string[];
@@ -15,6 +20,11 @@ export interface Item {
 export interface ItemWithID {
   _id: string;
   item_name: string;
+  category_name: string;
+  brand_name: string;
+  min_release_quantity: number;
+  output_rule: string;
+  output_rule_unit: string;
   company_id: string;
   company_name: string;
   attributes_array: string[];

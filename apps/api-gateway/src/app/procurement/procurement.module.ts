@@ -11,7 +11,7 @@ import { ITEM_SERVICE_NAME, PROCUREMENT_PACKAGE_NAME } from './procurement.pb';
         name: ITEM_SERVICE_NAME,
         transport: Transport.GRPC,
         options: {
-          url: '0.0.0.0:50051',
+          url: '0.0.0.0:50052',
           package: PROCUREMENT_PACKAGE_NAME,
           protoPath: 'node_modules\\zuplyd-proto\\proto\\procurement.proto',
           loader: { keepCase: true },
