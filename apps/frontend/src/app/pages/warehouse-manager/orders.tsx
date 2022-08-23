@@ -3,7 +3,9 @@ import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardC
 import Header from '../../components/header/header';
 import OrderTable from '../../components/order-table/order-table';
 import PMOrderTable from '../../components/pmorder-table/pmorder-table';
-import { orders as data } from '../../../data/orders';
+// import { orders as data } from '../../../data/orders';
+import axios from 'axios';
+import React from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -34,7 +36,21 @@ function a11yProps(index: number) {
 
 function orders() {
   const [value, setValue] = useState(0);
-  const [orderData, setOrderData] = useState(data);
+  const [orderData, setOrderData] = useState<any>([]);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const getRequestInfo = () => {
+    axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllDev').then((res) => {
+      setOrderData(res.data);
+    });
+  };
+
+  React.useEffect(() => {
+    getRequestInfo();
+  }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -44,10 +60,6 @@ function orders() {
     console.log(e.target.value);
     console.log(item);
   };
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   return (
     <>
       <Header title={'Orders'} />
@@ -70,7 +82,7 @@ function orders() {
             <PMOrderTable orders={orderData} />
           </TabPanel>
 
-          {/* History */} 
+          {/* History */}
           <TabPanel value={value} index={2}></TabPanel>
         </Box>
       </div>
