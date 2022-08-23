@@ -12,6 +12,11 @@ export class ShopWarehouseController {
     return this.shopWarehouseReqService.createRequest(creatShopWarehouseReqDto);
   }
 
+  @Post('createMultipleRequests')
+  createMultipleRequests(@Body() creatShopWarehouseReqsArr: CreatShopWarehouseReqDto[]) {
+    return this.shopWarehouseReqService.createMultipleRequests(creatShopWarehouseReqsArr);
+  }
+
   @Get('findAllByShopID/:id')
   findAllByShopID(@Param('id') id: string) {
     return this.shopWarehouseReqService.findAllByShopID(id);
