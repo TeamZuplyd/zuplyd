@@ -1,8 +1,26 @@
-.phoneNumberSpan{
-    color: #292929;
-    background-color: #b9b9b9;
-    padding: 3%;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-top: 50px;
+.phoneNumberSpan {
+  color: #292929;
+  background-color: #b9b9b9;
+  padding: 3%;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 50px;
+}
+
+.itemAttrSpan {
+  color: #292929;
+  background-color: #d8d8d8;
+  padding-top: 1%;
+  padding-bottom: 0.3%;
+  padding-left: 2%;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 50px;
+  transition: 0.2s ease-in;
+}
+
+.itemAttrSpan:hover {
+  color: #292929;
+  background-color: #c2c1c1;
+  transition: 0.2s ease-in;
 }
