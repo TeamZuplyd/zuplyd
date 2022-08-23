@@ -48,7 +48,7 @@ export default function SupplyChain() {
   return (
     <>
       <Header title={'Supply Chain'} />
-      <Box sx={{ width: '100%', paddingLeft: '2rem' }} className='content'>
+      <Box sx={{ width: '100%', paddingLeft: '2rem' }} className="content">
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
             <Tab label="Warehouses" {...a11yProps(0)} />
@@ -63,9 +63,7 @@ export default function SupplyChain() {
           <Grid container rowGap={2} columnGap={2}>
             {warehouses.map((warehouse) => (
               <Grid item>
-
-                <CompanyAdminCard name={warehouse['Manager Info']['Name']} telephoneNumber={warehouse['Manager Info']['Contact No']} warehouse={warehouse['Warehouse Info']['Warehouse ID']} data={warehouse} />
-
+                <CompanyAdminCard name={warehouse['Manager Info']['Name']} telephoneNumber={warehouse['Manager Info']['Contact No']} warehouse={warehouse['Warehouse Info']['Warehouse ID']} data={warehouse} title="Warehouse" />
               </Grid>
             ))}
           </Grid>
@@ -78,10 +76,7 @@ export default function SupplyChain() {
           <Grid container rowGap={2} columnGap={2}>
             {shops.map((shop) => (
               <Grid item>
-
-                <CompanyAdminCard name={shop['Manager Info']['Name']} telephoneNumber={shop['Manager Info']['Contact No']} warehouse={shop['Shop Info']['Shop ID']} data={shop} />
-
-
+                <CompanyAdminCard name={shop['Manager Info']['Name']} telephoneNumber={shop['Manager Info']['Contact No']} warehouse={shop['Shop Info']['Shop ID']} data={shop} title="Shop" />
               </Grid>
             ))}
           </Grid>
@@ -169,7 +164,7 @@ type PMCardProps = {
 };
 const PMCard = ({ name, telephoneNumber, email }: PMCardProps) => {
   return (
-    <Card sx={{ minWidth: 300, width: 300, maxHeight: 141, height: 141, ml: 2 }} style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+    <Card sx={{ minWidth: 300, width: 300, maxHeight: 141, height: 141, ml: 2 }}>
       <CardContent sx={{ pl: 3 }}>
         <Typography variant="h6" sx={{ mb: 1 }}>
           {name}
