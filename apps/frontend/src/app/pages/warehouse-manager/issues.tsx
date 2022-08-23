@@ -51,19 +51,21 @@ function issues() {
       <Header title={'Issue'} />
 
       <div className="content">
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Raise an issue" {...a11yProps(0)} />
-            <Tab label="Sent issues" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          <IssueForm />
-        </TabPanel>
+        <Box sx={{ width: '100%', paddingLeft: '2rem' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+              <Tab label="Raise an issue" {...a11yProps(0)} />
+              <Tab label="Sent issues" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <IssueForm />
+          </TabPanel>
 
-        <TabPanel value={value} index={1}>
-          <IssueTable />
-        </TabPanel>
+          <TabPanel value={value} index={1}>
+            <IssueTable />
+          </TabPanel>
+        </Box>
       </div>
     </>
   );

@@ -63,7 +63,7 @@ function goodRequests() {
                       <ItemCard key={goodRequest.id} item={goodRequest.item} quantity={goodRequest.quantity} urgencyLevel={goodRequest.urgencyLevel} requiredBy={goodRequest.requiredBy} assigned={goodRequest.assigned} warehouse={goodRequest.warehouse} />
                     </Grid>
                   );
-                })}              
+                })}
             </Grid>
           </TabPanel>
 
