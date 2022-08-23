@@ -59,6 +59,7 @@ import Table from '../pages/warehouse-manager/table';
 import { useQuery } from 'react-query';
 
 import axios from 'axios';
+import SignupButton from '../components/signup-button/signup-button';
 
 export interface AppRouteProps {}
 
@@ -146,6 +147,7 @@ export function AppRoute(props: AppRouteProps) {
       <Route path="comp-init-2" element={<RegPage3 />} />
       <Route path="comp-init-3" element={<RegPage4 />} />
       <Route path="comp-init-4" element={<RegPage5 />} />
+      <Route path="signup" element={<SignupButton />} />
 
       {/* <Route element={<ProtectedRoute user={user} role={'comp_admin'} />}> */}
       <Route path="/company-admin" element={<CompanyAdmin />}>
