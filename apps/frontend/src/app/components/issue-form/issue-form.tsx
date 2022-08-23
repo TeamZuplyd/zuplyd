@@ -26,18 +26,18 @@ export function IssueForm(props: IssueFormProps) {
 
   return (
     <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '70vh' }}>
-      <Card sx={{ width: '400px', maxWidth: '400px', height: '450px', maxHeight: '450px', justifyContent: 'center', alignItems: 'center' }}>
+      <Card sx={{ width: '400px', maxWidth: '400px', height: '480px', maxHeight: '480px', justifyContent: 'center', alignItems: 'center', p: 2 }}>
         <CardContent>
-          <Grid container rowGap={2} columnGap={2.5}>
-            <Grid item xs={10}>
+          <Grid container xs={12} rowGap={2} columnGap={2.5}>
+            <Grid item xs={12}>
               <Typography variant="h5" component="div" sx={{ fontWeight: 700, textAlign: 'center' }} style={{ color: '#1f2937' }}>
                 Raise an issue
               </Typography>
             </Grid>
           </Grid>
 
-          <Grid container rowGap={2} columnGap={4}>
-            <Grid item xs={7}>
+          <Grid container xs={12} rowGap={2} columnGap={4}>
+            <Grid item xs={12}>
               <TextField
                 onChange={(e) => {
                   setTitleName(e.target.value);
@@ -47,11 +47,11 @@ export function IssueForm(props: IssueFormProps) {
                 label="Title"
                 variant="outlined"
                 size="small"
-                sx={{ mt: 4, width: '340px' }}
+                sx={{ mt: 4, width: '100%' }}
               />
             </Grid>
 
-            <Grid item xs={7}>
+            <Grid item xs={12}>
               <TextField
                 onChange={(e) => {
                   setBatchNumber(e.target.value);
@@ -61,11 +61,11 @@ export function IssueForm(props: IssueFormProps) {
                 label="Batch number"
                 variant="outlined"
                 size="small"
-                sx={{ mt: 2, width: '340px' }}
+                sx={{ mt: 2, width: '100%' }}
               />
             </Grid>
 
-            <Grid item xs={7} sx={{ mb: 3 }}>
+            <Grid item xs={12} sx={{ mb: 3 }}>
               <TextField
                 onChange={(e) => {
                   setDesc(e.target.value);
@@ -76,7 +76,7 @@ export function IssueForm(props: IssueFormProps) {
                 variant="outlined"
                 rows={5}
                 multiline
-                sx={{ mt: 2, width: '340px' }}
+                sx={{ mt: 2, width: '100%' }}
               />
             </Grid>
           </Grid>
