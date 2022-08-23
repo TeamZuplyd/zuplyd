@@ -4,56 +4,66 @@ import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { useFormik } from 'formik';
+import { useQuery, useMutation } from 'react-query';
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import axios from 'axios';
 
-const postData = async (values: any) => {
-  //   const body = {
-  //     step: 1,
-  //     comp_id: null,
-  //     comp_data: {
-  //       name: 'EzPz PVT Ltd.',
-  //       address: 'No 25, Galle Road, Colombo 07',
-  //       contact_nums: ['0123456789', '0112345678'],
-  //     },
-  //   };
-  let body = {
-    step: 1,
-    comp_id: null,
-    comp_data: values,
-  };
-  body.comp_data.contact_nums = ['0123456789', '0112345678'];
+// TODO: get comp id by email, can be null
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  };
+const postData = {
+  step: 1,
+  comp_id: null,
+  comp_data: null,
+};
 
-  const res = await fetch('http://localhost:3333/api/companies/register/', requestOptions);
-  const ret = await res.json();
-  return ret;
+type formValues = {
+  company_name: string;
+  address: string;
+  contactNums: [''];
+};
+
+interface comp_data {
+  inputValues: any;
+  numbers: any;
+}
+
+const createNewComp = async ({ inputValues, numbers }: comp_data) => {
+  inputValues.contact_nums = numbers;
+  postData.comp_data = inputValues;
+
+  const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+  console.log(response.data.comp_id);
+
+  localStorage.setItem('comp_id', response.data.comp_id);
+
+  return response;
 };
 
 function regPage2() {
-  //   const { data, status, refetch } = useQuery(['step1'], postData, { enabled: false });
+  const methods = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      company_name: '',
+      address: '',
+    },
+  });
+
+  const useCreateCompany = () => {
+    return useMutation(createNewComp);
+  };
+
+  const { mutate: createCompany } = useCreateCompany();
+
+  const handleCreateCompany = ({ inputValues, numbers }: comp_data) => {
+    createCompany({ inputValues, numbers });
+    navigate('/comp-init-2');
+  };
+
+  const compCreateMutation = useMutation(createNewComp);
+  const inputValues = methods.watch();
   const navigate = useNavigate();
   const [numbers, setNumbers] = useState<string[]>([]);
   const [newNumber, setNewNumber] = useState('');
-
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      address: '',
-    },
-    onSubmit: async (values) => {
-      const ret = await postData(formik.values);
-      if (ret) navigate('/comp-init-2');
-      //   refetch();
-    },
-  });
 
   const addNewPhoneNumber = () => {
     if (newNumber != '') {
@@ -92,14 +102,14 @@ function regPage2() {
             </Typography>
           </Grid>
 
-          <form onSubmit={formik.handleSubmit}>
+          <FormProvider {...methods}>
             <Grid container item xs={13}>
               <Grid item xs={13}>
-                <TextField value={formik.values.name} onChange={formik.handleChange} id="name" label="Company Name" variant="standard" sx={{ mt: 5, width: '100%' }} />
+                <TextField {...methods.register('company_name', { required: true })} id="name" label="Company Name" variant="standard" sx={{ mt: 5, width: '100%' }} />
               </Grid>
 
               <Grid item xs={13}>
-                <TextField id="address" label="Address" variant="standard" sx={{ mt: 3, width: '100%' }} value={formik.values.address} onChange={formik.handleChange} />
+                <TextField {...methods.register('address', { required: true })} id="address" label="Address" variant="standard" sx={{ mt: 3, width: '100%' }} />
               </Grid>
             </Grid>
 
@@ -136,13 +146,23 @@ function regPage2() {
               })}
             </Grid>
 
-            <Button type="submit" variant="contained" className="createAcc" style={{ width: '100%', marginTop: '20%' }}>
+            <Button
+              type="submit"
+              variant="contained"
+              className="createAcc"
+              style={{ width: '100%', marginTop: '20%' }}
+              onClick={() => {
+                // if (!compId) {
+                handleCreateCompany({ inputValues, numbers });
+                // }
+              }}
+            >
               Continue
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: '25', marginLeft: '20' }}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Button>
-          </form>
+          </FormProvider>
         </Grid>
       </Grid>
 

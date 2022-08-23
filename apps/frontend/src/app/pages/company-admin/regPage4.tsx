@@ -2,27 +2,28 @@ import { Typography, Grid, Button, Card, CardContent, CardActionArea, ListItem, 
 
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const postData = async (selectedTier: number) => {
-  let body = {
-    step: 3,
-    comp_id: null, // TODO: set comp_id
-    comp_data: {
-      tier: selectedTier,
-    },
-  };
+const postData = {
+  step: 3,
+  comp_id: '',
+  comp_data: {},
+};
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  };
+const getCompId = () => {
+  return localStorage.getItem('comp_id') || '';
+};
 
-  const res = await fetch('http://localhost:3333/api/companies/register/', requestOptions);
-  const ret = await res.json();
-  return ret;
+const selectTier = async (selectedTier: any) => {
+  if (selectedTier == 0) {
+    alert('Select an option');
+    return null;
+  } else {
+    postData.comp_id = getCompId();
+    postData.comp_data = { tier: selectedTier };
+    const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+    return response;
+  }
 };
 
 const RegPage4 = () => {
@@ -50,19 +51,14 @@ const RegPage4 = () => {
     },
   ];
 
-  const validateData = async () => {
-    // TODO: Handle not selected scenario properly
-    if (selected == 0) {
-      alert('Select and option');
-    } else {
-      await postData(selected);
-      navigate('/comp-init-4');
-    }
-  };
-
   const handleSelected = (index: number) => {
     setSelected(index);
     // console.log('selected ' + index);
+  };
+
+  const handleInit3 = async () => {
+    let res = await selectTier(selected);
+    if (res) navigate('/comp-init-4');
   };
 
   return (
@@ -97,7 +93,17 @@ const RegPage4 = () => {
           </Grid>
 
           {/* <Link to="/comp-init-4"> */}
-          <Button onClick={validateData} variant="contained" className="createAcc" style={{ width: '50%', marginTop: '5%', alignSelf: 'center' }}>
+          <Button
+            // onClick={validateData}
+            variant="contained"
+            className="createAcc"
+            style={{ width: '50%', marginTop: '5%', alignSelf: 'center' }}
+            onClick={() => {
+              // if (compId != '') {
+              handleInit3();
+              // }
+            }}
+          >
             Continue
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: '25', marginLeft: '20' }}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
