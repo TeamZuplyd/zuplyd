@@ -36,12 +36,19 @@ function a11yProps(index: number) {
 function orders() {
   const [value, setValue] = useState(0);
   const [orderData, setOrderData] = useState(data);
+  const [sentRequest, setSentRequest] = useState<any>([]);
+
+  const addSentRequest = (request: any) => {
+    console.log(request);
+    setSentRequest([...sentRequest, ...request]);
+    //SentRequest -> backend object
+  };
 
   const handleStatusChange = (warehouseIndex: number, selectedItem: string) => {
     setSelected(-1);
     const index = orderData.findIndex((item) => item.item_code === selectedItem); //selected request
     const newOrderData = orderData[index]; //backend data object
-    newOrderData['warehouse_id'] = warehouses[warehouseIndex];
+    // newOrderData['warehouse_id'] = warehouses[warehouseIndex];
     newOrderData['sentRequest'] = true;
     setOrderData([...orderData.slice(0, index), newOrderData, ...orderData.slice(index + 1)]);
     console.log(orderData);
@@ -49,8 +56,8 @@ function orders() {
 
   useEffect(() => {
     console.log(orderData);
-  }, [orderData])
-  
+  }, [orderData]);
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -83,12 +90,12 @@ function orders() {
 
           {/* Low Stocks */}
           <TabPanel value={value} index={0}>
-            <SMOrderTable orders={orderData} handleStatusChange={() => handleStatusChange(selected, selectedItem)} selected={selected} setSelected={setSelected} warehouses={warehouses} handleSelected={handleSelected} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+            <SMOrderTable orders={orderData} handleStatusChange={() => handleStatusChange(selected, selectedItem)} selected={selected} setSelected={setSelected} warehouses={warehouses} handleSelected={handleSelected} selectedItem={selectedItem} setSelectedItem={setSelectedItem} addSentRequest={addSentRequest} />
           </TabPanel>
 
           {/* Sent Requests */}
           <TabPanel value={value} index={1}>
-            <WMOrderTable orders={orderData} />
+            <WMOrderTable orders={sentRequest} />
           </TabPanel>
 
           {/* History */}

@@ -15,7 +15,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { Button, TableHead } from '@mui/material';
+import { Button, TableHead, FormControl, MenuItem, NativeSelect } from '@mui/material';
 // import { orders } from '../../../data/orders';
 interface TablePaginationActionsProps {
   count: number;
@@ -64,9 +64,10 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
 export interface OrderTableProps {
   orders: any[];
+  handleStatusChange: (event: React.ChangeEvent<{ value: unknown }>, ites:string) => void;
 }
 
-export function OrderTable({orders}: OrderTableProps) {
+export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -91,12 +92,10 @@ export function OrderTable({orders}: OrderTableProps) {
             <TableCell component="th">Name </TableCell>
             <TableCell component="th">Brand</TableCell>
             <TableCell component="th">Quantity</TableCell>
-            <TableCell component="th">Status</TableCell>
             <TableCell component="th">Required By</TableCell>
             <TableCell component="th">Requested By</TableCell>
             <TableCell component="th">Requested Date</TableCell>
-            <TableCell component="th">Request</TableCell>
-            <TableCell component="th">Fulfill</TableCell>
+            <TableCell component="th">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -105,36 +104,15 @@ export function OrderTable({orders}: OrderTableProps) {
               <TableCell component="th" scope="row">
                 {order.item_code}
               </TableCell>
-              <TableCell style={{ }} >
-                {order.name}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.brand}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.quantity}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.status}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.required_by}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.requested_by}
-              </TableCell>
-              <TableCell style={{ }} >
-                {order.requested_date}
-              </TableCell>
-              <TableCell style={{ }} >
-                <Button variant="contained" disabled={!order.request}>
-                  Request
-                </Button>
-              </TableCell>
-              <TableCell style={{ }} >
-                <Button variant="contained" color='success' disabled={order.request}>
-                  Fulfill
-                </Button>
+              <TableCell style={{}}>{order.name}</TableCell>
+              <TableCell style={{}}>{order.brand}</TableCell>
+              <TableCell style={{}}>{order.quantity}</TableCell>
+              <TableCell style={{}}>{order.required_by}</TableCell>
+              <TableCell style={{}}>{order.requested_by}</TableCell>
+              <TableCell style={{}}>{order.requested_date}</TableCell>
+              <TableCell style={{}}>
+                {/* {order.status} */}
+                <StatusDropDown status={order.status} handleStatusChange={handleStatusChange} item={order.item_code} />
               </TableCell>
             </TableRow>
           ))}
@@ -170,3 +148,19 @@ export function OrderTable({orders}: OrderTableProps) {
 }
 
 export default OrderTable;
+type StatusDropDownProps = {
+  status: string;
+  handleStatusChange: (event: React.ChangeEvent<{ value: unknown }>, item:string) => void;
+  item: string;
+};
+function StatusDropDown({ status, handleStatusChange, item }: StatusDropDownProps) {
+  return (
+    <FormControl variant="standard" sx={{}}>
+      <NativeSelect defaultValue={status} id="demo-simple-select-standard" onChange={(e) => handleStatusChange(e,item)}>
+        <option value={'Pending'}>In Progress</option>
+        <option value={'in_delivery'}>In Delivery</option>
+        <option value={'complete'}>Completed</option>
+      </NativeSelect>
+    </FormControl>
+  );
+}

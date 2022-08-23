@@ -11,7 +11,7 @@ export const orders = [
     required_by: '2022-09-01',
     requested_date: '2022-08-01',
     requested_by: 'S0001',
-    request: true,
+    request: false,
     sentRequest: false,
     warehouse_id: '',
   },

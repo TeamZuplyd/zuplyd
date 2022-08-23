@@ -100,7 +100,7 @@ export function WMOrderTable({orders}: WMOrderTableProps) {
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders)
-            .filter((order) => order.sentRequest)
+            // .filter((order) => order.sentRequest)
             .map((order) => (
               <TableRow key={order.item_code}>
                 <TableCell component="th" scope="row">
@@ -111,7 +111,7 @@ export function WMOrderTable({orders}: WMOrderTableProps) {
                 <TableCell style={{}}>{order.quantity}</TableCell>
                 <TableCell style={{}}>{order.required_by}</TableCell>
                 {/* <TableCell style={{}}>{order.requested_by}</TableCell> */}
-                <TableCell style={{}}>{order.requested_date}</TableCell>
+                <TableCell style={{}}>{new Date().toISOString().split('T')[0]}</TableCell>
                 <TableCell style={{}}>{order.warehouse_id}</TableCell>
                 <TableCell style={{}}>{order.status}</TableCell>
               </TableRow>

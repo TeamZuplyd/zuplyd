@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent } from '@mui/material';
 import Header from '../../components/header/header';
 import OrderTable from '../../components/order-table/order-table';
@@ -39,6 +39,12 @@ function orders() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const handleStatusChange = (e: ChangeEvent<{ value: unknown }>, item: string) => {
+    console.log(e.target.value);
+    console.log(item);
+  };
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -51,13 +57,12 @@ function orders() {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
               <Tab label="Received Requests" {...a11yProps(0)} />
               <Tab label="Sent Requests" {...a11yProps(1)} />
-              {/* <Tab label="Pending Requests" {...a11yProps(2)} /> */}
               <Tab label="History" {...a11yProps(2)} />
             </Tabs>
           </Box>
           {/* Received Requests */}
           <TabPanel value={value} index={0}>
-            <OrderTable orders={orderData} />
+            <OrderTable orders={orderData} handleStatusChange={handleStatusChange} />
           </TabPanel>
 
           {/* Sent Requests */}
@@ -65,7 +70,7 @@ function orders() {
             <PMOrderTable orders={orderData} />
           </TabPanel>
 
-          {/* History */}
+          {/* History */} 
           <TabPanel value={value} index={2}></TabPanel>
         </Box>
       </div>
