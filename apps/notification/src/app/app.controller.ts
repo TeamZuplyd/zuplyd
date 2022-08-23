@@ -20,6 +20,8 @@ export class AppController {
 
   @Post('bulk')
   sendEmailBulk(@Body('comp_name') comp_name, @Body('p_managers') p_managers, @Body('w_managers') w_managers, @Body('s_managers') s_managers) {
+    console.log(p_managers);
+
     this.appService.sendEmailBulk(comp_name, p_managers);
     // this.appService.sendEmailBulk(comp_name, w_managers);
     // this.appService.sendEmailBulk(comp_name, s_managers);

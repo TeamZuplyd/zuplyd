@@ -22,6 +22,7 @@ export class CompaniesController {
   @Post('register')
   async register(@Body() data: any) {
     data.comp_data.init_completed = data.step != 4 ? false : true;
+    console.log(data);
 
     let registeredCompany = await this.companyService.register(data.comp_id, data.comp_data);
 
@@ -92,15 +93,16 @@ export class CompaniesController {
       }
 
       const emailsBody = {
-        company_name: company.company_name,
+        comp_name: company.company_name,
         p_managers: managersDto.p_managers,
         w_managers: managersDto.w_managers,
         s_managers: managersDto.s_managers,
       };
+      console.log(emailsBody);
 
-      // let res = await axios.post('http://localhost:7000/api/user-mgmt/register', body);
+      let res = await axios.post('http://localhost:3500/api/notification/bulk', emailsBody);
+      return true;
     }
-
-    return true;
+    return false;
   }
 }
