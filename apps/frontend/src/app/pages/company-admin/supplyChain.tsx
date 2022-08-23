@@ -48,7 +48,7 @@ export default function SupplyChain() {
   return (
     <>
       <Header title={'Supply Chain'} />
-      <Box sx={{ width: '100%', paddingLeft: '2rem' }}>
+      <Box sx={{ width: '100%', paddingLeft: '2rem' }} className='content'>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
             <Tab label="Warehouses" {...a11yProps(0)} />
@@ -63,7 +63,9 @@ export default function SupplyChain() {
           <Grid container rowGap={2} columnGap={2}>
             {warehouses.map((warehouse) => (
               <Grid item>
+
                 <CompanyAdminCard name={warehouse['Manager Info']['Name']} telephoneNumber={warehouse['Manager Info']['Contact No']} warehouse={warehouse['Warehouse Info']['Warehouse ID']} data={warehouse} />
+
               </Grid>
             ))}
           </Grid>
@@ -76,7 +78,10 @@ export default function SupplyChain() {
           <Grid container rowGap={2} columnGap={2}>
             {shops.map((shop) => (
               <Grid item>
+
                 <CompanyAdminCard name={shop['Manager Info']['Name']} telephoneNumber={shop['Manager Info']['Contact No']} warehouse={shop['Shop Info']['Shop ID']} data={shop} />
+
+
               </Grid>
             ))}
           </Grid>

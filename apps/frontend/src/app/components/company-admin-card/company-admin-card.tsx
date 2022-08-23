@@ -5,7 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Grid, Modal, TextField, Box } from '@mui/material';
 import SideOver from '../side-over/side-over';
 
 export interface CompanyAdminCardProps {
@@ -13,9 +13,12 @@ export interface CompanyAdminCardProps {
   name: string;
   telephoneNumber: string;
   data: any;
+  title: string;
 }
 
+
 export function CompanyAdminCard({ name, telephoneNumber, warehouse, data }: CompanyAdminCardProps) {
+
   const [rightSideNav, setrightSideNav] = React.useState(false);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -26,11 +29,20 @@ export function CompanyAdminCard({ name, telephoneNumber, warehouse, data }: Com
     setrightSideNav(!rightSideNav);
   };
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
   return (
     <>
       <SideOver toggle={rightSideNav} toggleDrawer={toggleDrawer} data={data} />
+
       <Card sx={{ minWidth: 300, width: 300, maxHeight: 141, height: 141, ml: 2 }} style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
         <CardContent sx={{ pl: 3 }}>
+
           <Typography variant="h6" sx={{ mb: 1 }}>
             {warehouse}
           </Typography>
@@ -60,10 +72,21 @@ export function CompanyAdminCard({ name, telephoneNumber, warehouse, data }: Com
           </Grid>
         </CardContent>
 
+
         <CardActions>
           <Button size="small" style={{ position: 'relative', left: 200, bottom: 50 }} onClick={toggleDrawer(true)}>
+
             More Info
           </Button>
+          <Button size="small" color="success">
+          {/* <Button size="small" color="success" onClick={handleOpen}> */}
+            Edit
+          </Button>
+          <EditModal open={open} handleClose={handleClose} title={title} />
+          <Button size="small" color="warning" onClick={handleOpenModal}>
+            Delete
+          </Button>
+          <DeleteModal open={openModal} handleClose={handleCloseModal} title={title} />
         </CardActions>
       </Card>
     </>
@@ -71,3 +94,60 @@ export function CompanyAdminCard({ name, telephoneNumber, warehouse, data }: Com
 }
 
 export default CompanyAdminCard;
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  minHeight: 200,
+  maxHeight: 200,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
+//modal component
+type ContainerModalProps = {
+  open: boolean;
+  handleClose: () => void;
+  title: string;
+};
+
+const DeleteModal = ({ open, handleClose, title }: ContainerModalProps) => {
+  return (
+    <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Box sx={style}>
+        <Typography variant="h6" textAlign="center">
+          Delete {title}
+        </Typography>
+        <Box>
+          <Typography variant="body1" pt={2}>
+            {' '}
+            Are you sure to delete the {title}?
+          </Typography>
+          <Grid container direction="row" justifyContent="space-around" alignItems="center" sx={{}}>
+            <Button variant="contained" color="warning" sx={{ mt: 4, mr: 4 }}>
+              Delete
+            </Button>
+            <Button variant="contained" color="success" sx={{ mt: 4, mr: 'end' }} onClick={handleClose}>
+              No
+            </Button>
+          </Grid>
+        </Box>
+      </Box>
+    </Modal>
+  );
+};
+
+const EditModal = ({ open, handleClose, title }: ContainerModalProps) => {
+  return (
+    <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Box sx={style}>
+        <Typography variant="h6" textAlign="center">
+          Edit {title}
+        </Typography>
+      </Box>
+    </Modal>
+  );
+};
