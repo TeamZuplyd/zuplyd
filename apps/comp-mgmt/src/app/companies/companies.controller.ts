@@ -1,15 +1,13 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-} from '@nestjs/common';
-import { CreateCompanyDto } from './dto/create-company.dto';
-import { Company } from './schemas/company.schema';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
+
+// Importing DTOs
+import { CreateCompanyDto } from './dto/create-company.dto';
+import { ManagersDto } from './dto/managers.dto';
+
+// Importing Schemas
+import { Company } from './schemas/company.schema';
+import { Managers } from './schemas/managers.schema';
 
 @Controller('companies')
 export class CompaniesController {
@@ -24,10 +22,7 @@ export class CompaniesController {
   async register(@Body() data: any) {
     data.comp_data.init_completed = data.step != 4 ? false : true;
 
-    let registeredCompany = await this.companyService.register(
-      data.comp_id,
-      data.comp_data
-    );
+    let registeredCompany = await this.companyService.register(data.comp_id, data.comp_data);
 
     const ret = { comp_id: registeredCompany['id'] };
     return ret;
@@ -43,5 +38,18 @@ export class CompaniesController {
   async findAll(): Promise<Company[]> {
     let companies = await this.companyService.findAll();
     return companies;
+  }
+
+  @Post('setupManagers')
+  async setupManagers(@Body() managersDto: ManagersDto) {
+    console.log(managersDto);
+
+    // http://localhost:7000/api/user-mgmt/register
+
+    // let registeredCompany = await this.companyService.register(data.comp_id, data.comp_data);
+
+    // const ret = { comp_id: registeredCompany['id'] };
+    // return ret;
+    return true;
   }
 }

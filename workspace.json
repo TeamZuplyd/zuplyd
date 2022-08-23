@@ -7,7 +7,9 @@
     "frontend": "apps/frontend",
     "frontend-e2e": "apps/frontend-e2e",
     "inventory": "apps/inventory",
+    "notification": "apps/notification",
     "procurement": "apps/procurement",
+    "request-handler": "apps/request-handler",
     "user-mgmt": "apps/user-mgmt"
   }
 }

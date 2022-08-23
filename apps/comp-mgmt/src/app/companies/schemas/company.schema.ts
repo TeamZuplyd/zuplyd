@@ -6,7 +6,7 @@ export type CompanyDocument = Company & Document;
 @Schema()
 export class Company {
   @Prop()
-  name: string;
+  company_name: string;
 
   @Prop()
   address: string;
@@ -25,6 +25,9 @@ export class Company {
 
   @Prop([String])
   s_managers: string[];
+
+  @Prop([String])
+  p_managers: string[];
 
   @Prop()
   init_completed: boolean;
