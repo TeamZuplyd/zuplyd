@@ -10,6 +10,8 @@ import CardActions from '@mui/material/CardActions';
 import { truncate } from 'fs/promises';
 import CategoryCardPM from '../../components/category-card-pm/category-card-pm';
 import Paper from '@mui/material/Paper';
+import axios from 'axios';
+import { useMutation } from 'react-query';
 
 function addItem() {
   const [itemNameTextFieldValue, setItemNameTextFieldValue] = useState('');
@@ -68,18 +70,35 @@ function addItem() {
     // setAllUnits([]);
   };
 
+  const createItemType = async (data: any) => {
+    const { data: response } = await axios.post('http://localhost:7000/api/procurement/item/create', data);
+    return response.data;
+  };
+
+  const { mutate, isLoading } = useMutation(createItemType, {
+    onSuccess: (data: any) => {
+      handleClose();
+      discardChanges();
+    },
+    onError: () => {
+      alert('there was an error');
+    },
+  });
+
   const saveChanges = () => {
     const arr: any = {
       item_name: itemNameTextFieldValue,
       category_name: categoryTextFieldValue,
       brand_name: itemBrandTextFieldValue,
-      min_release_quantity: minReleaseQTextFieldValue,
+      min_release_quantity: parseInt(minReleaseQTextFieldValue),
       attributes_array: allAttributes,
       output_rule: allAttributes[selected],
       output_rule_unit: unit,
     };
 
-    console.table(arr);
+    mutate(arr);
+
+    //console.table(arr);
   };
 
   let count: number = -1;

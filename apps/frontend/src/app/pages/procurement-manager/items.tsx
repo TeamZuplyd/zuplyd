@@ -15,9 +15,11 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead } from '@mui/material';
-import { itemInfo } from '../../../data/itemInfo';
+// import { itemInfo } from '../../../data/itemInfo';
 import SideOver from '../../components/side-over/side-over';
 import ItemSideOverPM from '../../components/item-side-over-pm/item-side-over-pm';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 // export const orders = [
 //   {
 //     item_code: 'I0001',
@@ -31,6 +33,12 @@ import ItemSideOverPM from '../../components/item-side-over-pm/item-side-over-pm
 //     request: true,
 //   },
 // ];
+
+// const getAllItemTypes = async () => {
+//   const data = await axios.get('http://localhost:7000/api/procurement/item/findAll');
+//   return data;
+// };
+
 interface TablePaginationActionsProps {
   count: number;
   page: number;
@@ -82,7 +90,31 @@ function Items(props: ItemsProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  const [itemInfo, setItemInfo] = React.useState<any>([]);
+
   const [rightSideNav, setrightSideNav] = React.useState(false);
+
+  const [selectedRow, setSelectedRow] = React.useState({});
+
+  // const { isLoading, isFetched, isSuccess, isError, data: itemsRes, error } = useQuery('itemInfo', getAllItemTypes);
+
+  // if (isLoading) {
+  //   return <div>Loading</div>;
+  // }
+
+  // if (isFetched) {
+  //   setItemInfo(itemsRes?.data.items);
+  // }
+
+  const getItemInfo = () => {
+    axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
+      setItemInfo(res.data.items);
+    });
+  };
+
+  React.useEffect(() => {
+    getItemInfo();
+  }, []);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
@@ -104,8 +136,6 @@ function Items(props: ItemsProps) {
     setPage(0);
   };
 
-  const [selectedRow, setSelectedRow] = React.useState({});
-
   return (
     <>
       <ItemSideOverPM toggle={rightSideNav} toggleDrawer={toggleDrawer} data={selectedRow} />
@@ -120,9 +150,9 @@ function Items(props: ItemsProps) {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0 ? itemInfo.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : itemInfo).map((item) => (
-              <TableRow key={item.id} onClick={() => setSelectedRow(item)}>
-                <TableCell style={{}}>{item.name}</TableCell>
-                <TableCell style={{}}>{item.brand}</TableCell>
+              <TableRow key={item._id} onClick={() => setSelectedRow(item)}>
+                <TableCell style={{}}>{item.item_name}</TableCell>
+                <TableCell style={{}}>{item.brand_name}</TableCell>
                 <TableCell style={{}}>
                   <Button variant="contained" onClick={toggleDrawer(true)}>
                     Show More
