@@ -1,21 +1,17 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
 import { useState, useRef } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
+import { TextField, Grid, Button, Typography, Box, Modal, Card, CardContent } from '@mui/material';
+import CardActions from '@mui/material/CardActions';
+import { truncate } from 'fs/promises';
+import CategoryCardPM from '../../components/category-card-pm/category-card-pm';
+import Paper from '@mui/material/Paper';
 
 function addItem() {
-  // const [open, setOpen] = useState(false);
-  // const handleOpen = () => setOpen(true);
-
   const [itemNameTextFieldValue, setItemNameTextFieldValue] = useState('');
   const [categoryTextFieldValue, setCategoryTextFieldValue] = useState('');
   const [itemBrandTextFieldValue, setItemBrandTextFieldValue] = useState('');
@@ -23,7 +19,17 @@ function addItem() {
 
   const [textFieldValue, setTextFieldValue] = useState('');
   const [allAttributes, setAllAttributes] = useState<string[]>([]);
-  const [allUnits, setAllUnits] = useState<string[]>([]);
+  // const [allUnits, setAllUnits] = useState<string[]>([]);
+
+  const [selected, setSelected] = useState(-1);
+
+  const handleClick = (index: number) => {
+    setSelected(index);
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const [unit, setUnit] = useState('');
   let arr: string[] = [];
@@ -31,7 +37,7 @@ function addItem() {
   const addAttribute = () => {
     if (textFieldValue != '') {
       setAllAttributes([...allAttributes, textFieldValue]);
-      setAllUnits([...allUnits, unit]);
+      // setAllUnits([...allUnits, unit]);
       setTextFieldValue('');
       setUnit('');
     }
@@ -44,11 +50,11 @@ function addItem() {
     for (let index = 0; index < allAttributes.length; index++) {
       if (allAttributes[index] != attrName) {
         arrAttr.push(allAttributes[index]);
-        arrUnit.push(allUnits[index]);
+        // arrUnit.push(allUnits[index]);
       }
     }
     setAllAttributes(arrAttr);
-    setAllUnits(arrUnit);
+    // setAllUnits(arrUnit);
   };
 
   const discardChanges = () => {
@@ -59,15 +65,13 @@ function addItem() {
     setTextFieldValue('');
     setUnit('');
     setAllAttributes([]);
-    setAllUnits([]);
+    // setAllUnits([]);
   };
 
   let count: number = -1;
 
   return (
     <>
-      {/* <SearchButton handleOpen={handleOpen} /> */}
-
       <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '70vh' }}>
         <Card sx={{ width: '800px', maxWidth: '800px', height: 'fit-content', maxHeight: 'fit-content', justifyContent: 'center', alignItems: 'center' }}>
           <CardContent>
@@ -78,10 +82,6 @@ function addItem() {
                 </Typography>
               </Grid>
             </Grid>
-
-            {/* const [itemNameTextFieldValue, setItemNameTextFieldValue] = useState('');
-const [itemBrandTextFieldValue, setItemBrandTextFieldValue] = useState('');
-const [minReleaseQTextFieldValue, setMinReleaseQTextFieldValue] = useState(''); */}
 
             <Grid container rowGap={2} columnGap={4} sx={{ mt: 1 }}>
               <Grid item xs={5}>
@@ -141,9 +141,7 @@ const [minReleaseQTextFieldValue, setMinReleaseQTextFieldValue] = useState(''); 
               </Grid>
             </Grid>
 
-            <Grid item xs={12} sx={{ mt: 4, mb: 5 }}>
-              {/* <TextField size="small" id="outlined-basic" label="Search" variant="outlined" sx={{ ml: 2, mb: 3 }} /> */}
-              {/* <TextField onChange={(e) => {}} id="outlined-basic" value={'abc'} label="Item name" variant="outlined" size="small" sx={{ width: '340px', mt: 1.5 }} /> */}
+            <Grid item xs={12} sx={{ mt: 4, mb: 3 }}>
               <TextField
                 id="standard-basic"
                 label="Attribute name"
@@ -154,7 +152,8 @@ const [minReleaseQTextFieldValue, setMinReleaseQTextFieldValue] = useState(''); 
                 value={textFieldValue}
               />
 
-              <UnitDropDown unit={unit} setUnit={setUnit} />
+              {/* unit drop down */}
+              {/* <UnitDropDown unit={unit} setUnit={setUnit} /> */}
               <Button variant="contained" color="primary" sx={{ ml: 3, mt: 1.5 }} onClick={addAttribute}>
                 Add new
               </Button>
@@ -165,13 +164,13 @@ const [minReleaseQTextFieldValue, setMinReleaseQTextFieldValue] = useState(''); 
                 return (
                   <Grid container item xs={3} sx={{ mt: 0 }} direction="row" className="itemAttrSpan">
                     <Grid item xs={10} sx={{ mt: 0 }}>
-                      <Typography variant="h6" gutterBottom component="div" sx={{ fontSize: 18 }}>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ fontSize: 14 }}>
                         {attrName}
                       </Typography>
 
-                      <Typography variant="h3" gutterBottom component="div" sx={{ fontSize: 14 }}>
+                      {/* <Typography variant="h3" gutterBottom component="div" sx={{ fontSize: 14 }}>
                         {allUnits[(count = count + 1)]}
-                      </Typography>
+                      </Typography> */}
                     </Grid>
 
                     <Grid item xs={2} sx={{ mt: 0 }}>
@@ -188,9 +187,12 @@ const [minReleaseQTextFieldValue, setMinReleaseQTextFieldValue] = useState(''); 
 
             <Grid container rowGap={2} columnGap={4}>
               <Grid item xs={4}>
-                <Button variant="contained" color="success" sx={{ width: 140 }} className="saveChangesBtn">
+                <Button variant="contained" color="success" sx={{ width: 140 }} className="createAcc" onClick={handleOpen}>
                   {' '}
-                  Save Changes{' '}
+                  Next
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: '25', marginLeft: '20' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </Button>
               </Grid>
 
@@ -204,6 +206,8 @@ const [minReleaseQTextFieldValue, setMinReleaseQTextFieldValue] = useState(''); 
           </CardContent>
         </Card>
       </Grid>
+
+      <ContainerModal open={open} handleClose={handleClose} attributeList={allAttributes} selected={selected} handleClick={handleClick} unit={unit} setUnit={setUnit} />
     </>
   );
 }
@@ -216,7 +220,9 @@ type UnitDropDownProps = {
 function UnitDropDown({ unit, setUnit }: UnitDropDownProps) {
   return (
     <FormControl variant="standard" sx={{ ml: 4, minWidth: 120 }}>
-      <InputLabel id="demo-simple-select-standard-label">Unit</InputLabel>
+      <InputLabel id="demo-simple-select-standard-label" style={{ paddingTop: 3 }}>
+        Unit
+      </InputLabel>
       <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" value={unit} onChange={(e) => setUnit(e.target.value)} label="Unit">
         <MenuItem value="">
           <em>None</em>
@@ -260,5 +266,86 @@ function SelectLabels({ categoryTextFieldValue, setCategoryTextFieldValue }: Sel
     </div>
   );
 }
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  minHeight: 500,
+  maxHeight: 600,
+  minWidth: 600,
+  overflowY: 'scroll',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
+
+type ContainerModalProps = {
+  open: boolean;
+  handleClose: () => void;
+  attributeList: string[];
+  selected: number;
+  handleClick: any;
+  unit: string;
+  setUnit: any;
+};
+
+const ContainerModal = ({ open, handleClose, attributeList, selected, handleClick, unit, setUnit }: ContainerModalProps) => {
+  // const [selected, setSelected] = useState(-1);
+
+  // const handleClick = (index: number) => {
+  //   setSelected(index);
+  // };
+
+  return (
+    <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Box sx={style}>
+        <Typography variant="h6" textAlign="center">
+          Select the attribute of output rule and the unit of it
+        </Typography>
+        <form>
+          {attributeList.map((attr, index) => (
+            <>
+              <Card sx={{ minWidth: 200, mt: 1, cursor: 'pointer', backgroundColor: '#ebebeb', pb: 0 }} style={{ backgroundColor: '#ebebeb' }} onClick={() => handleClick(index)} className={selected === index ? 'highlightTier' : ''}>
+                <Grid container xs={12}>
+                  <Grid item xs={8}>
+                    <CardContent>
+                      <Typography sx={{ fontSize: 14, mb: 0 }} gutterBottom>
+                        {attr}
+                      </Typography>
+                    </CardContent>
+                  </Grid>
+
+                  {selected === index ? (
+                    <Grid item xs={4}>
+                      <UnitDropDown unit={unit} setUnit={setUnit} />
+                    </Grid>
+                  ) : (
+                    <Grid item xs={4}></Grid>
+                  )}
+
+                  {/* <Grid item xs={4}>
+                    <UnitDropDown unit={unit} setUnit={setUnit} />
+                  </Grid> */}
+                </Grid>
+              </Card>
+            </>
+          ))}
+
+          <Grid container direction="row" justifyContent="space-between" alignItems="center" sx={{ mt: 5 }}>
+            <Button variant="contained" color="success" sx={{ mr: 4 }}>
+              Save
+            </Button>
+            <Button variant="contained" color="warning" sx={{ mr: 'end' }} onClick={handleClose}>
+              Cancel
+            </Button>
+          </Grid>
+        </form>
+      </Box>
+    </Modal>
+  );
+};
 
 export default addItem;
