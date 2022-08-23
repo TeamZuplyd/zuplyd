@@ -19,6 +19,8 @@ function addItem() {
   const [itemBrandTextFieldValue, setItemBrandTextFieldValue] = useState('');
   const [minReleaseQTextFieldValue, setMinReleaseQTextFieldValue] = useState('');
 
+  const [minReleaseQTextFieldDropDown, setMinReleaseQTextFieldDropDown] = useState('');
+
   const [textFieldValue, setTextFieldValue] = useState('');
   const [allAttributes, setAllAttributes] = useState<string[]>([]);
   // const [allUnits, setAllUnits] = useState<string[]>([]);
@@ -64,6 +66,7 @@ function addItem() {
     setCategoryTextFieldValue('');
     setItemBrandTextFieldValue('');
     setMinReleaseQTextFieldValue('');
+    setMinReleaseQTextFieldDropDown('');
     setTextFieldValue('');
     setUnit('');
     setAllAttributes([]);
@@ -91,6 +94,7 @@ function addItem() {
       category_name: categoryTextFieldValue,
       brand_name: itemBrandTextFieldValue,
       min_release_quantity: parseInt(minReleaseQTextFieldValue),
+      min_release_quantity_unit: minReleaseQTextFieldDropDown,
       attributes_array: allAttributes,
       output_rule: allAttributes[selected],
       output_rule_unit: unit,
@@ -98,7 +102,7 @@ function addItem() {
 
     mutate(arr);
 
-    //console.table(arr);
+    console.table(arr);
   };
 
   let count: number = -1;
@@ -106,7 +110,7 @@ function addItem() {
   return (
     <>
       <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '70vh' }}>
-        <Card sx={{ width: '800px', maxWidth: '800px', height: 'fit-content', maxHeight: 'fit-content', justifyContent: 'center', alignItems: 'center' }}>
+        <Card sx={{ width: '820px', maxWidth: '820px', height: 'fit-content', maxHeight: 'fit-content', justifyContent: 'center', alignItems: 'center', p: 2 }}>
           <CardContent>
             <Grid container rowGap={2} columnGap={2.5}>
               <Grid item xs={12}>
@@ -138,11 +142,11 @@ function addItem() {
               <Grid item xs={5}>
                 <TextField
                   onChange={(e) => {
-                    setItemBrandTextFieldValue(e.target.value);
+                    setMinReleaseQTextFieldValue(e.target.value);
                   }}
                   id="outlined-basic"
-                  value={itemBrandTextFieldValue}
-                  label="Item Brand"
+                  value={minReleaseQTextFieldValue}
+                  label="Min release quantity (in kg)"
                   variant="outlined"
                   size="small"
                   sx={{ mt: 1, width: '340px' }}
@@ -150,13 +154,17 @@ function addItem() {
               </Grid>
 
               <Grid item xs={6}>
+                <DropDownUnits categoryTextFieldValue={minReleaseQTextFieldDropDown} setCategoryTextFieldValue={setMinReleaseQTextFieldDropDown} />
+              </Grid>
+
+              <Grid item xs={5}>
                 <TextField
                   onChange={(e) => {
-                    setMinReleaseQTextFieldValue(e.target.value);
+                    setItemBrandTextFieldValue(e.target.value);
                   }}
                   id="outlined-basic"
-                  value={minReleaseQTextFieldValue}
-                  label="Min release quantity (in kg)"
+                  value={itemBrandTextFieldValue}
+                  label="Item Brand"
                   variant="outlined"
                   size="small"
                   sx={{ mt: 1, width: '340px' }}
@@ -291,9 +299,44 @@ function SelectLabels({ categoryTextFieldValue, setCategoryTextFieldValue }: Sel
             setCategoryTextFieldValue(e.target.value);
           }}
         >
-          <MenuItem value={'Category1'}>Category1</MenuItem>
-          <MenuItem value={'Category2'}>Category2</MenuItem>
-          <MenuItem value={'Category3'}>Category3</MenuItem>
+          <MenuItem value={'Food'}>Food</MenuItem>
+          <MenuItem value={'Drinks'}>Drinks</MenuItem>
+          <MenuItem value={'Ingredients'}>Ingredients</MenuItem>
+        </Select>
+      </FormControl>
+    </div>
+  );
+}
+
+type DropDownUnitsProps = {
+  categoryTextFieldValue: string;
+  setCategoryTextFieldValue: any;
+};
+
+function DropDownUnits({ categoryTextFieldValue, setCategoryTextFieldValue }: SelectLabelsProps) {
+  return (
+    <div style={{ width: '100' }}>
+      <FormControl sx={{ mt: 1, minWidth: 340 }} size="small">
+        <InputLabel id="demo-simple-select-helper-label">Unit of measure</InputLabel>
+        <Select
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          value={categoryTextFieldValue}
+          label="Age"
+          onChange={(e) => {
+            setCategoryTextFieldValue(e.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={'kg'}>kg</MenuItem>
+          <MenuItem value={'g'}>g</MenuItem>
+          <MenuItem value={'l'}>l</MenuItem>
+          <MenuItem value={'ml'}>ml</MenuItem>
+          <MenuItem value={'m'}>m</MenuItem>
+          <MenuItem value={'cm'}>cm</MenuItem>
+          <MenuItem value={'foot'}>foot</MenuItem>
         </Select>
       </FormControl>
     </div>

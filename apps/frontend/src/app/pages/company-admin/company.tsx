@@ -47,7 +47,7 @@ function company() {
 
   return (
     <>
-      <Header title={'Dashboard'} />
+      <Header title={'Company'} />
 
       <div className="content">
         <Box sx={{ width: '100%', paddingLeft: '2rem' }}>

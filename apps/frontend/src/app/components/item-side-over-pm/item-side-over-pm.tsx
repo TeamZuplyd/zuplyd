@@ -20,7 +20,7 @@ export function ItemSideOverPM({ toggle, toggleDrawer, data, index }: ItemSideOv
           </Typography>
           <Grid container direction="row" spacing={3} columnGap={0} sx={{ pt: 3, margin: 'auto' }}>
             {Object.keys(data)
-              .filter((key) => key != '_id' && key != '_v')
+              .filter((key) => key != '_id' && key != '__v')
               .map((key) => {
                 return (
                   <>
