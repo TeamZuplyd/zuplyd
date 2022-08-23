@@ -9,6 +9,7 @@
     "inventory": "apps/inventory",
     "notification": "apps/notification",
     "procurement": "apps/procurement",
+    "request-handler": "apps/request-handler",
     "user-mgmt": "apps/user-mgmt"
   }
 }
