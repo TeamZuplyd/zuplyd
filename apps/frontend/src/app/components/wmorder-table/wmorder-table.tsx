@@ -1,3 +1,4 @@
+/* eslint-disable-next-line */
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -14,9 +15,8 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { Button, TableHead, Modal, Typography, Card, CardContent, CardActionArea, Grid, styled } from '@mui/material';
-import { AutofpsSelectRounded, HdrOnSelectRounded, Warehouse } from '@mui/icons-material';
-// import { orders } from '../../../data/orders';
+import { Button, TableHead } from '@mui/material';
+
 interface TablePaginationActionsProps {
   count: number;
   page: number;
@@ -61,18 +61,12 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     </Box>
   );
 }
-interface SMOrderTableProps {
+
+export interface WMOrderTableProps {
   orders: any[];
-  handleStatusChange: () => void;
-  setSelected: (id: number) => void;
-  selected: number;
-  warehouses: string[];
-  handleSelected: (id: number) => void;
-  selectedItem: string;
-  setSelectedItem: (item: string) => void;
 }
 
-export function SMOrderTable({ orders, handleStatusChange, setSelected, selected, warehouses, handleSelected, selectedItem, setSelectedItem }: SMOrderTableProps) {
+export function WMOrderTable({orders}: WMOrderTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -88,17 +82,6 @@ export function SMOrderTable({ orders, handleStatusChange, setSelected, selected
     setPage(0);
   };
 
-  //modal
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = (id: string) => {
-    setOpen(true);
-    setSelectedItem(id);
-  };
-  const handleClose = () => {
-    setOpen(false);
-    setSelected(-1);
-  };
-
   return (
     <TableContainer component={Paper}>
       <Table stickyHeader sx={{ minWidth: 500 }} aria-label="custom pagination table">
@@ -108,16 +91,16 @@ export function SMOrderTable({ orders, handleStatusChange, setSelected, selected
             <TableCell component="th">Name </TableCell>
             <TableCell component="th">Brand</TableCell>
             <TableCell component="th">Quantity</TableCell>
-            {/* <TableCell component="th">Status</TableCell> */}
             <TableCell component="th">Required By</TableCell>
             {/* <TableCell component="th">Requested By</TableCell> */}
             <TableCell component="th">Requested Date</TableCell>
-            <TableCell component="th">Request</TableCell>
+            <TableCell component="th">Requested Warehouse</TableCell>
+            <TableCell component="th">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders)
-            .filter((order) => !order.sentRequest && order.request)
+            .filter((order) => order.sentRequest)
             .map((order) => (
               <TableRow key={order.item_code}>
                 <TableCell component="th" scope="row">
@@ -126,17 +109,11 @@ export function SMOrderTable({ orders, handleStatusChange, setSelected, selected
                 <TableCell style={{}}>{order.name}</TableCell>
                 <TableCell style={{}}>{order.brand}</TableCell>
                 <TableCell style={{}}>{order.quantity}</TableCell>
-                {/* <TableCell style={{}}>{order.status}</TableCell> */}
                 <TableCell style={{}}>{order.required_by}</TableCell>
                 {/* <TableCell style={{}}>{order.requested_by}</TableCell> */}
                 <TableCell style={{}}>{order.requested_date}</TableCell>
-                <TableCell style={{}}>
-                  {/* <Button variant="contained" onClick={handleStatusChange}> */}
-                  <Button variant="contained" onClick={() => handleOpen(order.item_code)}>
-                    Request
-                  </Button>
-                  <BasicModal open={open} handleClose={handleClose} data={warehouses} handleSelect={handleSelected} selected={selected} handleStatusChange={handleStatusChange} selectedItem={selectedItem} />
-                </TableCell>
+                <TableCell style={{}}>{order.warehouse_id}</TableCell>
+                <TableCell style={{}}>{order.status}</TableCell>
               </TableRow>
             ))}
           {emptyRows > 0 && (
@@ -170,73 +147,4 @@ export function SMOrderTable({ orders, handleStatusChange, setSelected, selected
   );
 }
 
-export default SMOrderTable;
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
-type BasicModalProps = {
-  open: boolean;
-  handleClose: () => void;
-  data: string[];
-  handleSelect: (id: number) => void;
-  selected: number;
-  handleStatusChange: (warehouseID: number, selectedItem: string) => void;
-  selectedItem: string;
-  // setSelectedItem: (item: string) => void;
-};
-
-function BasicModal({ open, handleClose, data, handleSelect, selected, handleStatusChange, selectedItem }: BasicModalProps) {
-  return (
-    <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2" textAlign="center">
-          Select Warehouse to Request
-        </Typography>
-        <Grid container spacing={2} direction="row" paddingTop={2}>
-          {data.map((warehouse, index) => (
-            <Grid item xs="auto">
-              <Card sx={{ width: 100 }} onClick={() => handleSelect(index)} className={selected === index && index !== 1 ? 'highlightTier' : ''} style={index === 1 ? { backgroundColor: '#9e9e9e' } : {}}>
-                {index !== 1 && (
-                  <CardActionArea>
-                    <CardContent>{warehouse}</CardContent>
-                  </CardActionArea>
-                )}
-                {index === 1 && (
-                  <StyledCardActionArea>
-                    <CardContent>{warehouse}</CardContent>
-                  </StyledCardActionArea>
-                )}
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-        <Grid container direction="row" justifyContent="space-around" alignItems="center" sx={{}}>
-          {/* <Button variant="contained" color="success" sx={{ mt: 4, mr: 4 }} onClick={() => handleStatusChange(selected, selectedItem)}> */}
-          <Button variant="contained" color="success" sx={{ mt: 4, mr: 4 }} onClick={(selected !== -1 && selected !== 1)? () => handleStatusChange(selected, selectedItem) : undefined}>
-            Request
-          </Button>
-          <Button variant="contained" color="warning" sx={{ mt: 4, mr: 'end' }} onClick={handleClose}>
-            Cancel
-          </Button>
-        </Grid>
-      </Box>
-    </Modal>
-  );
-}
-const StyledCardActionArea = styled(CardActionArea)(
-  ({ theme }) => `
-    .MuiCardActionArea-focusHighlight {
-        background: transparent;
-    }
-`
-);
+export default WMOrderTable;

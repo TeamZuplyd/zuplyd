@@ -1,8 +1,10 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent } from '@mui/material';
 import Header from '../../components/header/header';
 import PMOrderTable from '../../components/pmorder-table/pmorder-table';
 import SMOrderTable from '../../components/smorder-table/smorder-table';
+import { orders as data } from '../../../data/orders';
+import WMOrderTable from '../../components/wmorder-table/wmorder-table';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -32,14 +34,40 @@ function a11yProps(index: number) {
 }
 
 function orders() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [orderData, setOrderData] = useState(data);
 
+  const handleStatusChange = (warehouseIndex: number, selectedItem: string) => {
+    setSelected(-1);
+    const index = orderData.findIndex((item) => item.item_code === selectedItem); //selected request
+    const newOrderData = orderData[index]; //backend data object
+    newOrderData['warehouse_id'] = warehouses[warehouseIndex];
+    newOrderData['sentRequest'] = true;
+    setOrderData([...orderData.slice(0, index), newOrderData, ...orderData.slice(index + 1)]);
+    console.log(orderData);
+  };
+
+  useEffect(() => {
+    console.log(orderData);
+  }, [orderData])
+  
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const warehouses = ['W0001', 'W0002', 'W0003'];
+
+  const [selected, setSelected] = useState(-1); //selected Warehouse
+  const [selectedItem, setSelectedItem] = useState(''); //selected Item
+
+  const handleSelected = (index: number) => {
+    setSelected(index);
+    console.log('selected ' + index);
+  };
+
   return (
     <>
       <Header title={'Orders'} />
@@ -47,20 +75,20 @@ function orders() {
         <Box sx={{ width: '100%', paddingLeft: '2rem' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
-              <Tab label="Received Requests" {...a11yProps(0)} />
+              <Tab label="Low Stocks" {...a11yProps(0)} />
               <Tab label="Sent Requests" {...a11yProps(1)} />
-              {/* <Tab label="Pending Requests" {...a11yProps(2)} /> */}
               <Tab label="History" {...a11yProps(2)} />
             </Tabs>
           </Box>
-          {/* Received Requests */}
+
+          {/* Low Stocks */}
           <TabPanel value={value} index={0}>
-            <SMOrderTable/>
+            <SMOrderTable orders={orderData} handleStatusChange={() => handleStatusChange(selected, selectedItem)} selected={selected} setSelected={setSelected} warehouses={warehouses} handleSelected={handleSelected} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
           </TabPanel>
 
           {/* Sent Requests */}
           <TabPanel value={value} index={1}>
-            <PMOrderTable />
+            <WMOrderTable orders={orderData} />
           </TabPanel>
 
           {/* History */}

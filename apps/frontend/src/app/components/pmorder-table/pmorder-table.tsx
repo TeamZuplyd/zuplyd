@@ -16,7 +16,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead } from '@mui/material';
-import { orders } from '../../../data/orders';
+// import { orders } from '../../../data/orders';
 interface TablePaginationActionsProps {
   count: number;
   page: number;
@@ -62,9 +62,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export interface PMOrderTableProps {}
+export interface PMOrderTableProps {
+  orders: any[];
+}
 
-export function PMOrderTable(props: PMOrderTableProps) {
+export function PMOrderTable({orders}: PMOrderTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -96,7 +98,7 @@ export function PMOrderTable(props: PMOrderTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).map((order) => (
+          {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).filter(order=>order.sentRequest).map((order) => (
             <TableRow key={order.item_code}>
               <TableCell component="th" scope="row">
                 {order.item_code}

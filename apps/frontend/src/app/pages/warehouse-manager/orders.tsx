@@ -1,8 +1,9 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent } from '@mui/material';
 import Header from '../../components/header/header';
 import OrderTable from '../../components/order-table/order-table';
 import PMOrderTable from '../../components/pmorder-table/pmorder-table';
+import { orders as data } from '../../../data/orders';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -32,12 +33,13 @@ function a11yProps(index: number) {
 }
 
 function orders() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [orderData, setOrderData] = useState(data);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
@@ -55,12 +57,12 @@ function orders() {
           </Box>
           {/* Received Requests */}
           <TabPanel value={value} index={0}>
-            <OrderTable />
+            <OrderTable orders={orderData} />
           </TabPanel>
 
           {/* Sent Requests */}
           <TabPanel value={value} index={1}>
-            <PMOrderTable/>
+            <PMOrderTable orders={orderData} />
           </TabPanel>
 
           {/* History */}
