@@ -68,6 +68,20 @@ function addItem() {
     // setAllUnits([]);
   };
 
+  const saveChanges = () => {
+    const arr: any = {
+      item_name: itemNameTextFieldValue,
+      category_name: categoryTextFieldValue,
+      brand_name: itemBrandTextFieldValue,
+      min_release_quantity: minReleaseQTextFieldValue,
+      attributes_array: allAttributes,
+      output_rule: allAttributes[selected],
+      output_rule_unit: unit,
+    };
+
+    console.table(arr);
+  };
+
   let count: number = -1;
 
   return (
@@ -207,7 +221,7 @@ function addItem() {
         </Card>
       </Grid>
 
-      <ContainerModal open={open} handleClose={handleClose} attributeList={allAttributes} selected={selected} handleClick={handleClick} unit={unit} setUnit={setUnit} />
+      <ContainerModal open={open} handleClose={handleClose} attributeList={allAttributes} selected={selected} handleClick={handleClick} unit={unit} setUnit={setUnit} saveChanges={saveChanges} />
     </>
   );
 }
@@ -290,9 +304,10 @@ type ContainerModalProps = {
   handleClick: any;
   unit: string;
   setUnit: any;
+  saveChanges: () => void;
 };
 
-const ContainerModal = ({ open, handleClose, attributeList, selected, handleClick, unit, setUnit }: ContainerModalProps) => {
+const ContainerModal = ({ open, handleClose, attributeList, selected, handleClick, unit, setUnit, saveChanges }: ContainerModalProps) => {
   return (
     <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={style}>
@@ -325,7 +340,7 @@ const ContainerModal = ({ open, handleClose, attributeList, selected, handleClic
           ))}
 
           <Grid container direction="row" justifyContent="space-between" alignItems="center" sx={{ mt: 5 }}>
-            <Button variant="contained" color="success" sx={{ mr: 4 }}>
+            <Button variant="contained" color="success" sx={{ mr: 4 }} onClick={saveChanges}>
               Save
             </Button>
             <Button variant="contained" color="warning" sx={{ mr: 'end' }} onClick={handleClose}>
