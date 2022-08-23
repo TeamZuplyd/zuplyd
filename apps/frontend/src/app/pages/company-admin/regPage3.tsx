@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -10,14 +10,14 @@ import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-do
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
-// TODO: get comp id by email, can be null
-const compId = null;
-// const compId = '62f7517c8d8d6a1689cd1b6d';
-
 const postData = {
   step: 2,
-  comp_id: null,
+  comp_id: '',
   comp_data: {},
+};
+
+const getCompId = () => {
+  return localStorage.getItem('comp_id') || '';
 };
 
 const selectDistStruct = async (selectedStruct: any) => {
@@ -26,6 +26,8 @@ const selectDistStruct = async (selectedStruct: any) => {
     return null;
   } else {
     postData.comp_data = { distribution_struct: selectedStruct };
+    postData.comp_id = getCompId();
+
     const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
     return response;
   }
@@ -92,9 +94,7 @@ function regPage3() {
               className="createAcc"
               style={{ width: '100%', marginTop: '20%' }}
               onClick={() => {
-                if (!compId) {
-                  handleInit2();
-                }
+                handleInit2();
               }}
             >
               Continue

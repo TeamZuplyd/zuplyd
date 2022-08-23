@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-// TODO: get comp id by email, can be null
-const compId = null;
-// const compId = '62f7517c8d8d6a1689cd1b6d';
-
 const postData = {
   step: 3,
-  comp_id: null,
+  comp_id: '',
   comp_data: {},
+};
+
+const getCompId = () => {
+  return localStorage.getItem('comp_id') || '';
 };
 
 const selectTier = async (selectedTier: any) => {
@@ -19,6 +19,7 @@ const selectTier = async (selectedTier: any) => {
     alert('Select an option');
     return null;
   } else {
+    postData.comp_id = getCompId();
     postData.comp_data = { tier: selectedTier };
     const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
     return response;
@@ -98,9 +99,9 @@ const RegPage4 = () => {
             className="createAcc"
             style={{ width: '50%', marginTop: '5%', alignSelf: 'center' }}
             onClick={() => {
-              if (!compId) {
-                handleInit3();
-              }
+              // if (compId != '') {
+              handleInit3();
+              // }
             }}
           >
             Continue

@@ -138,8 +138,8 @@ export function AppRoute(props: AppRouteProps) {
       */}
 
       {/* <Route element={<RoleBasedDefaultRouting user={user} />}> */}
-      <Route path="/" element={<Signup />}></Route>
-      <Route path="/landing" element={<LandingPage />}></Route>
+      {/* <Route path="/" element={<Signup />}></Route> */}
+      <Route path="/" element={<LandingPage />}></Route>
       {/* </Route> */}
 
       <Route path="comp-init-1" element={<RegPage2 />} />

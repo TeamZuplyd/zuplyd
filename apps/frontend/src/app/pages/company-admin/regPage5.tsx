@@ -7,14 +7,16 @@ import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-do
 type Props = {};
 import axios from 'axios';
 
-// TODO: get comp id by email, can be null
-const compId = null;
-// const compId = '62f7517c8d8d6a1689cd1b6d';
+// TODO: check if we shud destroy comp_id in localStorage
 
 const postData = {
   step: 4,
-  comp_id: null,
+  comp_id: '',
   comp_data: {},
+};
+
+const getCompId = () => {
+  return localStorage.getItem('comp_id') || '';
 };
 
 interface comp_data {
@@ -24,12 +26,12 @@ interface comp_data {
 }
 
 const postManagers = async ({ p_managers, w_managers, s_managers }: comp_data) => {
+  postData.comp_id = getCompId();
   postData.comp_data = {
     p_managers: p_managers,
     w_managers: w_managers,
     s_managers: s_managers,
   };
-  console.log(postData);
 
   const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
   return response;
@@ -130,9 +132,9 @@ const RegPage5 = (props: Props) => {
             className="createAcc"
             style={{ width: '25%', marginTop: '5%', alignSelf: 'center' }}
             onClick={() => {
-              if (!compId) {
-                handleInit4();
-              }
+              // if (!compId) {
+              handleInit4();
+              // }
             }}
           >
             Continue
