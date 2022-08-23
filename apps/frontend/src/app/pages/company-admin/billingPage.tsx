@@ -80,7 +80,7 @@ type TierItemProps = {
 
 function TierItem({ id, name, price, description, handleSelect, selected, chosenTier }: TierItemProps) {
   return (
-    <Card onClick={() => handleSelect(id)} className={selected === id ? 'highlightTier' : '' || chosenTier == true ? 'selectedTier' : ''}>
+    <Card style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }} onClick={() => handleSelect(id)} className={selected === id ? 'highlightTier' : '' || chosenTier == true ? 'selectedTier' : ''}>
       <CardActionArea>
         <CardContent sx={{ p: 4 }}>
           <Typography variant="subtitle1" sx={{ color: '#1F2937' }}>

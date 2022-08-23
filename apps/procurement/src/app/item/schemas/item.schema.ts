@@ -9,6 +9,21 @@ export class Item {
   item_name: string;
 
   @Prop()
+  category_name: string;
+
+  @Prop()
+  brand_name: string;
+
+  @Prop()
+  min_release_quantity: number;
+
+  @Prop()
+  output_rule: string;
+
+  @Prop()
+  output_rule_unit: string;
+
+  @Prop()
   company_id: string;
 
   @Prop()

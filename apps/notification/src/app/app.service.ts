@@ -21,7 +21,7 @@ export class AppService {
     });
   }
 
-  async sendEmailBulk(comp_name: string, email_list: Array<string>) {
+  async sendEmailBulk(comp_name: string, role: string, email_list: Array<string>) {
     await email_list.forEach((email) =>
       this.mailService.sendMail({
         to: email,
@@ -29,6 +29,7 @@ export class AppService {
         template: 'welcome',
         context: {
           company: comp_name,
+          role: role,
         },
       })
     );

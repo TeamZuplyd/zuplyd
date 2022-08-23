@@ -50,21 +50,23 @@ function company() {
       <Header title={'Dashboard'} />
 
       <div className="content">
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Details" {...a11yProps(0)} />
-            <Tab label="Plan & Billing" {...a11yProps(1)} />
-          </Tabs>
+        <Box sx={{ width: '100%', paddingLeft: '2rem' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+              <Tab label="Details" {...a11yProps(0)} />
+              <Tab label="Plan & Billing" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <FormComponent companyName="Zuplyd" companyAddress="" />
+
+            <ContactDetailsFormComponent email="zuplyD@gmail.com" phoneNumbers={['0766811254', '0711478525']} />
+          </TabPanel>
+
+          <TabPanel value={value} index={1}>
+            <BillingPage />
+          </TabPanel>
         </Box>
-        <TabPanel value={value} index={0}>
-          <FormComponent companyName="Zuplyd" companyAddress="" />
-
-          <ContactDetailsFormComponent email="zuplyD@gmail.com" phoneNumbers={['0766811254', '0711478525']} />
-        </TabPanel>
-
-        <TabPanel value={value} index={1}>
-          <BillingPage />
-        </TabPanel>
       </div>
     </>
   );

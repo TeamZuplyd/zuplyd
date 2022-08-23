@@ -16,7 +16,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead } from '@mui/material';
-import { orders } from '../../../data/orders';
+// import { orders } from '../../../data/orders';
 interface TablePaginationActionsProps {
   count: number;
   page: number;
@@ -62,9 +62,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export interface PMOrderTableProps {}
+export interface PMOrderTableProps {
+  orders: any[];
+}
 
-export function PMOrderTable(props: PMOrderTableProps) {
+export function PMOrderTable({orders}: PMOrderTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -89,28 +91,29 @@ export function PMOrderTable(props: PMOrderTableProps) {
             <TableCell component="th">Name </TableCell>
             <TableCell component="th">Brand</TableCell>
             <TableCell component="th">Quantity</TableCell>
-            <TableCell component="th">Status</TableCell>
             <TableCell component="th">Required By</TableCell>
             <TableCell component="th">Requested By</TableCell>
             <TableCell component="th">Requested Date</TableCell>
+            <TableCell component="th">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).map((order) => (
-            <TableRow key={order.item_code}>
-              <TableCell component="th" scope="row">
-                {order.item_code}
-              </TableCell>
-              <TableCell style={{}}>{order.name}</TableCell>
-              <TableCell style={{}}>{order.brand}</TableCell>
-              <TableCell style={{}}>{order.quantity}</TableCell>
-              <TableCell style={{}}>{order.status}</TableCell>
-              <TableCell style={{}}>{order.required_by}</TableCell>
-              <TableCell style={{}}>{order.requested_by}</TableCell>
-              <TableCell style={{}}>{order.requested_date}</TableCell>
-             
-            </TableRow>
-          ))}
+          {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders)
+            .filter((order) => order.sentRequest)
+            .map((order) => (
+              <TableRow key={order.item_code}>
+                <TableCell component="th" scope="row">
+                  {order.item_code}
+                </TableCell>
+                <TableCell style={{}}>{order.name}</TableCell>
+                <TableCell style={{}}>{order.brand}</TableCell>
+                <TableCell style={{}}>{order.quantity}</TableCell>
+                <TableCell style={{}}>{order.required_by}</TableCell>
+                <TableCell style={{}}>{order.requested_by}</TableCell>
+                <TableCell style={{}}>{order.requested_date}</TableCell>
+                <TableCell style={{}}>{order.status}</TableCell>
+              </TableRow>
+            ))}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
               <TableCell colSpan={6} />
