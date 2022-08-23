@@ -60,6 +60,7 @@ import { useQuery } from 'react-query';
 
 import axios from 'axios';
 import SignupButton from '../components/signup-button/signup-button';
+import ProfileSetup from '../pages/procurement-manager/initialization/profileSetUp';
 
 export interface AppRouteProps {}
 
@@ -147,6 +148,7 @@ export function AppRoute(props: AppRouteProps) {
       <Route path="comp-init-2" element={<RegPage3 />} />
       <Route path="comp-init-3" element={<RegPage4 />} />
       <Route path="comp-init-4" element={<RegPage5 />} />
+      <Route path="profile-setup" element={<ProfileSetup />} />
       <Route path="signup" element={<SignupButton />} />
 
       {/* <Route element={<ProtectedRoute user={user} role={'comp_admin'} />}> */}
