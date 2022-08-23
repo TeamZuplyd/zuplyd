@@ -22,7 +22,7 @@ export interface HeaderProps {
   title: string;
 }
 
-export function Header({title}: HeaderProps) {
+export function Header({ title }: HeaderProps) {
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -38,7 +38,7 @@ export function Header({title}: HeaderProps) {
           <StyledToolbar>
             {/* <Breadcrumb /> */}
 
-            <Typography
+            {/* <Typography
               variant="h4"
               noWrap
               component="div"
@@ -47,8 +47,12 @@ export function Header({title}: HeaderProps) {
             >
               <Breadcrumb/>
               {title}
+            </Typography> */}
+
+            <Typography variant="h4" noWrap component="div" sx={{ flexGrow: 1, alignSelf: 'center' }} color="#4B5563">
+              {title}
             </Typography>
-            
+
             <BellIcon
               style={{
                 minWidth: '24px',
@@ -60,11 +64,9 @@ export function Header({title}: HeaderProps) {
                 // paddingLeft: "2rem",
               }}
             />
-            
           </StyledToolbar>
         </AppBar>
       </Box>
-     
     </div>
   );
 }
