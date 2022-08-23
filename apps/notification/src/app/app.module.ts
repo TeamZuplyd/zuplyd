@@ -24,7 +24,7 @@ import { join } from 'path';
           from: 'teamzuplyd@gmail.com',
         },
         template: {
-          dir: 'D:\\Team Zuplyd\\zuplyd\\dist\\apps\\notification\\assets\\templates',
+          dir: join(__dirname, '/assets/templates'),
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,

@@ -16,8 +16,21 @@ export class AppService {
       subject: 'Invitaion: Team Zuplyd',
       template: 'welcome',
       context: {
-        name: name,
+        company: name,
       },
     });
+  }
+
+  async sendEmailBulk(comp_name: string, email_list: Array<string>) {
+    await email_list.forEach((email) =>
+      this.mailService.sendMail({
+        to: email,
+        subject: `Invitation to join ${comp_name}`,
+        template: 'welcome',
+        context: {
+          company: comp_name,
+        },
+      })
+    );
   }
 }
