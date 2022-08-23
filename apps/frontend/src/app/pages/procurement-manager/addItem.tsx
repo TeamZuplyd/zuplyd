@@ -146,7 +146,7 @@ function addItem() {
                   }}
                   id="outlined-basic"
                   value={minReleaseQTextFieldValue}
-                  label="Min release quantity (in kg)"
+                  label="Min release quantity"
                   variant="outlined"
                   size="small"
                   sx={{ mt: 1, width: '340px' }}
