@@ -5,13 +5,6 @@ import { Empty } from './google/protobuf/empty.pb';
 
 export const protobufPackage = 'userMgmt';
 
-export interface UserDto {
-  email: string;
-  role: string;
-  company_name: string;
-  company_id: string;
-}
-
 /** Register */
 export interface RegisterRequest {
   email: string;
