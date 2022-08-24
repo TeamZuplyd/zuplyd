@@ -6,12 +6,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://user_mgmt_admin:WCWXJ2wOMHOgAjLs@cluster0.v2ctmfu.mongodb.net/?retryWrites=true&w=majority'
-    ),
-    UsersModule,
-  ],
+  imports: [MongooseModule.forRoot('mongodb+srv://admin:nESDm2LrDARJWLfs@cluster0.m7waswd.mongodb.net/?retryWrites=true&w=majority'), UsersModule],
   controllers: [AppController],
   providers: [AppService],
   exports: [AppService],

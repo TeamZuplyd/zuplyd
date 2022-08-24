@@ -71,6 +71,8 @@ export function LandingPricing(props: LandingPricingProps) {
               width:"100%",
               flexDirection: 'column',
               p:"30px",
+              top:"0px",
+              transition: "all 0.5s",
               '&:hover': {
                 top:"-20px"
               }
@@ -91,12 +93,12 @@ export function LandingPricing(props: LandingPricingProps) {
               component="p"
               sx={{ color:"#637381", mt:"40px"}}
             >
-              Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien
+              Perfect for any new businesses
             </Typography>
             <ul style={{listStyleImage:`url(${checkMark})`, margin:"30px"}}>
-              <li>Auto update mode</li>
-              <li>Auto update mode</li>
-              <li>Auto update mode</li>
+              <li>1 warehouse</li>
+              <li>10 shops</li>
+              <li>Unlimited suppliers</li>
             </ul>
 
             <StartButton />
@@ -114,6 +116,8 @@ export function LandingPricing(props: LandingPricingProps) {
               width:"100%",
               flexDirection: 'column',
               p:"30px",
+              top:"0px",
+              transition: "all 0.5s",
               '&:hover': {
                 top:"-20px"
               }
@@ -134,13 +138,13 @@ export function LandingPricing(props: LandingPricingProps) {
               component="p"
               sx={{ color:"#637381", mt:"40px"}}
             >
-              Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien
+              Perfect for small businesses
             </Typography>
             <ul style={{listStyleImage:`url(${checkMark})`, margin:"30px"}}>
-              <li>Auto update mode</li>
-              <li>Auto update mode</li>
-              <li>Auto update mode</li>
-              <li>Auto update mode</li>
+              <li>3 warehouses</li>
+              <li>100 shops</li>
+              <li>Unlimited suppliers</li>
+              <li>Email support</li>
             </ul>
 
             <StartButton />
@@ -158,6 +162,8 @@ export function LandingPricing(props: LandingPricingProps) {
               width:"100%",
               flexDirection: 'column',
               p:"30px",
+              top:"0px",
+              transition: "all 0.5s",
               '&:hover': {
                 top:"-20px"
               }
@@ -178,14 +184,14 @@ export function LandingPricing(props: LandingPricingProps) {
               component="p"
               sx={{ color:"#637381", mt:"40px"}}
             >
-              Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien
+              Perfect for medium scale businesses
             </Typography>
             <ul style={{listStyleImage:`url(${checkMark})`, margin:"30px"}}>
-              <li>Auto update mode</li>
-              <li>Auto update mode</li>
-              <li>Auto update mode</li>
-              <li>Auto update mode</li>
-              <li>Auto update mode</li>
+              <li>Unlimited warehouses</li>
+              <li>Unlimited shops</li>
+              <li>Unlimited suppliers</li>
+              <li>Custom training</li>
+              <li>Phone support</li>
             </ul>
 
             <StartButton />

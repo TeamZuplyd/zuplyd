@@ -1,5 +1,6 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
+import axios from 'axios';
 
 // Importing DTOs
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -21,6 +22,7 @@ export class CompaniesController {
   @Post('register')
   async register(@Body() data: any) {
     data.comp_data.init_completed = data.step != 4 ? false : true;
+    console.log(data);
 
     let registeredCompany = await this.companyService.register(data.comp_id, data.comp_data);
 
@@ -40,16 +42,67 @@ export class CompaniesController {
     return companies;
   }
 
+  async regManager(body): Promise<any> {
+    return await axios.post('http://localhost:7000/api/user-mgmt/register', body);
+  }
+
   @Post('setupManagers')
-  async setupManagers(@Body() managersDto: ManagersDto) {
+  async setupManagers(@Body() managersDto: ManagersDto): Promise<any> {
     console.log(managersDto);
 
-    // http://localhost:7000/api/user-mgmt/register
+    let company = await this.companyService.findOne(managersDto.company_id);
+    if (company) {
+      console.log(company.company_name);
 
-    // let registeredCompany = await this.companyService.register(data.comp_id, data.comp_data);
+      const body = {
+        email: '',
+        role: '',
+        company_name: company.company_name,
+        company_id: managersDto.company_id,
+      };
 
-    // const ret = { comp_id: registeredCompany['id'] };
-    // return ret;
-    return true;
+      const errBody = {
+        p_managers: [],
+        w_managers: [],
+        s_managers: [],
+      };
+
+      let p_managers = managersDto.p_managers;
+      let w_managers = managersDto.w_managers;
+      let s_managers = managersDto.s_managers;
+
+      // Handling proc_mngr
+      for (const email of p_managers) {
+        body.email = email;
+        body.role = 'proc_mngr';
+        let res = await this.regManager(body);
+      }
+
+      // Handling wh_mngr
+      for (const email of w_managers) {
+        body.email = email;
+        body.role = 'wh_mngr';
+        let res = await this.regManager(body);
+      }
+
+      // Handling sh_mngr
+      for (const email of s_managers) {
+        body.email = email;
+        body.role = 'sh_mngr';
+        let res = await this.regManager(body);
+      }
+
+      const emailsBody = {
+        comp_name: company.company_name,
+        p_managers: managersDto.p_managers,
+        w_managers: managersDto.w_managers,
+        s_managers: managersDto.s_managers,
+      };
+      console.log(emailsBody);
+
+      let res = await axios.post('http://localhost:3500/api/notification/bulk', emailsBody);
+      return true;
+    }
+    return false;
   }
 }

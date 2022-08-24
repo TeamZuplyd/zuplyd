@@ -43,7 +43,7 @@ export function LandingHero(props: LandingHeroProps) {
               style={{ width: "90%", color:"#637381" }}
               align="left"
             >
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour..
+              A supply chain management system for small to medium range businesses to stay on top of their inventory, assets, and more.
             </Typography>
             
             <button style={btnStyle}>Try For Free</button>

@@ -67,7 +67,7 @@ export function SideNav({ username, userNum }: SideNavProps) {
       {/* Profile details section - Start  */}
       <div className="profileDetails">
         <img
-          src="./assets/imgs/sample.jpg"
+          src="./assets/imgs/sample.png"
           // TODO: set image properly
           alt="profileImg"
           className="profileImg"
