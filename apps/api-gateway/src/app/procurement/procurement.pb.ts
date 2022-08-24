@@ -10,6 +10,7 @@ export interface Item {
   category_name: string;
   brand_name: string;
   min_release_quantity: number;
+  min_release_quantity_unit: string;
   output_rule: string;
   output_rule_unit: string;
   company_id: string;
@@ -23,6 +24,7 @@ export interface ItemWithID {
   category_name: string;
   brand_name: string;
   min_release_quantity: number;
+  min_release_quantity_unit: string;
   output_rule: string;
   output_rule_unit: string;
   company_id: string;
