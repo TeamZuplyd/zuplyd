@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import TaskIcon from '@mui/icons-material/Task';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 import TuneIcon from '@mui/icons-material/Tune';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -83,7 +84,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
 
 
   return (
-    <Container maxWidth="xl" sx={{bgcolor:"#161C24",pt:5,pb:5}} id="features">
+    <Container maxWidth="100%" sx={{bgcolor:"#161C24",pt:5,pb:5}} id="features">
       <Container maxWidth="lg">
         <Grid container>
           <Grid item sm={12} md={6}>
@@ -106,7 +107,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
                 style={{ width: "70%", color:"#A5C1D9" }}
                 align="left"
               >
-                Choose the perfect plan for your needs. Always flexible to grow
+                A smarter way to supply chain management, no matter what business you’re in.
               </Typography>
               <Box
                 display="flex"
@@ -166,6 +167,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
                 data-aos="fade-left"
               >
                 <TaskIcon sx={{ color: "#FFF",fontSize: 63, mb:2 }}/>
+                
                 <Typography
                   variant="h6"
                   gutterBottom
@@ -210,7 +212,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
                 style={fBox5}
                 data-aos="fade-up"
               >
-                <NotificationImportantIcon sx={{ color: "#FFF",fontSize: 63, mb:2 }}/>
+                <ThumbUpIcon sx={{ color: "#FFF",fontSize: 63, mb:2 }}/>
                 <Typography
                   variant="h6"
                   gutterBottom

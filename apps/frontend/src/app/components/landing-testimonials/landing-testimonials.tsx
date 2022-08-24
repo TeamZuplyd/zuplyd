@@ -40,7 +40,7 @@ export function LandingTestimonials(props: LandingTestimonialsProps) {
   },[]);
 
   return (
-    <Container maxWidth="xl" sx={{bgcolor:"#161C24",pt:5,pb:5}}>
+    <Container maxWidth="100%" sx={{bgcolor:"#161C24",pt:5,pb:5}}>
       <Container maxWidth="lg">
         <Grid container>
           <Grid item sm={12} md={5}>
@@ -70,7 +70,7 @@ export function LandingTestimonials(props: LandingTestimonialsProps) {
                   style={{ width: "80%", color:"#A5C1D9" }}
                   align="center"
                 >
-                  Choose the perfect plan for your needs. Always flexible to grow
+                  Positive feedback we got so far
                 </Typography>
               </Box>
             </Box>
@@ -120,7 +120,7 @@ export function LandingTestimonials(props: LandingTestimonialsProps) {
                       Eleanor Pena
                     </Typography>
                     <Typography variant="body2" gutterBottom style={{ color:"#BCCEDE" }}>
-                      Procument Manager
+                      ABC company
                     </Typography>
                   </Box>
                   <Box
