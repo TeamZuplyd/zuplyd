@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-do
 import { useQuery, useMutation } from 'react-query';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import axios from 'axios';
+import { useAuth0, User } from '@auth0/auth0-react';
 
 // TODO: get comp id by email, can be null
 
@@ -25,18 +26,32 @@ type formValues = {
 interface comp_data {
   inputValues: any;
   numbers: any;
+  userEmail: any;
 }
 
-const createNewComp = async ({ inputValues, numbers }: comp_data) => {
+const createNewComp = async ({ inputValues, numbers, userEmail }: comp_data): Promise<any> => {
   inputValues.contact_nums = numbers;
   postData.comp_data = inputValues;
 
-  const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
-  console.log(response.data.comp_id);
+  const response1 = await axios.post(`http://localhost:3333/api/companies/register`, postData);
 
-  localStorage.setItem('comp_id', response.data.comp_id);
+  const userBody = {
+    email: userEmail,
+    role: 'comp_admin',
+    company_name: inputValues.company_name,
+    company_id: '',
+  };
 
-  return response;
+  userBody.company_id = response1.data.comp_id;
+
+  const response2 = await axios.post(`http://localhost:7000/api/user-mgmt/register`, userBody);
+  console.log(response1.data.comp_id);
+
+  localStorage.setItem('comp_id', response1.data.comp_id);
+
+  console.log('done');
+
+  return response1 && response2;
 };
 
 function regPage2() {
@@ -54,8 +69,8 @@ function regPage2() {
 
   const { mutate: createCompany } = useCreateCompany();
 
-  const handleCreateCompany = ({ inputValues, numbers }: comp_data) => {
-    createCompany({ inputValues, numbers });
+  const handleCreateCompany = ({ inputValues, numbers, userEmail }: comp_data) => {
+    createCompany({ inputValues, numbers, userEmail });
     navigate('/comp-init-2');
   };
 
@@ -82,6 +97,8 @@ function regPage2() {
     }
     setNumbers(arr);
   };
+  const auth = useAuth0();
+  const userEmail = auth.user?.email;
 
   return (
     <Grid container rowGap={0} columnGap={0}>
@@ -153,7 +170,7 @@ function regPage2() {
               style={{ width: '100%', marginTop: '20%' }}
               onClick={() => {
                 // if (!compId) {
-                handleCreateCompany({ inputValues, numbers });
+                handleCreateCompany({ inputValues, numbers, userEmail });
                 // }
               }}
             >

@@ -11,6 +11,8 @@ export class UsersController {
 
   @GrpcMethod(USER_MGMT_SERVICE_NAME, 'register')
   async register(createUserDto: CreateUserDto): Promise<any> {
+    console.log(createUserDto);
+
     if (await this.userService.findOne(createUserDto.email)) {
       return { error: 'user_already_exists' };
     } else {

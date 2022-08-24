@@ -43,6 +43,7 @@ const postManagers = async ({ p_managers, w_managers, s_managers }: comp_data): 
     p_managers: p_managers,
   };
   const response2 = await axios.post(`http://localhost:3333/api/companies/setupManagers`, mangBody);
+
   console.log('done');
 
   return response1 && response2;
@@ -90,7 +91,8 @@ const RegPage5 = (props: Props) => {
         setPosting(false);
       })
       .then(() => {
-        navigate('/company-admin/dashboard');
+        console.log('Navigates');
+        navigate('/company-admin');
       });
 
     // if (res) navigate('/company-admin/dashboard');
