@@ -69,6 +69,13 @@ export class UserMgmtController {
     );
   }
 
+  @Get('find')
+  private async emptyFind(@Param() userRequest: UserRequest): Promise<any> {
+    return {
+      error: 'not_logged_in',
+    };
+  }
+
   @Get('delete/:email')
   private async delete(@Param() userRequest: UserRequest): Promise<any> {
     return this.svc.delete(userRequest).pipe(
