@@ -29,6 +29,9 @@ export class Item {
   @Prop()
   company_name: string;
 
+  @Prop()
+  min_release_quantity_unit: string;
+
   @Prop([String])
   attributes_array: string[];
 }
