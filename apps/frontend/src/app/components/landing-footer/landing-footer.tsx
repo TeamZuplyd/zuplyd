@@ -12,7 +12,8 @@ export interface LandingFooterProps {}
 
 export function LandingFooter(props: LandingFooterProps) {
   return (
-    <div style={{backgroundColor:"F9FAFB"}}>
+    
+    <div style={{backgroundColor:"#F9FAFB"}}>
       <Container maxWidth="lg">
         <img src={logo} style={{ width: 130 }} alt="zuplyd's logo" />
         
@@ -24,7 +25,7 @@ export function LandingFooter(props: LandingFooterProps) {
               component="p"
               sx={{ color:"#637381", mt:"20px", width:"70%"}}
             >
-              The starting point for your next project based on easy-to-customize Material-UI © helps you build apps faster and better.
+              Dynamic supply chain management system
             </Typography>
             <Typography
               variant="body2"
@@ -42,7 +43,7 @@ export function LandingFooter(props: LandingFooterProps) {
             }}>
                 <MailOutlineIcon style={{fontSize:"22px", marginRight:"10px"}}/>
                 <Typography variant="subtitle2" gutterBottom style={{fontSize:"14px"}}>
-                  info@example.com
+                teamzuplyd@googlegroups.com
                 </Typography>
             </div>
             <div style={{

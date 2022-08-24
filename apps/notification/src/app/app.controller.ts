@@ -23,7 +23,7 @@ export class AppController {
     console.log(p_managers);
 
     this.appService.sendEmailBulk(comp_name, 'Procurement Manager', p_managers);
-    // this.appService.sendEmailBulk(comp_name, 'Warehouse Manager', w_managers);
-    // this.appService.sendEmailBulk(comp_name, 'Shop Manager', s_managers);
+    this.appService.sendEmailBulk(comp_name, 'Warehouse Manager', w_managers);
+    this.appService.sendEmailBulk(comp_name, 'Shop Manager', s_managers);
   }
 }

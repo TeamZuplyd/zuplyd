@@ -1,6 +1,7 @@
 /* eslint-disable-next-line */
 import * as React from 'react';
 import { Typography, Drawer, Box, Button, Grid } from '@mui/material';
+import { formatColumnHeader } from '../../../util/stringMethods';
 
 export interface ItemSideOverPMProps {
   toggle: boolean;
@@ -19,14 +20,14 @@ export function ItemSideOverPM({ toggle, toggleDrawer, data, index }: ItemSideOv
           </Typography>
           <Grid container direction="row" spacing={3} columnGap={0} sx={{ pt: 3, margin: 'auto' }}>
             {Object.keys(data)
-              .filter((key) => key != '_id' && key != '_v')
+              .filter((key) => key != '_id' && key != '__v')
               .map((key) => {
                 return (
                   <>
                     {key != 'attributes_array' ? (
                       <>
                         <Grid item xs={6}>
-                          {key.replace(/_/g, ' ')}
+                          {formatColumnHeader(key)}
                         </Grid>
 
                         <Grid item xs={6}>
