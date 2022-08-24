@@ -32,9 +32,9 @@ export class ShopWarehouseController {
     return this.shopWarehouseReqService.delete(id);
   }
 
-  @Get('update/:id')
-  update(@Param('id') id: string, @Body() shopWarehouseReq: ShopWarehouseReq) {
-    return this.shopWarehouseReqService.update(id, shopWarehouseReq);
+  @Get('update')
+  update(@Body() shopWarehouseReq: any) {
+    return this.shopWarehouseReqService.update(shopWarehouseReq._id, shopWarehouseReq);
   }
 
   @Get('findAllDev')
