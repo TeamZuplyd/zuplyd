@@ -38,15 +38,15 @@ export function LandingPricing(props: LandingPricingProps) {
           pb:"30px"
         }}
       >
-        <span style={{color:"#FA541C", fontSize:"12px", margin:"30px", fontWeight: 600}}>PRICING</span>
-        <Typography variant="h3" component="h3" gutterBottom style={{ fontWeight: 700, fontSize:"48px"}}>
+        <span style={{color:"#FA541C", fontSize:"12px", margin:"30px" ,fontFamily: 'Poppins', fontWeight: 600, fontStyle: "normal"}}>PRICING</span>
+        <Typography variant="h3" component="h3" gutterBottom style={{ fontWeight: 700, fontSize:"48px", fontFamily: 'Barlow',fontStyle: "normal"}}>
           Check Our Plans
         </Typography>
         <Typography
           variant="h6"
           gutterBottom
           component="p"
-          style={{ width: "35%", color:"#637381" }}
+          style={{ width: "35%", color:"#637381", fontFamily: 'Poppins', fontStyle: "normal", fontWeight: 400 }}
           align="center"
         >
           Choose the perfect plan for your needs. Always flexible to grow

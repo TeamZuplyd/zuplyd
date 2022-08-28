@@ -96,15 +96,15 @@ export function LandingFeatures(props: LandingFeaturesProps) {
               sx={{ flexDirection: "column" }}
               style={{ textAlign: "center" }}
             >
-              <span style={{color:"#FA541C", fontSize:"12px"}}>FEATURE HIGHLIGHTS</span>
-              <Typography variant="h3" component="h3" gutterBottom style={{ width: "70%", fontWeight: 700, color:"#FFF", fontSize:"48px"}} align="left">
+              <span style={{color:"#FA541C",fontFamily: 'Poppins', fontWeight: 600, fontSize:"12px",fontStyle: "normal"}}>FEATURE HIGHLIGHTS</span>
+              <Typography variant="h3" component="h3" gutterBottom style={{ width: "70%", fontWeight: 700, color:"#FFF", fontSize:"48px", fontFamily: 'Barlow',fontStyle: "normal"}} align="left">
                 Have Everything You Need
               </Typography>
               <Typography
                 variant="h6"
                 gutterBottom
                 component="p"
-                style={{ width: "70%", color:"#A5C1D9" }}
+                style={{ width: "70%", color:"#A5C1D9", fontFamily: 'Poppins', fontStyle: "normal", fontWeight: 400 }}
                 align="left"
               >
                 A smarter way to supply chain management, no matter what business you’re in.

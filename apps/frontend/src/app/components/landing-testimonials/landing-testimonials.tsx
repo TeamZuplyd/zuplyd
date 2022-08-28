@@ -59,15 +59,15 @@ export function LandingTestimonials(props: LandingTestimonialsProps) {
                   flexDirection: "column"
                 }}
               >
-                <span style={{color:"#FA541C", fontSize:"12px", margin:"20px", fontWeight: 600}}>TESTIMONIALS</span>
-                <Typography variant="h3" component="h3" gutterBottom style={{ fontWeight: 700, fontSize:"48px", color:"#FFF"}}>
+                <span style={{color:"#FA541C", fontSize:"12px", margin:"20px", fontWeight: 600,fontFamily: 'Poppins', fontStyle: "normal"}}>TESTIMONIALS</span>
+                <Typography variant="h3" component="h3" gutterBottom style={{ fontWeight: 700, fontSize:"48px", color:"#FFF", fontFamily: 'Barlow',fontStyle: "normal"}}>
                   Who Loves Our Work
                 </Typography>
                 <Typography
                   variant="h6"
                   gutterBottom
                   component="p"
-                  style={{ width: "80%", color:"#A5C1D9" }}
+                  style={{ width: "80%", color:"#A5C1D9", fontFamily: 'Poppins', fontStyle: "normal", fontWeight: 400 }}
                   align="center"
                 >
                   Positive feedback we got so far

@@ -33,14 +33,14 @@ export function LandingHero(props: LandingHeroProps) {
             sx={{ flexDirection: "column" }}
             style={{ textAlign: "center" }}
           >
-            <Typography variant="h2" component="h1" gutterBottom style={{ width: "90%", fontWeight: 700,textShadow: "7px 9px 23px rgba(0, 0, 0, 0.15)" }} align="left">
+            <Typography variant="h2" component="h1" gutterBottom style={{ width: "90%", fontWeight: 700,textShadow: "7px 9px 23px rgba(0, 0, 0, 0.15)", fontFamily: 'Barlow'}} align="left">
               Say <span className='highlight'>hello!</span> to your ideal inventory solution
             </Typography>
             <Typography
               variant="body2"
               gutterBottom
               component="p"
-              style={{ width: "90%", color:"#637381" }}
+              style={{ width: "90%", color:"#637381", fontFamily: 'Poppins', fontWeight: 400, fontSize: "16px"}}
               align="left"
             >
               A supply chain management system for small to medium range businesses to stay on top of their inventory, assets, and more.
