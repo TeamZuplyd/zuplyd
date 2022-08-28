@@ -6,18 +6,32 @@ import LandingFaq from '../../components/landing-faq/landing-faq';
 import LandingFooter from '../../components/landing-footer/landing-footer';
 import LandingTestimonials from '../../components/landing-testimonials/landing-testimonials';
 
+import { useAuth0 } from '@auth0/auth0-react';
+
 export interface LandingPageProps {}
 
 export function LandingPage(props: LandingPageProps) {
+
+  const { loginWithRedirect } = useAuth0();
+
+  const handleSignUp = async () => {
+    await loginWithRedirect({
+      screen_hint: 'signup',
+      appState: {
+        returnTo: '/comp-init-1',
+      },
+    });
+  };
+
   return (
     <>
       <LandingNavBar />
-      <LandingHero />
+      <LandingHero getStart={handleSignUp}/>
       <LandingFeatures />
-      <LandingPricing />
+      <LandingPricing getStart={handleSignUp}/>
       <LandingTestimonials />
       <LandingFaq />
-      <LandingFooter />
+      <LandingFooter getStart={handleSignUp}/>
     </>
   );
 }

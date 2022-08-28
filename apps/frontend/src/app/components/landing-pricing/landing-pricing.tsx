@@ -8,9 +8,11 @@ import planStarter from "../../../assets/imgs/ic_plan_starter.png";
 
 import checkMark from "../../../assets/imgs/ic_check.png";
 
-export interface LandingPricingProps {}
+export interface LandingPricingProps {
+  getStart: ()=>void
+}
 
-function StartButton(){
+function StartButton(props){
 
   const btnStyle ={
     background: "#FA541C",
@@ -23,7 +25,7 @@ function StartButton(){
   }
 
   return(
-    <button style={btnStyle}>Get Started</button>
+    <button style={btnStyle} onClick={props.handleSignup}>Get Started</button>
   );
 }
 
@@ -101,7 +103,7 @@ export function LandingPricing(props: LandingPricingProps) {
               <li>Unlimited suppliers</li>
             </ul>
 
-            <StartButton />
+            <StartButton handleSignup={props.getStart}/>
           </Box>
           
         </Box>
@@ -147,7 +149,7 @@ export function LandingPricing(props: LandingPricingProps) {
               <li>Email support</li>
             </ul>
 
-            <StartButton />
+            <StartButton handleSignup={props.getStart}/>
           </Box>
           
         </Box>
@@ -194,7 +196,7 @@ export function LandingPricing(props: LandingPricingProps) {
               <li>Phone support</li>
             </ul>
 
-            <StartButton />
+            <StartButton handleSignup={props.getStart}/>
           </Box>
           
         </Box>

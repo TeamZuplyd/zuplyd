@@ -7,7 +7,9 @@ import Container from '@mui/material/Container';
 import manWithBox from "../../../assets/imgs/manwithabox.png";
 import vector from "../../../assets/imgs/vector1.png";
 
-export interface LandingHeroProps {}
+export interface LandingHeroProps {
+  getStart: ()=>void
+}
 
 export function LandingHero(props: LandingHeroProps) {
 
@@ -46,7 +48,7 @@ export function LandingHero(props: LandingHeroProps) {
               A supply chain management system for small to medium range businesses to stay on top of their inventory, assets, and more.
             </Typography>
             
-            <button style={btnStyle}>Try For Free</button>
+            <button style={btnStyle} onClick={props.getStart}>Try For Free</button>
           </Box>
         </Grid>
         <Grid item sm={12} md={6}>
