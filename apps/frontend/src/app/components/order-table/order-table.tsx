@@ -16,6 +16,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead, FormControl, MenuItem, NativeSelect } from '@mui/material';
+import axios from 'axios';
 // import { orders } from '../../../data/orders';
 interface TablePaginationActionsProps {
   count: number;
@@ -64,12 +65,14 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
 export interface OrderTableProps {
   orders: any[];
-  handleStatusChange: (event: React.ChangeEvent<{ value: unknown }>, ites:string) => void;
+  handleStatusChange: (event: React.ChangeEvent<{ value: unknown }>, ites: string) => void;
 }
 
 export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const [dropDown, setDropDown] = React.useState('');
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
@@ -81,6 +84,13 @@ export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const changeStatus = (text: string, index: number) => {
+    //backendCall
+    orders[index].status = text;
+    axios.post('http://localhost:7000/api/procurement/item/create', orders[index]);
+    console.log(orders[index]);
   };
 
   return (
@@ -99,7 +109,7 @@ export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).map((order) => (
+          {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).map((order, index) => (
             <TableRow key={order.item_code}>
               <TableCell component="th" scope="row">
                 {order.item_code}
@@ -112,7 +122,7 @@ export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
               <TableCell style={{}}>{order.requested_date}</TableCell>
               <TableCell style={{}}>
                 {/* {order.status} */}
-                <StatusDropDown status={order.status} handleStatusChange={handleStatusChange} item={order.item_code} />
+                <StatusDropDown status={order.status} handleStatusChange={handleStatusChange} item={order.item_code} index={index} changeStatus={changeStatus} />
               </TableCell>
             </TableRow>
           ))}
@@ -150,13 +160,25 @@ export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
 export default OrderTable;
 type StatusDropDownProps = {
   status: string;
-  handleStatusChange: (event: React.ChangeEvent<{ value: unknown }>, item:string) => void;
+  handleStatusChange: (event: React.ChangeEvent<{ value: unknown }>, item: string) => void;
   item: string;
+  index: number;
+  changeStatus: (text: string, index: number) => void;
 };
-function StatusDropDown({ status, handleStatusChange, item }: StatusDropDownProps) {
+function StatusDropDown({ status, handleStatusChange, item, changeStatus, index }: StatusDropDownProps) {
+  const [selected, setSelected] = React.useState('');
+
   return (
     <FormControl variant="standard" sx={{}}>
-      <NativeSelect defaultValue={status} id="demo-simple-select-standard" onChange={(e) => handleStatusChange(e,item)}>
+      <NativeSelect
+        defaultValue={status}
+        value={selected}
+        id="demo-simple-select-standard"
+        onChange={(e) => {
+          setSelected(e.target.value);
+          changeStatus(e.target.value, index);
+        }}
+      >
         <option value={'Pending'}>In Progress</option>
         <option value={'in_delivery'}>In Delivery</option>
         <option value={'complete'}>Completed</option>
