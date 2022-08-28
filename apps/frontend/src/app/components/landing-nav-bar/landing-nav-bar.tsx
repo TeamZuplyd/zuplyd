@@ -16,7 +16,7 @@ export function LandingNavBar(props: LandingNavBarProps) {
     await loginWithRedirect({
       screen_hint: 'signup',
       appState: {
-        returnTo: '/comp-init-1',
+        returnTo: '/',
       },
     });
   };

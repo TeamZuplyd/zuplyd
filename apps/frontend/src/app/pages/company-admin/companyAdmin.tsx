@@ -1,17 +1,17 @@
-import React from 'react'
-import SideNav from '../../components/side-nav/side-nav'
-import { Outlet } from 'react-router-dom'
-import Header from '../../components/header/header'
+import React from 'react';
+import SideNav from '../../components/side-nav/side-nav';
+import { Outlet } from 'react-router-dom';
+import Header from '../../components/header/header';
 
 function companyAdmin() {
   return (
     <div className="outerContainer">
-      <SideNav username={"Name here"} userNum={0} />
+      <SideNav username={'devindsnk25@gmail.com'} userNum={0} />
       {/* <Header title={'Dashboard'} /> */}
-      
+
       <Outlet />
     </div>
-  )
+  );
 }
 
-export default companyAdmin
+export default companyAdmin;
