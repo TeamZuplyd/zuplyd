@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Grid, Box, Button, Card } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import EmailList from '../../components/email-list/email-list';
 import InitialAddForm from '../../components/initial-add-form/initial-add-form';
 import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-dom';
@@ -25,7 +25,8 @@ interface comp_data {
   s_managers: any;
 }
 
-const postManagers = async ({ p_managers, w_managers, s_managers }: comp_data) => {
+const postManagers = async ({ p_managers, w_managers, s_managers }: comp_data): Promise<any> => {
+  // setTimeout(async (): Promise<any> => {
   postData.comp_id = getCompId();
   postData.comp_data = {
     p_managers: p_managers,
@@ -33,12 +34,25 @@ const postManagers = async ({ p_managers, w_managers, s_managers }: comp_data) =
     s_managers: s_managers,
   };
 
-  const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
-  return response;
+  const response1 = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+
+  const mangBody = {
+    company_id: getCompId(),
+    w_managers: w_managers,
+    s_managers: s_managers,
+    p_managers: p_managers,
+  };
+  const response2 = await axios.post(`http://localhost:3333/api/companies/setupManagers`, mangBody);
+
+  console.log('done');
+
+  return response1 && response2;
+  // }, 3000);
 };
 
 const RegPage5 = (props: Props) => {
   const navigate = useNavigate();
+  const [isPosting, setPosting] = useState(false);
   const [s_managers, setShopManagerEmails] = useState<string[]>([]);
   const [w_managers, setWarehouseManagerEmails] = useState<string[]>([]);
   const [p_managers, setProcurementManagerEmails] = useState<string[]>([]);
@@ -70,9 +84,23 @@ const RegPage5 = (props: Props) => {
   };
 
   const handleInit4 = async () => {
-    let res = await postManagers({ p_managers, w_managers, s_managers });
-    if (res) navigate('/company-admin/dashboard');
+    setPosting(true);
+    // let res = await postManagers({ p_managers, w_managers, s_managers });
+    postManagers({ p_managers, w_managers, s_managers })
+      .then((data) => {
+        setPosting(false);
+      })
+      .then(() => {
+        console.log('Navigates');
+        navigate('/company-admin');
+      });
+
+    // if (res) navigate('/company-admin/dashboard');
   };
+
+  useEffect(() => {
+    console.log('isPosting', isPosting);
+  }, [isPosting]);
 
   return (
     <Grid container rowGap={0} columnGap={0} sx={{ py: 1 }}>
@@ -94,6 +122,8 @@ const RegPage5 = (props: Props) => {
               Add procurement, warehouse & shop managers.
             </Typography>
           </Grid>
+          {isPosting && <h2>Posting..</h2>}
+          {!isPosting && <h1>Not Posting</h1>}
           <Grid container item xs={12} spacing={1}>
             {/* pm */}
             <Grid container item xs={12} md={4} sx={{ mt: 1 }} alignItems="center" justifyContent="space-evenly" direction="column">
@@ -131,10 +161,9 @@ const RegPage5 = (props: Props) => {
             variant="contained"
             className="createAcc"
             style={{ width: '25%', marginTop: '5%', alignSelf: 'center' }}
-            onClick={() => {
-              // if (!compId) {
+            onClick={async () => {
               handleInit4();
-              // }
+              // setPosting(false);
             }}
           >
             Continue
