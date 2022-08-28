@@ -84,7 +84,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
 
 
   return (
-    <Container maxWidth="100%" sx={{bgcolor:"#161C24",pt:5,pb:5}} id="features">
+    <div style={{backgroundColor:"#161C24",paddingTop:5,paddingBottom:5, width:"100%"}} id="features">
       <Container maxWidth="lg">
         <Grid container>
           <Grid item sm={12} md={6}>
@@ -229,7 +229,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
           </Grid>
         </Grid>
       </Container>
-    </Container>
+    </div>
   );
 }
 

@@ -40,7 +40,7 @@ export function LandingTestimonials(props: LandingTestimonialsProps) {
   },[]);
 
   return (
-    <Container maxWidth="100%" sx={{bgcolor:"#161C24",pt:5,pb:5}}>
+    <div style={{backgroundColor:"#161C24",paddingTop:5,paddingBottom:5, width:"100%"}}>
       <Container maxWidth="lg">
         <Grid container>
           <Grid item sm={12} md={5}>
@@ -192,7 +192,7 @@ export function LandingTestimonials(props: LandingTestimonialsProps) {
           </Grid>
         </Grid>
       </Container>
-    </Container>
+    </div>
   );
 }
 
