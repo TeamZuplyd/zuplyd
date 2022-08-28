@@ -60,6 +60,7 @@ export function LandingHero(props: LandingHeroProps) {
             <img
               src={manWithBox}
               alt="a man with a box"
+              style={{position:"absolute", width:"626px",bottom:"-230px",zIndex:-50}}
             />
             <img
               src={vector}
