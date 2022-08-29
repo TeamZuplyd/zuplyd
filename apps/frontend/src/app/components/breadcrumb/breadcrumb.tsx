@@ -2,22 +2,28 @@
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 
-export interface BreadcrumbProps { }
+export interface BreadcrumbProps {
+  tags: string[];
+}
 
 function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
   event.preventDefault();
   console.info('You clicked a breadcrumb.');
 }
 
-export function Breadcrumb(props: BreadcrumbProps) {
+export function Breadcrumb({ tags }: BreadcrumbProps) {
   return (
-    <div
-      style={{ paddingTop: '0.5rem', paddingBottom: '0rem' }}
-      role="presentation"
-      onClick={handleClick}
-    >
+    <div style={{ paddingTop: '0.5rem', paddingBottom: '0rem' }} role="presentation" onClick={handleClick}>
       <Breadcrumbs separator=">" aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/">
+        {tags.map((k) => {
+          return (
+            <Link underline="hover" color="inherit" href="/">
+              {k}
+            </Link>
+          );
+        })}
+
+        {/* <Link underline="hover" color="inherit" href="/">
           Home
         </Link>
         <Link
@@ -35,7 +41,7 @@ export function Breadcrumb(props: BreadcrumbProps) {
           aria-current="page"
         >
           Sales
-        </Link>
+        </Link> */}
       </Breadcrumbs>
     </div>
   );
