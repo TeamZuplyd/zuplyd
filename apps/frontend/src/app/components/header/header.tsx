@@ -47,7 +47,7 @@ export function Header({ title }: HeaderProps) {
           <StyledToolbar>
             {/* <Breadcrumb /> */}
 
-            <Typography variant="h4" noWrap component="div" sx={{ flexGrow: 1, alignSelf: 'flex-end' }} color="#4B5563">
+            <Typography variant="h4" noWrap component="div" sx={{ flexGrow: 1, alignSelf: 'center', fontWeight: 500, fontSize: '35px', fontStyle: 'Poppins', color: '#1F2937' }} color="#4B5563">
               <Breadcrumb tags={tags} />
               {title}
             </Typography>
