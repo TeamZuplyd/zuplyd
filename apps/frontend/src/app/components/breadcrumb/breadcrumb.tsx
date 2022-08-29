@@ -18,7 +18,7 @@ export function Breadcrumb({ tags }: BreadcrumbProps) {
         {tags.map((k) => {
           return (
             <Link underline="hover" color="inherit" href="/">
-              {k}
+              {k.charAt(0).toUpperCase() + k.slice(1)}
             </Link>
           );
         })}
