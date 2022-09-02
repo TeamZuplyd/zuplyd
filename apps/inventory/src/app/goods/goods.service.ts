@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import mongoose, { Connection, Schema } from 'mongoose';
+import mongoose, { Connection, Model, Schema } from 'mongoose';
 
 @Injectable()
 export class GoodsService {
@@ -12,7 +12,8 @@ export class GoodsService {
   async addItem(ownerId: string, qty: number, unitOfMeasure: string, itemName: string, itemType: any, itemDetails: any) {
     const itemSchema = await this.customSchemaGenaraterForItems(itemType);
 
-    const itemModel = this.connection.model(itemName, itemSchema);
+    // const itemModel = this.connection.model(itemName, itemSchema);
+    const itemModel = this.itemModel(itemName, itemSchema);
 
     let itemToAdd = {
       item_name: itemType.item_name,
@@ -28,7 +29,7 @@ export class GoodsService {
       ...itemDetails,
     };
 
-    const addedItem = await itemModel.create(itemToAdd);
+    const addedItem = await (await itemModel).create(itemToAdd);
 
     return addedItem;
   }
@@ -53,5 +54,46 @@ export class GoodsService {
     });
     //console.log(singleItemSchema);
     return singleItemSchema;
+  }
+
+  //model creation based on the item type so that specific collection can be accessed
+  async itemModel(itemName: string, itemSchema: Schema): Promise<Model<any>> {
+    return this.connection.model(itemName, itemSchema);
+  }
+
+  async itemTransfer(item: any, toEntityId: string, transferQty: number, itemType: any) {
+    const itemSchema = await this.customSchemaGenaraterForItems(itemType);
+
+    const itemModel = await this.itemModel(item.item_name, itemSchema);
+
+    if (item.qty == transferQty) {
+      item = { ...item, ownerId: toEntityId };
+      return await itemModel.findByIdAndUpdate(item._id, item, {
+        returnOriginal: false,
+      });
+    } else {
+      let session = null;
+      let transferObj = null;
+      this.connection
+        .startSession()
+        .then((_session) => {
+          session = _session;
+
+          session.startTransaction();
+
+          transferObj = { ...item, qty: transferQty, ownerId: toEntityId };
+          delete transferObj._id;
+
+          item = { ...item, qty: item.qty - transferQty };
+
+          return itemModel.findByIdAndUpdate(item._id, item, {
+            returnOriginal: false,
+            session: session,
+          });
+        })
+        .then(() => itemModel.create([transferObj], { session: session }))
+        .then(() => session.commitTransaction())
+        .then(() => session.endSession());
+    }
   }
 }
