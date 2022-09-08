@@ -9,7 +9,7 @@ export class GoodsService {
     this.connection = mongoose.createConnection('mongodb+srv://admin:WCWXJ2wOMHOgAjLs@cluster0.zazfmj0.mongodb.net/?retryWrites=true&w=majority');
   }
 
-  async addItem(ownerId: string, qty: number, unitOfMeasure: string, itemName: string, itemType: any, itemDetails: any) {
+  async addItem(ownerId: string, qty: number, itemName: string, itemType: any, itemDetails: any) {
     const itemSchema = await this.customSchemaGenaraterForItems(itemType);
 
     // const itemModel = this.connection.model(itemName, itemSchema);
@@ -21,7 +21,7 @@ export class GoodsService {
       company_name: itemType.company_name,
       ownerId: ownerId,
       qty: qty,
-      unitOfMeasure: unitOfMeasure,
+      unitOfMeasure: itemType.unitOfMeasure,
     };
 
     itemToAdd = {
@@ -95,5 +95,28 @@ export class GoodsService {
         .then(() => session.commitTransaction())
         .then(() => session.endSession());
     }
+  }
+
+  async itemRelease(item: any, releaseQty: number, itemType: any) {
+    const itemSchema = await this.customSchemaGenaraterForItems(itemType);
+
+    const itemModel = await this.itemModel(item.item_name, itemSchema);
+
+    if (item.qty >= releaseQty) {
+      item = { ...item, qty: item.qty - releaseQty };
+      return await itemModel.findByIdAndUpdate(item._id, item, {
+        returnOriginal: false,
+      });
+    } else {
+      return { error: 'Qty error' };
+    }
+  }
+
+  async itemToBeReleased(item: any, itemType: any) {
+    const itemSchema = await this.customSchemaGenaraterForItems(itemType);
+
+    const itemModel = await this.itemModel(item.item_name, itemSchema);
+
+    return itemModel.find({});
   }
 }
