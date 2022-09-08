@@ -91,6 +91,19 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 export interface IssueTableProps {}
 
 export function IssueTable(props: IssueTableProps) {
+  const [itemInfo, setItemInfo] = React.useState<any>([]);
+
+  // const getItemInfo = () => {
+  //   axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
+  //     setItemInfo(res.data.items);
+  //     console.log(res.data.items);
+  //   });
+  // };
+
+  // React.useEffect(() => {
+  //   getItemInfo();
+  // }, []);
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
