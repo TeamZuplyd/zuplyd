@@ -24,7 +24,7 @@ export interface HeaderProps {
 
 export function Header({ title }: HeaderProps) {
   const params = window.location.pathname;
-  const tags: string[] = params.split('/').slice(2);
+  const tags: string[] = params.split('/').slice(1);
 
   // const tags = ['home', 'dashboard'];
 

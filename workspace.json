@@ -10,6 +10,7 @@
     "notification": "apps/notification",
     "procurement": "apps/procurement",
     "request-handler": "apps/request-handler",
+    "shop": "apps/shop",
     "user-mgmt": "apps/user-mgmt"
   }
 }
