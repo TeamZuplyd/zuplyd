@@ -352,7 +352,7 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
             <span className="secondaryText">Required Date</span>
           </Grid>
           <Grid item xs={6}>
-            <input type="date" style={{ marginLeft: 2 }} value={requiredDate} onChange={(e) => setRequiredDate((e.target.value))} />
+            <input type="date" style={{ marginLeft: 2 }} value={requiredDate} onChange={(e) => setRequiredDate(e.target.value)} />
           </Grid>
           <Grid item>
             <div className="secondaryText">Total Quantity</div>

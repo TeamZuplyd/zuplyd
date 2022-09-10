@@ -4,8 +4,22 @@ import { useParams } from 'react-router-dom';
 import { items } from '../../../data/items';
 import CustomTable from '../../components/custom-table/custom-table';
 import Header from '../../components/header/header';
+import axios from 'axios';
 
 const table = () => {
+  const [itemInfo, setItemInfo] = React.useState<any>([]);
+
+  // const getItemInfo = () => {
+  //   axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
+  //     setItemInfo(res.data.items);
+  //     console.log(res.data.items);
+  //   });
+  // };
+
+  // React.useEffect(() => {
+  //   getItemInfo();
+  // }, []);
+
   const { id } = useParams();
   let data = items.filter((item) => id !== undefined && item.category.toLowerCase() === id.toLowerCase());
   return (
