@@ -27,7 +27,8 @@ export function LandingFeatures(props: LandingFeaturesProps) {
     borderRadius: "16px",
     textAlign: "center",
     width:"70%",
-    padding:"20px"
+    padding:"20px",
+    marginBottom:"15px"
   }
 
   const fBox2:CSSProperties ={
@@ -65,7 +66,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
     height:"153px",
     padding:"20px",
     position:"absolute",
-    bottom:"80px",
+    bottom:"-20px",
     left:"-110px"
   }
 
@@ -78,7 +79,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
     height:"211px",
     padding:"40px",
     position:"absolute",
-    bottom:"90px",
+    bottom:"-20px",
     right:"10px"
   }
 
@@ -96,7 +97,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
               sx={{ flexDirection: "column" }}
               style={{ textAlign: "center" }}
             >
-              <span style={{color:"#FA541C",fontFamily: 'Poppins', fontWeight: 600, fontSize:"12px",fontStyle: "normal"}}>FEATURE HIGHLIGHTS</span>
+              <span style={{color:"#FA541C",fontFamily: 'Poppins', fontWeight: 600, fontSize:"12px",fontStyle: "normal",marginTop:"55px"}}>FEATURE HIGHLIGHTS</span>
               <Typography variant="h3" component="h3" gutterBottom style={{ width: "70%", fontWeight: 700, color:"#FFF", fontSize:"48px", fontFamily: 'Barlow',fontStyle: "normal"}} align="left">
                 Have Everything You Need
               </Typography>

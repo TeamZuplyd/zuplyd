@@ -31,7 +31,7 @@ export function LandingHero(props: LandingHeroProps) {
             display="flex"
             justifyContent="center"
             alignItems="flex-start"
-            minHeight="80vh"
+            minHeight="92vh"
             sx={{ flexDirection: "column" }}
             style={{ textAlign: "center" }}
           >
@@ -62,12 +62,12 @@ export function LandingHero(props: LandingHeroProps) {
             <img
               src={manWithBox}
               alt="a man with a box"
-              style={{position:"absolute", width:"626px",bottom:"-230px",zIndex:-50}}
+              style={{position:"absolute", width:"576px",bottom:"-330px",zIndex:-50}}
             />
             <img
               src={vector}
               alt="vector"
-              style={{position:"absolute",zIndex:-100, bottom:"0px"}}
+              style={{position:"absolute",zIndex:-100, bottom:"-90px"}}
             />
           </Box>
         </Grid>
