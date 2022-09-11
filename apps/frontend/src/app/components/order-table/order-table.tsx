@@ -86,11 +86,14 @@ export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
     setPage(0);
   };
 
-  const changeStatus = (text: string, index: number) => {
+  const changeStatus = async (text: string, index: number) => {
     //backendCall
     orders[index].status = text;
-    axios.post('http://localhost:7000/api/procurement/item/create', orders[index]);
-    console.log(orders[index]);
+    const itemToSend = orders[index];
+    await axios.post('http://localhost:5000/api/shopWarehouseRequest/update', itemToSend).then((res) => {
+      console.log(res);
+    });
+    // console.log(orders[index]);
   };
 
   return (
@@ -121,7 +124,6 @@ export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
               <TableCell style={{}}>{order.requested_by}</TableCell>
               <TableCell style={{}}>{order.requested_date}</TableCell>
               <TableCell style={{}}>
-                {/* {order.status} */}
                 <StatusDropDown status={order.status} handleStatusChange={handleStatusChange} item={order.item_code} index={index} changeStatus={changeStatus} />
               </TableCell>
             </TableRow>
