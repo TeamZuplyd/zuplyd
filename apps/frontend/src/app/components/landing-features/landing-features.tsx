@@ -66,7 +66,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
     height:"153px",
     padding:"20px",
     position:"absolute",
-    bottom:"-20px",
+    bottom:"-45px",
     left:"-110px"
   }
 
@@ -79,7 +79,7 @@ export function LandingFeatures(props: LandingFeaturesProps) {
     height:"211px",
     padding:"40px",
     position:"absolute",
-    bottom:"-20px",
+    bottom:"-45px",
     right:"10px"
   }
 
