@@ -44,6 +44,8 @@ function orders() {
 
   const getRequestInfo = () => {
     axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllDev').then((res) => {
+      console.log(res.data);
+
       setOrderData(res.data);
     });
   };

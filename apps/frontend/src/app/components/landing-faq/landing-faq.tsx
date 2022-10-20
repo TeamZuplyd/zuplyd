@@ -21,15 +21,15 @@ export function LandingFaq(props: LandingFaqProps) {
           bgcolor:"#FFF"
         }}
       >
-        <span style={{color:"#FA541C", fontSize:"12px", margin:"30px", fontWeight: 600}}>FAQ</span>
-        <Typography variant="h3" component="h3" gutterBottom style={{ fontWeight: 700, fontSize:"48px"}}>
+        <span style={{color:"#FA541C", fontSize:"12px", margin:"30px", fontFamily: 'Poppins', fontWeight: 600, fontStyle: "normal"}}>FAQ</span>
+        <Typography variant="h3" component="h3" gutterBottom style={{ fontWeight: 700, fontSize:"48px", fontFamily: 'Barlow',fontStyle: "normal"}}>
           Frequently Asked Questions
         </Typography>
         <Typography
           variant="h6"
           gutterBottom
           component="p"
-          style={{ width: "35%", color:"#637381" }}
+          style={{ width: "35%", color:"#637381", fontFamily: 'Poppins', fontStyle: "normal", fontWeight: 400 }}
           align="center"
         >
           We've found the answers to your most frequently asked questions

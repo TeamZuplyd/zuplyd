@@ -8,7 +8,9 @@ import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import logo from "../../../assets/imgs/logoDark.png";
-export interface LandingFooterProps {}
+export interface LandingFooterProps {
+  getStart: ()=>void
+}
 
 export function LandingFooter(props: LandingFooterProps) {
   return (
@@ -80,7 +82,7 @@ export function LandingFooter(props: LandingFooterProps) {
               borderRadius: "8px",
               fontSize:"14px",
               cursor:"pointer"
-            }}>
+            }} onClick={props.getStart}>
               <ArrowForwardIosIcon style={{color:"#FFF", fontSize:"10px"}}/>
             </button>
           </Grid>
