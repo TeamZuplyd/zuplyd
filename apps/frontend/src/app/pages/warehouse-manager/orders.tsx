@@ -4,6 +4,7 @@ import Header from '../../components/header/header';
 import OrderTable from '../../components/order-table/order-table';
 import PMOrderTable from '../../components/pmorder-table/pmorder-table';
 import WMlowStocksTable from '../../components/wmlow-stocks-table/wmlow-stocks-table';
+import WMOrderHistoryTable from '../../components/wmorder-history-table/wmorder-history-table';
 // import { orders as data } from '../../../data/orders';
 import axios from 'axios';
 import React from 'react';
@@ -119,7 +120,9 @@ function orders() {
           </TabPanel>
 
           {/* History */}
-          <TabPanel value={value} index={3}></TabPanel>
+          <TabPanel value={value} index={3}>
+            <WMOrderHistoryTable orders={orderData} />
+          </TabPanel>
         </Box>
       </div>
     </>
