@@ -1,0 +1,27 @@
+.init-bg {
+  background-color: #1f2937;
+  height: 100vh;
+  display: flex;
+}
+
+.init-title {
+  margin: 20px 20px;
+  font-family: 'Barlow', sans-serif !important;
+  color: '4A4A4A' !important;
+}
+.init-container {
+  height: 80vh;
+  max-width: fit-content;
+  margin: auto;
+  padding: 100px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.init-container .size-mini {
+  max-width: 480px;
+}
+
+.init-container .size-large {
+  max-width: 1000px;
+}

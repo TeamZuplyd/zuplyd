@@ -63,6 +63,10 @@ import SignupButton from '../components/signup-button/signup-button';
 import LogoutButton from '../components/logout-button/logout-button';
 import ProfileSetup from '../pages/procurement-manager/initialization/profileSetUp';
 
+import CompInit1 from '../pages/company-admin/comp-init-1';
+import CompInit2 from '../pages/company-admin/comp-init-2';
+import CompInit3 from '../pages/company-admin/comp-init-3';
+
 export interface AppRouteProps {}
 
 const defaultLinkForUser = new Map<string, string>([
@@ -188,9 +192,9 @@ export function AppRoute(props: AppRouteProps) {
         </Route>
       </Route>
 
-      <Route path="comp-init-1" element={<RegPage2 />} />
-      <Route path="comp-init-2" element={<RegPage3 />} />
-      <Route path="comp-init-3" element={<RegPage4 />} />
+      <Route path="comp-init-1" element={<CompInit1 />} />
+      <Route path="comp-init-2" element={<CompInit2 />} />
+      <Route path="comp-init-3" element={<CompInit3 />} />
       <Route path="comp-init-4" element={<RegPage5 />} />
       <Route path="profile-setup" element={<ProfileSetup />} />
       <Route path="signup" element={<SignupButton />} />
