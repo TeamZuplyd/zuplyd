@@ -32,7 +32,7 @@ export class ShopWarehouseController {
     return this.shopWarehouseReqService.delete(id);
   }
 
-  @Get('update')
+  @Post('update')
   update(@Body() shopWarehouseReq: any) {
     return this.shopWarehouseReqService.update(shopWarehouseReq._id, shopWarehouseReq);
   }
