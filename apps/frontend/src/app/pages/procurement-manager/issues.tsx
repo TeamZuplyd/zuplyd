@@ -35,6 +35,27 @@ const itemList = [
   },
 ];
 
+const issueList = [
+  {
+    title: 'Banana Expired',
+    batchNo: 'B1234',
+    desc: 'Have given a bad batch of banana',
+    issue_id: 1,
+  },
+  {
+    title: 'Apple Expired',
+    batchNo: 'A1234',
+    desc: 'Have given a bad batch of Apple',
+    issue_id: 2,
+  },
+  {
+    title: 'Mango Expired',
+    batchNo: 'M1234',
+    desc: 'Have given a bad batch of Mango',
+    issue_id: 3,
+  },
+];
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -82,7 +103,7 @@ function issues() {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            {/* <PMraisedIssueTable /> */}
+            <PMraisedIssueTable orders={issueList} />
           </TabPanel>
 
           <TabPanel value={value} index={1}>
