@@ -9,6 +9,30 @@ import Box from '@mui/material/Box';
 import IssueForm from '../../components/issue-form/issue-form';
 import IssueTable from '../../components/issue-table/issue-table';
 
+const itemList = [
+  {
+    title: 'Banana Expired',
+    batchNo: 'B1234',
+    desc: 'Have given a bad batch of banana',
+    actionTaken: 'Gave new batch of banana',
+    actionDesc: 'Gave new batch of banana',
+  },
+  {
+    title: 'Apple Expired',
+    batchNo: 'A1234',
+    desc: 'Have given a bad batch of Apple',
+    actionTaken: 'Gave new batch of Apple',
+    actionDesc: 'Gave new batch of banana',
+  },
+  {
+    title: 'Mango Expired',
+    batchNo: 'M1234',
+    desc: 'Have given a bad batch of Mango',
+    actionTaken: 'Gave new batch of Mango',
+    actionDesc: 'Gave new batch of banana',
+  },
+];
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -60,7 +84,7 @@ function issues() {
           </TabPanel>
 
           <TabPanel value={value} index={1}>
-            <IssueTable />
+            <IssueTable itemList={itemList} />
           </TabPanel>
         </Box>
       </div>

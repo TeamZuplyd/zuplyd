@@ -18,6 +18,31 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead } from '@mui/material';
 import { orders } from '../../../data/orders';
 
+//delete this later
+const issuesExample = [
+  {
+    title: 'Banana Expired',
+    batchNo: 'B1234',
+    desc: 'Have given a bad batch of banana',
+    actionTaken: 'Gave new batch of banana',
+    actionDesc: 'Gave new batch of banana',
+  },
+  {
+    title: 'Apple Expired',
+    batchNo: 'A1234',
+    desc: 'Have given a bad batch of Apple',
+    actionTaken: 'Gave new batch of Apple',
+    actionDesc: 'Gave new batch of banana',
+  },
+  {
+    title: 'Mango Expired',
+    batchNo: 'M1234',
+    desc: 'Have given a bad batch of Mango',
+    actionTaken: 'Gave new batch of Mango',
+    actionDesc: 'Gave new batch of banana',
+  },
+];
+
 interface TablePaginationActionsProps {
   count: number;
   page: number;
@@ -63,11 +88,9 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export interface IssueTableProps {
-  itemList: any[];
-}
+export interface PMraisedIssueTableProps {}
 
-export function IssueTable({ itemList }: IssueTableProps) {
+export function PMraisedIssueTable(props: PMraisedIssueTableProps) {
   const [itemInfo, setItemInfo] = React.useState<any>([]);
 
   // const getItemInfo = () => {
@@ -109,7 +132,7 @@ export function IssueTable({ itemList }: IssueTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0 ? itemList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : itemList).map((i) => (
+          {(rowsPerPage > 0 ? issuesExample.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : issuesExample).map((i) => (
             <TableRow>
               <TableCell style={{}}>{i.title}</TableCell>
               <TableCell style={{}}>{i.batchNo}</TableCell>
@@ -149,4 +172,4 @@ export function IssueTable({ itemList }: IssueTableProps) {
   );
 }
 
-export default IssueTable;
+export default PMraisedIssueTable;
