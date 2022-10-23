@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param } from '@nestjs/common';
 import { GoodsService } from './goods.service';
 
 @Controller('goods')
@@ -6,7 +6,19 @@ export class GoodsController {
   constructor(private readonly goodsService: GoodsService) {}
 
   @Get('addItem')
-  addItem() {
+  addItem(@Body() addItemDto: any) {
+    /*
+    addItemDto structure that should be sent form the frontend
+
+    addItemDto = {
+      itemType: {nested obj} - itemTypeFromProcurement (createItemTypeDto)
+      itemDetails: {nested obj} - key value pair for the attributes_array in item type (see below)
+      ownerId: string
+      qty: number
+    }
+    
+    see below for reference
+
     const itemType = {
       _id: '62f9057a3eebc104e8dc79d3',
       item_name: 'choco',
@@ -27,12 +39,24 @@ export class GoodsController {
 
     const ownerId = 'ada';
     const qty = 1000;
+    */
 
-    return this.goodsService.addItem(ownerId, qty, itemType.item_name, itemType, itemDetails);
+    return this.goodsService.addItem(addItemDto.ownerId, addItemDto.qty, addItemDto.itemType.item_name, addItemDto.itemType, addItemDto.itemDetails);
   }
 
   @Get('transferGoods')
-  transferGoods() {
+  transferGoods(@Body() transferGoodsDto: any) {
+    /*
+    transferGoodsDto structure that should be sent form the frontend
+
+    transferGoodsDto = {
+      itemType: {nested obj} - itemTypeFromProcurement (createItemTypeDto)
+      transferQty: number
+      transferToEntity: string
+      transferFromEntity: string
+    }
+    
+
     const itemType = {
       _id: '62f9057a3eebc104e8dc79d3',
       item_name: 'choco',
@@ -43,27 +67,36 @@ export class GoodsController {
       output_rule_type: 'minFirst',
       attributes_array: ['batch_no', 'exp_date', 'MFD'],
     };
-
-    let item = {};
 
     // return this.goodsService.itemTransfer(item, 'bbbbbbbb', 100, itemType);
 
     const transferQty = 100;
-    const itemArr = this.goodsService.itemToBeReleased(item, itemType);
-
-    return itemArr.then((res) => {
-      if (itemType.output_rule_type == 'minFirst') {
-        res.sort(this.GetSortOrderMin(itemType.output_rule));
-      } else {
-        res.sort(this.GetSortOrderMax(itemType.output_rule));
-      }
-      item = res[0];
-      return this.goodsService.itemTransfer(item, 'bbbbbbbb', transferQty, itemType);
-    });
+    */
+    // let item = {};
+    // const itemArr = this.goodsService.itemToBeReleased(item, transferGoodsDto.itemType);
+    // return itemArr.then((res) => {
+    //   if (transferGoodsDto.itemType.output_rule_type == 'minFirst') {
+    //     res.sort(this.GetSortOrderMin(transferGoodsDto.itemType.output_rule));
+    //   } else {
+    //     res.sort(this.GetSortOrderMax(transferGoodsDto.itemType.output_rule));
+    //   }
+    //   item = res[0];
+    //   return this.goodsService.itemTransfer(item, transferGoodsDto.transferToEntity, transferGoodsDto.transferQty, transferGoodsDto.itemType);
+    // });
+    return this.goodsService.itemTransfer(transferGoodsDto.transferFromEntity, transferGoodsDto.transferToEntity, transferGoodsDto.transferQty, transferGoodsDto.itemType);
   }
 
   @Get('releaseGoods')
-  releaseGoods() {
+  releaseGoods(@Body() releaseGoodsDto: any) {
+    /*
+    releaseGoodsDto structure that should be sent form the frontend
+
+    releaseGoodsDto = {
+      itemType: {nested obj} - itemTypeFromProcurement (createItemTypeDto)
+      releaseQty: number
+      releaseFromEntity: string
+    }
+
     const itemType = {
       _id: '62f9057a3eebc104e8dc79d3',
       item_name: 'choco',
@@ -75,42 +108,82 @@ export class GoodsController {
       attributes_array: ['batch_no', 'exp_date', 'MFD'],
     };
 
-    let item = {};
-
     const releaseQty = 100;
-    const itemArr = this.goodsService.itemToBeReleased(item, itemType);
+    */
+    // let item = {};
+    // const itemArr = this.goodsService.itemToBeReleased(item, releaseGoodsDto.itemType);
+    // return itemArr.then((res) => {
+    //   if (releaseGoodsDto.itemType.output_rule_type == 'minFirst') {
+    //     res.sort(this.GetSortOrderMin(releaseGoodsDto.itemType.output_rule));
+    //   } else {
+    //     res.sort(this.GetSortOrderMax(releaseGoodsDto.itemType.output_rule));
+    //   }
+    //   item = res[0];
+    //   return this.goodsService.itemRelease(item, releaseGoodsDto.releaseQty, releaseGoodsDto.itemType);
+    // });
+    return this.goodsService.itemRelease(releaseGoodsDto.releaseFromEntity, releaseGoodsDto.releaseQty, releaseGoodsDto.itemType);
+    // return this.goodsService.itemRelease(item, releaseQty, releaseGoodsDto.itemType);
+  }
 
-    return itemArr.then((res) => {
-      if (itemType.output_rule_type == 'minFirst') {
-        res.sort(this.GetSortOrderMin(itemType.output_rule));
-      } else {
-        res.sort(this.GetSortOrderMax(itemType.output_rule));
-      }
-      item = res[0];
-      return this.goodsService.itemRelease(item, releaseQty, itemType);
+  @Get('getItemStock')
+  async getItemStock(@Body() itemTypeDto: any) {
+    /*
+    releaseGoodsDto = {
+      itemType: {nested obj} - itemTypeFromProcurement (createItemTypeDto)
+      ownerId: string
+    }
+    */
+
+    const itemsArray = await this.goodsService.getItemsOfAnOwner(itemTypeDto.itemType, itemTypeDto.ownerId);
+
+    let totalStock = 0;
+
+    itemsArray.forEach((val) => {
+      totalStock += val.qty;
     });
-    // return this.goodsService.itemRelease(item, releaseQty, itemType);
+
+    return { totalStock: totalStock };
+    /*returns the following
+      {
+        "totalStock": 1110
+      }
+    */
   }
 
-  GetSortOrderMax(prop: string) {
-    return function (a: string, b: string) {
-      if (a[prop] < b[prop]) {
-        return 1;
-      } else if (a[prop] > b[prop]) {
-        return -1;
-      }
-      return 0;
-    };
-  }
+  @Get('allBatchNosOfItem')
+  async getItemBatcheNos(@Body() itemTypeDto: any) {
+    /*
+    releaseGoodsDto = {
+      itemType: {nested obj} - itemTypeFromProcurement (createItemTypeDto)
+      ownerId: string
+    }
+    */
 
-  GetSortOrderMin(prop: string) {
-    return function (a: string, b: string) {
-      if (a[prop] > b[prop]) {
-        return 1;
-      } else if (a[prop] < b[prop]) {
-        return -1;
+    const itemsArray = await this.goodsService.getItemsOfAnOwner(itemTypeDto.itemType, itemTypeDto.ownerId);
+
+    let batchNo = [];
+
+    itemsArray.forEach((val) => {
+      batchNo.push(val.batch_no);
+    });
+
+    let batchNosSet = new Set(batchNo);
+
+    let batchNosFinal = [];
+
+    batchNosSet.forEach((val) => {
+      batchNosFinal.push(val);
+    });
+
+    return { batchNos: batchNosFinal };
+
+    /*returns the following
+      {
+      "batchNos": [
+        "5555",
+        "14213"
+        ]
       }
-      return 0;
-    };
+    */
   }
 }

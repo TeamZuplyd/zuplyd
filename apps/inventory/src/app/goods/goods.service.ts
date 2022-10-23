@@ -61,10 +61,21 @@ export class GoodsService {
     return this.connection.model(itemName, itemSchema);
   }
 
-  async itemTransfer(item: any, toEntityId: string, transferQty: number, itemType: any) {
+  async itemTransfer(fromEntityId: string, toEntityId: string, transferQty: number, itemType: any) {
     const itemSchema = await this.customSchemaGenaraterForItems(itemType);
 
-    const itemModel = await this.itemModel(item.item_name, itemSchema);
+    const itemModel = await this.itemModel(itemType.item_name, itemSchema);
+
+    const itemArr = itemModel.find({ ownerId: fromEntityId });
+
+    let item = await itemArr.then((res) => {
+      if (itemType.output_rule_type == 'minFirst') {
+        res.sort(this.GetSortOrderMin(itemType.output_rule));
+      } else {
+        res.sort(this.GetSortOrderMax(itemType.output_rule));
+      }
+      return res[0];
+    });
 
     if (item.qty == transferQty) {
       item = { ...item, ownerId: toEntityId };
@@ -81,10 +92,11 @@ export class GoodsService {
 
           session.startTransaction();
 
-          transferObj = { ...item, qty: transferQty, ownerId: toEntityId };
+          transferObj = { ...item._doc, qty: transferQty, ownerId: toEntityId };
+
           delete transferObj._id;
 
-          item = { ...item, qty: item.qty - transferQty };
+          item = { ...item._doc, qty: item.qty - transferQty };
 
           return itemModel.findByIdAndUpdate(item._id, item, {
             returnOriginal: false,
@@ -97,13 +109,25 @@ export class GoodsService {
     }
   }
 
-  async itemRelease(item: any, releaseQty: number, itemType: any) {
+  async itemRelease(fromEntityId: string, releaseQty: number, itemType: any) {
     const itemSchema = await this.customSchemaGenaraterForItems(itemType);
 
-    const itemModel = await this.itemModel(item.item_name, itemSchema);
+    const itemModel = await this.itemModel(itemType.item_name, itemSchema);
+
+    const itemArr = itemModel.find({ ownerId: fromEntityId });
+
+    let item = await itemArr.then((res) => {
+      if (itemType.output_rule_type == 'minFirst') {
+        res.sort(this.GetSortOrderMin(itemType.output_rule));
+      } else {
+        res.sort(this.GetSortOrderMax(itemType.output_rule));
+      }
+      return res[0];
+    });
 
     if (item.qty >= releaseQty) {
-      item = { ...item, qty: item.qty - releaseQty };
+      item = { ...item._doc, qty: item.qty - releaseQty };
+      console.log(item);
       return await itemModel.findByIdAndUpdate(item._id, item, {
         returnOriginal: false,
       });
@@ -112,11 +136,43 @@ export class GoodsService {
     }
   }
 
-  async itemToBeReleased(item: any, itemType: any) {
+  async getItemsOfAnOwner(itemType: any, ownerId: string) {
     const itemSchema = await this.customSchemaGenaraterForItems(itemType);
 
-    const itemModel = await this.itemModel(item.item_name, itemSchema);
+    const itemModel = await this.itemModel(itemType.item_name, itemSchema);
 
-    return itemModel.find({});
+    return itemModel.find({ ownerId: ownerId });
+  }
+
+  // async itemToBeReleased(itemModel: any, itemType: any, fromEntityId: string) {
+  //   // const itemSchema = await this.customSchemaGenaraterForItems(itemType);
+
+  //   // const itemModel = await this.itemModel(itemType.item_name, itemSchema);
+
+  //   const itemArr = itemModel.find({ ownerId: fromEntityId });
+
+  //   return itemArr;
+  // }
+
+  GetSortOrderMax(prop: string) {
+    return function (a: string, b: string) {
+      if (a[prop] < b[prop]) {
+        return 1;
+      } else if (a[prop] > b[prop]) {
+        return -1;
+      }
+      return 0;
+    };
+  }
+
+  GetSortOrderMin(prop: string) {
+    return function (a: string, b: string) {
+      if (a[prop] > b[prop]) {
+        return 1;
+      } else if (a[prop] < b[prop]) {
+        return -1;
+      }
+      return 0;
+    };
   }
 }
