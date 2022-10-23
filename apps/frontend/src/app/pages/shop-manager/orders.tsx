@@ -5,7 +5,7 @@ import PMOrderTable from '../../components/pmorder-table/pmorder-table';
 import SMOrderTable from '../../components/smorder-table/smorder-table';
 import { orders as data } from '../../../data/orders';
 import WMOrderTable from '../../components/wmorder-table/wmorder-table';
-import WMOrderHistoryTable from '../../components/wmorder-history-table/wmorder-history-table';
+import SMorderHistoryTable from '../../components/smorder-history-table/smorder-history-table';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -83,25 +83,25 @@ function orders() {
         <Box sx={{ width: '100%', paddingLeft: '2rem' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
-              <Tab label="Low Stocks" {...a11yProps(0)} />
+              {/* <Tab label="Low Stocks" {...a11yProps(0)} /> */}
               <Tab label="Sent Requests" {...a11yProps(1)} />
               <Tab label="History" {...a11yProps(2)} />
             </Tabs>
           </Box>
 
           {/* Low Stocks */}
-          <TabPanel value={value} index={0}>
+          {/* <TabPanel value={value} index={0}>
             <SMOrderTable orders={orderData} handleStatusChange={() => handleStatusChange(selected, selectedItem)} selected={selected} setSelected={setSelected} warehouses={warehouses} handleSelected={handleSelected} selectedItem={selectedItem} setSelectedItem={setSelectedItem} addSentRequest={addSentRequest} />
-          </TabPanel>
+          </TabPanel> */}
 
           {/* Sent Requests */}
-          <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={0}>
             <WMOrderTable orders={sentRequest} />
           </TabPanel>
 
           {/* History */}
-          <TabPanel value={value} index={2}>
-            <WMOrderHistoryTable orders={orderData} />
+          <TabPanel value={value} index={1}>
+            <SMorderHistoryTable orders={orderData} />
           </TabPanel>
         </Box>
       </div>
