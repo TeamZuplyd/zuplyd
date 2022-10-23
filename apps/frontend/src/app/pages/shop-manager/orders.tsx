@@ -5,6 +5,7 @@ import PMOrderTable from '../../components/pmorder-table/pmorder-table';
 import SMOrderTable from '../../components/smorder-table/smorder-table';
 import { orders as data } from '../../../data/orders';
 import WMOrderTable from '../../components/wmorder-table/wmorder-table';
+import WMOrderHistoryTable from '../../components/wmorder-history-table/wmorder-history-table';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -99,7 +100,9 @@ function orders() {
           </TabPanel>
 
           {/* History */}
-          <TabPanel value={value} index={2}></TabPanel>
+          <TabPanel value={value} index={2}>
+            <WMOrderHistoryTable orders={orderData} />
+          </TabPanel>
         </Box>
       </div>
     </>

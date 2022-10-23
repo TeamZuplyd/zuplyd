@@ -67,8 +67,8 @@ export function IssueForm(props: IssueFormProps) {
   };
 
   return (
-    <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '70vh' }}>
-      <Card sx={{ width: '400px', maxWidth: '400px', height: '480px', maxHeight: '480px', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+    <Grid container style={{ minHeight: '70vh' }}>
+      <Card sx={{ width: '100%', maxWidth: '100%', height: '50%', maxHeight: '50%', justifyContent: 'center', alignItems: 'center', p: 2 }}>
         <CardContent>
           <Grid container xs={12} rowGap={2} columnGap={2.5}>
             <Grid item xs={12}>
@@ -120,7 +120,7 @@ export function IssueForm(props: IssueFormProps) {
                   value={desc}
                   label="Description"
                   variant="outlined"
-                  rows={5}
+                  rows={10}
                   multiline
                   sx={{ mt: 2, width: '100%' }}
                 />
@@ -128,8 +128,8 @@ export function IssueForm(props: IssueFormProps) {
             </Grid>
           </FormProvider>
 
-          <Grid container rowGap={2} columnGap={4}>
-            <Grid item xs={4}>
+          <Grid container rowGap={2} columnGap={1}>
+            <Grid item xs={1.5}>
               <Button
                 variant="contained"
                 color="success"
@@ -145,7 +145,7 @@ export function IssueForm(props: IssueFormProps) {
               </Button>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={1}>
               <Button variant="contained" sx={{ width: 100, backgroundColor: 'transparent', color: 'black' }} className="addnewBtn" onClick={discardBtnClick}>
                 {' '}
                 Discard{' '}
