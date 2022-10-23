@@ -97,30 +97,30 @@ function orders() {
         <Box sx={{ width: '100%', paddingLeft: '2rem' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
-              <Tab label="Low Stocks" {...a11yProps(0)} />
-              <Tab label="Received Requests" {...a11yProps(1)} />
-              <Tab label="Sent Requests" {...a11yProps(2)} />
-              <Tab label="History" {...a11yProps(3)} />
+              {/* <Tab label="Low Stocks" {...a11yProps(0)} /> */}
+              <Tab label="Received Requests" {...a11yProps(0)} />
+              <Tab label="Sent Requests" {...a11yProps(1)} />
+              <Tab label="History" {...a11yProps(2)} />
             </Tabs>
           </Box>
 
           {/* Low Stocks */}
-          <TabPanel value={value} index={0}>
+          {/* <TabPanel value={value} index={0}>
             <WMlowStocksTable orders={orderData} handleStatusChange={() => handleStatusChange2(selected, selectedItem)} selected={selected} setSelected={setSelected} handleSelected={handleSelected} selectedItem={selectedItem} setSelectedItem={setSelectedItem} addSentRequest={addSentRequest} />
-          </TabPanel>
+          </TabPanel> */}
 
           {/* Received Requests */}
-          <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={0}>
             <OrderTable orders={orderData} handleStatusChange={handleStatusChange} />
           </TabPanel>
 
           {/* Sent Requests */}
-          <TabPanel value={value} index={2}>
+          <TabPanel value={value} index={1}>
             <PMOrderTable orders={orderData} />
           </TabPanel>
 
           {/* History */}
-          <TabPanel value={value} index={3}>
+          <TabPanel value={value} index={2}>
             <WMOrderHistoryTable orders={orderData} />
           </TabPanel>
         </Box>

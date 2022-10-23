@@ -83,11 +83,10 @@ export function CustomTable({ headerNames, rows }: CustomTableProps) {
   //setting the state to hold the clicked row
   const [selectedRow, setSelectedRow] = React.useState({});
 
-  
   return (
     <>
       <ItemSideOver toggle={rightSideNav} toggleDrawer={toggleDrawer} data={selectedRow} />
-      <TableContainer component={Paper} sx={{ width: '90%', mx: 'auto', my: 3, alignContent: 'center' }}>
+      <TableContainer component={Paper} sx={{ width: '100%', mx: 'auto', alignContent: 'center' }}>
         <Table stickyHeader aria-label="custom pagination table">
           <TableHead>
             <TableRow>
@@ -107,10 +106,14 @@ export function CustomTable({ headerNames, rows }: CustomTableProps) {
                 <TableCell>{row.brand}</TableCell>
                 <TableCell align="right">{row.units}</TableCell>
                 <TableCell>
-                  <Button variant='contained' onClick={toggleDrawer(true)}>More Info</Button>
+                  <Button variant="contained" onClick={toggleDrawer(true)}>
+                    More Info
+                  </Button>
                 </TableCell>
                 <TableCell>
-                  <Button variant='contained' color='success'>Reorder</Button>
+                  <Button variant="contained" color="success">
+                    Reorder
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
