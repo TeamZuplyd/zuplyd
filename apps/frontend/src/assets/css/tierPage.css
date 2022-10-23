@@ -37,12 +37,15 @@
   font-weight: 700 !important;
   font-size: 15px !important;
   color: #212b36;
+  font-family: 'Barlow', sans-serif !important;
 }
 
 .spec-name {
   font-size: 20px;
   font-weight: 700 !important;
   color: #fd8f02;
+  margin-right: 5px !important;
+  font-family: 'Barlow', sans-serif !important;
 }
 
 .price {
@@ -60,4 +63,22 @@
 .point {
   display: flex;
   vertical-align: middle;
+}
+
+/* Managers page  */
+.mang-container {
+  background: #ffffff !important;
+  border: 1px solid #cccccc !important;
+  box-shadow: 0px 7px 30px rgba(90, 114, 123, 0.1) !important;
+  border-radius: 16px !important;
+  min-width: 300px;
+  min-height: 415px;
+  max-height: 415px;
+}
+.mang-span {
+  font-size: 19px;
+  font-weight: 650 !important;
+  margin-right: 5px !important;
+  color: #4a4a4a;
+  font-family: 'Barlow', sans-serif !important;
 }

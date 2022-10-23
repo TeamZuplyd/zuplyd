@@ -2,10 +2,10 @@
 import Signup from '../pages/home-page/signup';
 import LandingPage from '../pages/landing-page/landing-page';
 
-import RegPage2 from '../pages/company-admin/regPage2';
-import RegPage3 from '../pages/company-admin/regPage3';
-import RegPage4 from '../pages/company-admin/regPage4';
-import RegPage5 from '../pages/company-admin/regPage5';
+import CompInit1 from '../pages/company-admin/comp-init-1';
+import CompInit2 from '../pages/company-admin/comp-init-2';
+import CompInit3 from '../pages/company-admin/comp-init-3';
+import CompInit4 from '../pages/company-admin/comp-init-4';
 
 import CompanyAdmin from '../pages/company-admin/companyAdmin';
 import CAdashboard from '../pages/company-admin/dashboard';
@@ -63,10 +63,6 @@ import axios from 'axios';
 import SignupButton from '../components/signup-button/signup-button';
 import LogoutButton from '../components/logout-button/logout-button';
 import ProfileSetup from '../pages/procurement-manager/initialization/profileSetUp';
-
-import CompInit1 from '../pages/company-admin/comp-init-1';
-import CompInit2 from '../pages/company-admin/comp-init-2';
-import CompInit3 from '../pages/company-admin/comp-init-3';
 
 export interface AppRouteProps {}
 
@@ -196,7 +192,7 @@ export function AppRoute(props: AppRouteProps) {
       <Route path="comp-init-1" element={<CompInit1 />} />
       <Route path="comp-init-2" element={<CompInit2 />} />
       <Route path="comp-init-3" element={<CompInit3 />} />
-      <Route path="comp-init-4" element={<RegPage5 />} />
+      <Route path="comp-init-4" element={<CompInit4 />} />
       <Route path="profile-setup" element={<ProfileSetup />} />
       <Route path="signup" element={<SignupButton />} />
       <Route path="logout" element={<LogoutButton />} />
