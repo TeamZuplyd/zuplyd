@@ -63,19 +63,18 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-interface SMOrderTableProps {
+interface WMlowStocksTableProps {
   orders: any[];
   handleStatusChange: () => void;
   setSelected: (id: number) => void;
   selected: number;
-  warehouses: string[];
   handleSelected: (id: number) => void;
   selectedItem: string;
   setSelectedItem: (item: string) => void;
   addSentRequest: (obj: any) => void;
 }
 
-export function SMOrderTable({ orders, handleStatusChange, setSelected, selected, warehouses, handleSelected, selectedItem, setSelectedItem, addSentRequest }: SMOrderTableProps) {
+export function WMlowStocksTable({ orders, handleStatusChange, setSelected, selected, handleSelected, selectedItem, setSelectedItem, addSentRequest }: WMlowStocksTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -138,7 +137,7 @@ export function SMOrderTable({ orders, handleStatusChange, setSelected, selected
                   <Button variant="contained" onClick={() => handleOpen(order.item_code)}>
                     Request
                   </Button>
-                  <BasicModal open={open} handleClose={handleClose} data={warehouses} handleSelect={handleSelected} selected={selected} handleStatusChange={handleStatusChange} selectedItem={selectedItem} order={order} addSentRequest={addSentRequest} />
+                  <BasicModal open={open} handleClose={handleClose} data={[order.name, order.brand]} handleSelect={handleSelected} selected={selected} handleStatusChange={handleStatusChange} selectedItem={selectedItem} order={order} addSentRequest={addSentRequest} />
                 </TableCell>
               </TableRow>
             ))}
@@ -173,7 +172,7 @@ export function SMOrderTable({ orders, handleStatusChange, setSelected, selected
   );
 }
 
-export default SMOrderTable;
+export default WMlowStocksTable;
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -212,28 +211,8 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
   };
 
   const handleSubmit = () => {
-    const warehouseOneID = 'W0001';
-    const warehouseTwoID = 'W0002';
-    const orderArray: any = [];
-    console.log(order);
-
-    if (warehouseOne > 0) {
-      const orderOne = Object.assign({}, order);
-      orderOne.warehouse_id = warehouseOneID;
-      orderOne.quantity = warehouseOne;
-      orderOne.required_by = requiredDate;
-      console.log(orderOne);
-      orderArray.push(orderOne);
-    }
-    if (warehouseTwo > 0) {
-      const orderTwo = Object.assign({}, order);
-      orderTwo.warehouse_id = warehouseTwoID;
-      orderTwo.quantity = warehouseTwo;
-      orderTwo.required_by = requiredDate;
-      orderArray.push(orderTwo);
-    }
-    console.log(orderArray);
-    addSentRequest(orderArray);
+    // console.log(orderArray);
+    // addSentRequest(orderArray);
   };
 
   return (
@@ -250,7 +229,7 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
             <Grid item xs={2}>
               <div className="secondaryText">Name</div>
               <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                Shampoo
+                {data[0]}
               </div>
             </Grid>
             <Grid item xs>
@@ -264,7 +243,7 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
             <Grid item xs={2}>
               <div className="secondaryText">Brand</div>
               <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                Loreal
+                {data[1]}
               </div>
             </Grid>
             <Grid item xs>
@@ -277,76 +256,9 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
         </Grid>
         <Divider sx={{ mt: 2, mb: 2 }} />
         <Typography id="modal-modal-title" variant="h6" sx={{ pt: 1 }}>
-          Stocks Available Warehouses
+          Order Information
         </Typography>
-        <Grid container spacing={2} direction="row" paddingTop={2}>
-          <Grid container item>
-            <Grid item xs>
-              <div className="secondaryText">W0001</div>
-              <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                Kottawa
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className="secondaryText">Batch No</div>
-              <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                BM12354
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className="secondaryText">Expiry Date</div>
-              <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                2024/02/16
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className="secondaryText">Available Quantity</div>
-              <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                200
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className="secondaryText">Requesting Quantity</div>
-              <TextField id="outlined-basic" size="small" type="number" InputProps={{ inputProps: { min: 1 } }} variant="outlined" sx={{ pt: 1 }} value={warehouseOne} onChange={(e) => setWarehouseOne(parseInt(e.target.value))} />
-            </Grid>
-            <Grid item xs></Grid>
-          </Grid>
-        </Grid>
-        <Divider sx={{ mt: 1, mb: 1 }} />
-        <Grid container spacing={2} direction="row" paddingTop={2}>
-          <Grid container item>
-            <Grid item xs>
-              <div className="secondaryText">W0002</div>
-              <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                Mattegoda
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className="secondaryText">Batch No</div>
-              <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                BM78945
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className="secondaryText">Expiry Date</div>
-              <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                2024/03/20
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className="secondaryText">Available Quantity</div>
-              <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
-                100
-              </div>
-            </Grid>
-            <Grid item xs>
-              <div className="secondaryText">Requesting Quantity</div>
-              <TextField id="outlined-basic" size="small" type="number" InputProps={{ inputProps: { min: 1 } }} variant="outlined" sx={{ pt: 1 }} value={warehouseTwo} onChange={(e) => setWarehouseTwo(parseInt(e.target.value))} />
-            </Grid>
-            <Grid item xs></Grid>
-          </Grid>
-        </Grid>
-        <Divider sx={{ mt: 1, mb: 1 }} />
+
         <Grid container item>
           <Grid item xs={2} sx={{ mt: 0.5, mb: 0.5 }}>
             <span className="secondaryText">Required Date</span>
@@ -354,9 +266,10 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
           <Grid item xs={6}>
             <input type="date" style={{ marginLeft: 2 }} value={requiredDate} onChange={(e) => setRequiredDate(e.target.value)} />
           </Grid>
-          <Grid item>
-            <div className="secondaryText">Total Quantity</div>
-            <TextField id="outlined-basic" size="small" type="number" sx={{ pt: 1, width: 166.66 }} disabled value={warehouseOne + warehouseTwo} />
+
+          <Grid item xs>
+            <div className="secondaryText">Requesting Quantity</div>
+            <TextField id="outlined-basic" size="small" type="number" InputProps={{ inputProps: { min: 1 } }} variant="outlined" sx={{ pt: 1 }} value={warehouseTwo} onChange={(e) => setWarehouseTwo(parseInt(e.target.value))} />
           </Grid>
         </Grid>
         <CardActions>

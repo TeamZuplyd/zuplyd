@@ -16,8 +16,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead } from '@mui/material';
-import { orders } from '../../../data/orders';
-
+// import { orders } from '../../../data/orders';
 interface TablePaginationActionsProps {
   count: number;
   page: number;
@@ -63,24 +62,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export interface IssueTableProps {
-  itemList: any[];
+export interface SMorderHistoryTableProps {
+  orders: any[];
 }
 
-export function IssueTable({ itemList }: IssueTableProps) {
-  const [itemInfo, setItemInfo] = React.useState<any>([]);
-
-  // const getItemInfo = () => {
-  //   axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
-  //     setItemInfo(res.data.items);
-  //     console.log(res.data.items);
-  //   });
-  // };
-
-  // React.useEffect(() => {
-  //   getItemInfo();
-  // }, []);
-
+export function SMorderHistoryTable({ orders }: SMorderHistoryTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -101,23 +87,33 @@ export function IssueTable({ itemList }: IssueTableProps) {
       <Table stickyHeader sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            <TableCell component="th">Title </TableCell>
-            <TableCell component="th">Batch Number</TableCell>
-            <TableCell component="th">Description</TableCell>
-            <TableCell component="th">Action Taken</TableCell>
-            <TableCell component="th">Action Description</TableCell>
+            <TableCell component="th">Item Code</TableCell>
+            <TableCell component="th">Name </TableCell>
+            <TableCell component="th">Brand</TableCell>
+            <TableCell component="th">Quantity</TableCell>
+            <TableCell component="th">Required By</TableCell>
+            <TableCell component="th">Requested By</TableCell>
+            <TableCell component="th">Requested Date</TableCell>
+            <TableCell component="th">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0 ? itemList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : itemList).map((i) => (
-            <TableRow>
-              <TableCell style={{}}>{i.title}</TableCell>
-              <TableCell style={{}}>{i.batchNo}</TableCell>
-              <TableCell style={{}}>{i.desc}</TableCell>
-              <TableCell style={{}}>{i.actionTaken}</TableCell>
-              <TableCell style={{}}>{i.actionDesc}</TableCell>
-            </TableRow>
-          ))}
+          {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders)
+            .filter((order) => order.sentRequest)
+            .map((order) => (
+              <TableRow key={order.item_code}>
+                <TableCell component="th" scope="row">
+                  {order.item_code}
+                </TableCell>
+                <TableCell style={{}}>{order.name}</TableCell>
+                <TableCell style={{}}>{order.brand}</TableCell>
+                <TableCell style={{}}>{order.quantity}</TableCell>
+                <TableCell style={{}}>{order.required_by}</TableCell>
+                <TableCell style={{}}>{order.requested_by}</TableCell>
+                <TableCell style={{}}>{order.requested_date}</TableCell>
+                <TableCell style={{}}>{order.status}</TableCell>
+              </TableRow>
+            ))}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
               <TableCell colSpan={6} />
@@ -149,4 +145,4 @@ export function IssueTable({ itemList }: IssueTableProps) {
   );
 }
 
-export default IssueTable;
+export default SMorderHistoryTable;

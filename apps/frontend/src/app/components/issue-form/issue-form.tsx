@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,7 +13,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useForm, FormProvider } from 'react-hook-form';
 import axios from 'axios';
 import { useMutation } from 'react-query';
-
+import { FormControl } from '@mui/material';
 export interface IssueFormProps {}
 
 const createNewIssue = async (inputValues: any): Promise<any> => {
@@ -38,7 +38,7 @@ export function IssueForm(props: IssueFormProps) {
   const methods = useForm({
     mode: 'onBlur',
     defaultValues: {
-      issue_title: '',
+      item_name: '',
       batch_number: '',
       description: '',
     },
@@ -56,19 +56,14 @@ export function IssueForm(props: IssueFormProps) {
     createIssue(inputValues);
   };
 
-  const [titleName, setTitleName] = useState('');
-  const [batchNumber, setBatchNumber] = useState('');
-  const [desc, setDesc] = useState('');
-
-  const discardBtnClick = () => {
-    setTitleName('');
-    setBatchNumber('');
-    setDesc('');
+  const handleClick = () => {
+    methods.resetField('description');
+    methods.resetField('batch_number');
+    methods.resetField('item_name');
   };
-
   return (
-    <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '70vh' }}>
-      <Card sx={{ width: '400px', maxWidth: '400px', height: '480px', maxHeight: '480px', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+    <Grid container style={{ minHeight: '70vh' }}>
+      <Card sx={{ width: '100%', maxWidth: '100%', height: '50%', maxHeight: '50%', justifyContent: 'center', alignItems: 'center', p: 2 }}>
         <CardContent>
           <Grid container xs={12} rowGap={2} columnGap={2.5}>
             <Grid item xs={12}>
@@ -81,55 +76,33 @@ export function IssueForm(props: IssueFormProps) {
           <FormProvider {...methods}>
             <Grid container xs={12} rowGap={2} columnGap={4}>
               <Grid item xs={12}>
-                <TextField
-                  {...methods.register('issue_title', { required: true })}
-                  onChange={(e) => {
-                    setTitleName(e.target.value);
-                  }}
-                  id="outlined-basic"
-                  value={titleName}
-                  label="Title"
-                  variant="outlined"
-                  size="small"
-                  sx={{ mt: 4, width: '100%' }}
-                />
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Item Name</InputLabel>
+                  <Select {...methods.register('item_name')} labelId="demo-simple-select-label" id="demo-simple-select" onChange={()=>console.log('backend call for abtch numbers')}>
+                    <MenuItem value={'10'}>Ten</MenuItem>
+                    <MenuItem value={"20"}>Twenty</MenuItem>
+                    <MenuItem value={"30"}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
-
               <Grid item xs={12}>
-                <TextField
-                  {...methods.register('batch_number', { required: true })}
-                  onChange={(e) => {
-                    setBatchNumber(e.target.value);
-                  }}
-                  id="outlined-basic"
-                  value={batchNumber}
-                  label="Batch number"
-                  variant="outlined"
-                  size="small"
-                  sx={{ mt: 2, width: '100%' }}
-                />
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Batch Number</InputLabel>
+                  <Select {...methods.register('batch_number')} labelId="demo-simple-select-label" id="demo-simple-select">
+                    <MenuItem value={"100"}>Hundred</MenuItem>
+                    <MenuItem value={"200"}>Two hundred</MenuItem>
+                    <MenuItem value={"300"}>Three hundred</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
-
               <Grid item xs={12} sx={{ mb: 3 }}>
-                <TextField
-                  {...methods.register('description', { required: true })}
-                  onChange={(e) => {
-                    setDesc(e.target.value);
-                  }}
-                  id="outlined-basic"
-                  value={desc}
-                  label="Description"
-                  variant="outlined"
-                  rows={5}
-                  multiline
-                  sx={{ mt: 2, width: '100%' }}
-                />
+                <TextField {...methods.register('description', { required: true })} id="outlined-basic" label="Description" variant="outlined" rows={10} multiline sx={{ mt: 2, width: '100%' }} />
               </Grid>
             </Grid>
           </FormProvider>
 
-          <Grid container rowGap={2} columnGap={4}>
-            <Grid item xs={4}>
+          <Grid container rowGap={2} columnGap={1}>
+            <Grid item xs={1.5}>
               <Button
                 variant="contained"
                 color="success"
@@ -138,6 +111,7 @@ export function IssueForm(props: IssueFormProps) {
                 type="submit"
                 onClick={() => {
                   handleCreateIssue({ inputValues });
+                  console.log(inputValues);
                 }}
               >
                 {' '}
@@ -145,10 +119,9 @@ export function IssueForm(props: IssueFormProps) {
               </Button>
             </Grid>
 
-            <Grid item xs={3}>
-              <Button variant="contained" sx={{ width: 100, backgroundColor: 'transparent', color: 'black' }} className="addnewBtn" onClick={discardBtnClick}>
-                {' '}
-                Discard{' '}
+            <Grid item xs={1}>
+              <Button variant="contained" sx={{ width: 100, backgroundColor: 'transparent', color: 'black' }} className="addnewBtn" onClick={handleClick}>
+                Discard
               </Button>
             </Grid>
           </Grid>
