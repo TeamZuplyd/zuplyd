@@ -363,7 +363,7 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
           <Button variant="contained" color="success" sx={{ mr: 2 }} onClick={handleRequest}>
             Send Request
           </Button>
-          <Button variant="contained" color="warning">
+          <Button variant="contained" color="warning" onClick={handleClose}>
             Cancel
           </Button>
         </CardActions>

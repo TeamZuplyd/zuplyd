@@ -2,10 +2,10 @@
 import Signup from '../pages/home-page/signup';
 import LandingPage from '../pages/landing-page/landing-page';
 
-import RegPage2 from '../pages/company-admin/regPage2';
-import RegPage3 from '../pages/company-admin/regPage3';
-import RegPage4 from '../pages/company-admin/regPage4';
-import RegPage5 from '../pages/company-admin/regPage5';
+import CompInit1 from '../pages/company-admin/comp-init-1';
+import CompInit2 from '../pages/company-admin/comp-init-2';
+import CompInit3 from '../pages/company-admin/comp-init-3';
+import CompInit4 from '../pages/company-admin/comp-init-4';
 
 import CompanyAdmin from '../pages/company-admin/companyAdmin';
 import CAdashboard from '../pages/company-admin/dashboard';
@@ -189,64 +189,64 @@ export function AppRoute(props: AppRouteProps) {
         </Route>
       </Route>
 
-      <Route path="comp-init-1" element={<RegPage2 />} />
-      <Route path="comp-init-2" element={<RegPage3 />} />
-      <Route path="comp-init-3" element={<RegPage4 />} />
-      <Route path="comp-init-4" element={<RegPage5 />} />
+      <Route path="comp-init-1" element={<CompInit1 />} />
+      <Route path="comp-init-2" element={<CompInit2 />} />
+      <Route path="comp-init-3" element={<CompInit3 />} />
+      <Route path="comp-init-4" element={<CompInit4 />} />
       <Route path="profile-setup" element={<ProfileSetup />} />
       <Route path="signup" element={<SignupButton />} />
       <Route path="logout" element={<LogoutButton />} />
 
-      <Route element={<ProtectedRoute user={user} role={'comp_admin'} />}>
-        <Route path="/company-admin" element={<CompanyAdmin />}>
-          <Route index element={<Navigate to={'dashboard'} replace />} />
-          <Route path="dashboard" element={<CAdashboard />} />
-          <Route path="supply-Chain" element={<SupplyChain />} />
-          <Route path="company" element={<Company />} />
-          <Route path="reports" element={<CAReports />} />
-          <Route path="settings" element={<CASettings />} />
-        </Route>
+      {/* <Route element={<ProtectedRoute user={user} role={'comp_admin'} />}> */}
+      <Route path="/company-admin" element={<CompanyAdmin />}>
+        <Route index element={<Navigate to={'dashboard'} replace />} />
+        <Route path="dashboard" element={<CAdashboard />} />
+        <Route path="supply-Chain" element={<SupplyChain />} />
+        <Route path="company" element={<Company />} />
+        <Route path="reports" element={<CAReports />} />
+        <Route path="settings" element={<CASettings />} />
       </Route>
+      {/* </Route> */}
 
-      <Route element={<ProtectedRoute user={user} role={'proc_mngr'} />}>
-        <Route path="/procurement-manager" element={<ProcurementManager />}>
-          <Route index element={<Navigate to={'dashboard'} replace />} />
-          <Route path="dashboard" element={<PDashboard />} />
-          <Route path="goodRequests" element={<PGoodRequests />} />
-          <Route path="issues" element={<PIssues />} />
-          <Route path="procurement" element={<PProcurement />} />
-          <Route path="products" element={<PProducts />} />
-          <Route path="reports" element={<PReports />} />
-          <Route path="settings" element={<PSettings />} />
-        </Route>
+      {/* <Route element={<ProtectedRoute user={user} role={'proc_mngr'} />}> */}
+      <Route path="/procurement-manager" element={<ProcurementManager />}>
+        <Route index element={<Navigate to={'dashboard'} replace />} />
+        <Route path="dashboard" element={<PDashboard />} />
+        <Route path="goodRequests" element={<PGoodRequests />} />
+        <Route path="issues" element={<PIssues />} />
+        <Route path="procurement" element={<PProcurement />} />
+        <Route path="products" element={<PProducts />} />
+        <Route path="reports" element={<PReports />} />
+        <Route path="settings" element={<PSettings />} />
       </Route>
+      {/* </Route> */}
 
-      <Route element={<ProtectedRoute user={user} role={'wh_mngr'} />}>
-        <Route path="/warehouse-manager" element={<WarehouseManager />}>
-          <Route index element={<Navigate to={'dashboard'} replace />} />
-          <Route path="dashboard" element={<WHMdashboard />} />
-          <Route path="inventory" element={<WHMinventory />} />
-          <Route path="inventory/:id" element={<Table />} />
-          <Route path="orders" element={<WHMOrders />} />
-          <Route path="issues" element={<WHMissues />} />
-          <Route path="shops" element={<WHMShops />} />
-          <Route path="reports" element={<WHMReports />} />
-          <Route path="settings" element={<WHMSettings />} />
-        </Route>
+      {/* <Route element={<ProtectedRoute user={user} role={'wh_mngr'} />}> */}
+      <Route path="/warehouse-manager" element={<WarehouseManager />}>
+        <Route index element={<Navigate to={'dashboard'} replace />} />
+        <Route path="dashboard" element={<WHMdashboard />} />
+        <Route path="inventory" element={<WHMinventory />} />
+        <Route path="inventory/:id" element={<Table />} />
+        <Route path="orders" element={<WHMOrders />} />
+        <Route path="issues" element={<WHMissues />} />
+        <Route path="shops" element={<WHMShops />} />
+        <Route path="reports" element={<WHMReports />} />
+        <Route path="settings" element={<WHMSettings />} />
       </Route>
+      {/* </Route> */}
 
-      <Route element={<ProtectedRoute user={user} role={'sh_mngr'} />}>
-        <Route path="/shop-manager" element={<ShopManager />}>
-          <Route index element={<Navigate to={'dashboard'} replace />} />
-          <Route path="dashboard" element={<SMdashboard />} />
-          <Route path="inventory" element={<SMinventory />} />
-          <Route path="inventory/:id" element={<ShopTable />} />
-          <Route path="orders" element={<SMOrders />} />
-          <Route path="issues" element={<SMissues />} />
-          <Route path="reports" element={<SMReports />} />
-          <Route path="settings" element={<SMSettings />} />
-        </Route>
+      {/* <Route element={<ProtectedRoute user={user} role={'sh_mngr'} />}> */}
+      <Route path="/shop-manager" element={<ShopManager />}>
+        <Route index element={<Navigate to={'dashboard'} replace />} />
+        <Route path="dashboard" element={<SMdashboard />} />
+        <Route path="inventory" element={<SMinventory />} />
+        <Route path="inventory/:id" element={<ShopTable />} />
+        <Route path="orders" element={<SMOrders />} />
+        <Route path="issues" element={<SMissues />} />
+        <Route path="reports" element={<SMReports />} />
+        <Route path="settings" element={<SMSettings />} />
       </Route>
+      {/* </Route> */}
 
       <Route element={<ProtectedRoute user={user} role={'supl'} />}>
         <Route path="/supplier" element={<Supplier />}>
