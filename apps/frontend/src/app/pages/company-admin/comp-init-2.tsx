@@ -21,53 +21,32 @@ import { GoBackButton, ContactNoButton } from '../../components/buttons/buttons'
 // TODO: get comp id by email, can be null
 
 const postData = {
-  step: 1,
-  comp_id: null,
-  comp_data: null,
+  step: 2,
+  comp_id: '',
+  comp_data: {},
 };
 
-// type formValues = {
-//   company_name: string;
-//   address: string;
-//   contactNums: [''];
-// };
+const getCompId = () => {
+  return localStorage.getItem('comp_id') || '';
+};
 
-interface comp_data {
-  inputValues: any;
-  numbers: any;
-  userEmail: any;
-}
+const handleData = async (selectedStruct: any) => {
+  //Updating company
+  if (selectedStruct == 0) {
+    alert('Select an option');
+    return null;
+  } else {
+    postData.comp_data = { distribution_struct: selectedStruct };
+    postData.comp_id = getCompId();
 
-const createNewComp = async ({ inputValues, numbers, userEmail }: any): Promise<any> => {
-  inputValues.contact_nums = numbers;
-  postData.comp_data = inputValues;
-
-  const response1 = await axios.post(`http://localhost:3333/api/companies/register`, postData);
-
-  const userBody = {
-    email: userEmail,
-    role: 'comp_admin',
-    company_name: inputValues.company_name,
-    company_id: '',
-  };
-
-  userBody.company_id = response1.data.comp_id;
-
-  const response2 = await axios.post(`http://localhost:7000/api/user-mgmt/register`, userBody);
-  console.log(response1.data.comp_id);
-
-  localStorage.setItem('comp_id', response1.data.comp_id);
-
-  console.log('done');
-
-  return response1 && response2;
+    const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+    return response;
+  }
 };
 
 function compInit2() {
+  const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
-  function handleContinue() {
-    setLoading(true);
-  }
 
   const [selected, setSelected] = useState(0);
   const distributionStructure = [
@@ -75,18 +54,27 @@ function compInit2() {
       id: 1,
       name: 'Centralized',
       description: 'A single top level warehouse collects goods from suppliers and distributes to other warehouses',
-      img: '../../assets/imgs/c.png',
+      img: '../../assets/imgs/centralized.png',
     },
     {
       id: 2,
       name: 'Distributed',
       description: 'A single top level warehouse collects goods from suppliers and distributes to other warehouses',
-      img: '../../assets/imgs/c.png',
+      img: '../../assets/imgs/distributed.png',
     },
   ];
   const handleSelected = (index: number) => {
     setSelected(index);
   };
+
+  async function handleContinue() {
+    setLoading(true);
+    let state = await handleData(selected);
+    setLoading(false);
+    // TODO: redirect if success only
+    navigate('/comp-init-3');
+  }
+
   return (
     <>
       <InitLayout>

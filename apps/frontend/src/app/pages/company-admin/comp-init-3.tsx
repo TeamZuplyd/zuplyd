@@ -18,65 +18,42 @@ import Box from '@mui/material/Box';
 // Components
 import InitLayout from '../../components/init-layout/init-layout';
 import { GoBackButton, ContactNoButton } from '../../components/buttons/buttons';
-// import planStarter from '../../../assets/imgs/ic_plan_starter.png';
-// import planPlus from '../../../assets/imgs/ic_plan_basic.png';
-// import planPremium from '../../../assets/imgs/ic_plan_premium.png';
 
 import checkMark from '../../../assets/imgs/ic_check.png';
 
-// TODO: get comp id by email, can be null
-
 const postData = {
-  step: 1,
-  comp_id: null,
-  comp_data: null,
+  step: 3,
+  comp_id: '',
+  comp_data: {},
 };
 
-// type formValues = {
-//   company_name: string;
-//   address: string;
-//   contactNums: [''];
-// };
+const getCompId = () => {
+  return localStorage.getItem('comp_id') || '';
+};
 
-interface comp_data {
-  inputValues: any;
-  numbers: any;
-  userEmail: any;
-}
-
-const createNewComp = async ({ inputValues, numbers, userEmail }: any): Promise<any> => {
-  inputValues.contact_nums = numbers;
-  postData.comp_data = inputValues;
-
-  const response1 = await axios.post(`http://localhost:3333/api/companies/register`, postData);
-
-  const userBody = {
-    email: userEmail,
-    role: 'comp_admin',
-    company_name: inputValues.company_name,
-    company_id: '',
-  };
-
-  userBody.company_id = response1.data.comp_id;
-
-  const response2 = await axios.post(`http://localhost:7000/api/user-mgmt/register`, userBody);
-  console.log(response1.data.comp_id);
-
-  localStorage.setItem('comp_id', response1.data.comp_id);
-
-  console.log('done');
-
-  return response1 && response2;
+const handleData = async (selectedTier: any): Promise<any> => {
+  if (selectedTier == 0) {
+    alert('Select an option');
+    return null;
+  } else {
+    postData.comp_id = getCompId();
+    postData.comp_data = { tier: selectedTier };
+    const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+    return response;
+  }
 };
 
 function compInit3() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = React.useState(false);
+
   const [selected, setSelected] = useState(0);
 
   const tiers = [
     {
       id: 1,
       name: 'Starter',
-      iconPath: '../../../assets/imgs/ic_plan_starter.png',
+      iconPath: '../../../assets/imgs/ic_plan_basic.png',
       price: 0,
       description: 'Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien.',
       points: ['Online operator 24/7', 'Online operator 24/7', 'Point 3', 'Point 4', 'Point 5'],
@@ -84,7 +61,7 @@ function compInit3() {
     {
       id: 2,
       name: 'Plus',
-      iconPath: '../../../assets/imgs/ic_plan_basic.png',
+      iconPath: '../../../assets/imgs/ic_plan_starter.png',
       price: 59,
       description: 'Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien.',
       points: ['Online operator 24/7', 'Online operator 24/7', 'Online operator 24/7', 'Point 4', 'Point 5'],
@@ -101,12 +78,14 @@ function compInit3() {
 
   const handleSelected = (index: number) => {
     setSelected(index);
-    // console.log('selected ' + index);
   };
 
-  const [loading, setLoading] = React.useState(false);
-  function handleContinue() {
+  async function handleContinue() {
     setLoading(true);
+    let state = await handleData(selected);
+    setLoading(false);
+    // TODO: redirect if success only
+    navigate('/comp-init-4');
   }
 
   return (

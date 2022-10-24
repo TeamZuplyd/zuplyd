@@ -18,7 +18,7 @@ import InitLayout from '../../components/init-layout/init-layout';
 import { GoBackButton, ContactNoButton } from '../../components/buttons/buttons';
 
 // TODO: check if we shud destroy comp_id in localStorage
-type Props = {};
+// type Props = {};
 const postData = {
   step: 4,
   comp_id: '',
@@ -29,14 +29,7 @@ const getCompId = () => {
   return localStorage.getItem('comp_id') || '';
 };
 
-interface comp_data {
-  p_managers: any;
-  w_managers: any;
-  s_managers: any;
-}
-
-const postManagers = async ({ p_managers, w_managers, s_managers }: comp_data): Promise<any> => {
-  // setTimeout(async (): Promise<any> => {
+const handleData = async ({ p_managers, w_managers, s_managers }: any): Promise<any> => {
   postData.comp_id = getCompId();
   postData.comp_data = {
     p_managers: p_managers,
@@ -57,11 +50,12 @@ const postManagers = async ({ p_managers, w_managers, s_managers }: comp_data): 
   console.log('done');
 
   return response1 && response2;
-  // }, 3000);
 };
 
-const compInit4 = (props: Props) => {
+const compInit4 = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = React.useState(false);
+
   const [isPosting, setPosting] = useState(false);
   const [s_managers, setShopManagerEmails] = useState<string[]>([]);
   const [w_managers, setWarehouseManagerEmails] = useState<string[]>([]);
@@ -80,9 +74,7 @@ const compInit4 = (props: Props) => {
   };
 
   const deleteShopManagerEmail = (index: number) => {
-    // console.log('delete ' + index);
     setShopManagerEmails((s_managers) => s_managers.filter((_, i) => i !== index));
-    // console.log('delete ' + index);
   };
 
   const deleteWarehouseManagerEmail = (index: number) => {
@@ -93,28 +85,26 @@ const compInit4 = (props: Props) => {
     setProcurementManagerEmails((p_managers) => p_managers.filter((_, i) => i !== index));
   };
 
-  const handleInit4 = async () => {
-    setPosting(true);
-    // let res = await postManagers({ p_managers, w_managers, s_managers });
-    postManagers({ p_managers, w_managers, s_managers })
-      .then((data) => {
-        setPosting(false);
-      })
-      .then(() => {
-        console.log('Navigates');
-        navigate('/company-admin');
-      });
+  // const handleInit4 = async () => {
+  //   setPosting(true);
+  //   // let res = await postManagers({ p_managers, w_managers, s_managers });
+  //   postManagers({ p_managers, w_managers, s_managers })
+  //     .then((data) => {
+  //       setPosting(false);
+  //     })
+  //     .then(() => {
+  //       console.log('Navigates');
+  //       navigate('/company-admin');
+  //     });
 
-    // if (res) navigate('/company-admin/dashboard');
-  };
+  //   // if (res) navigate('/company-admin/dashboard');
+  // };
 
-  useEffect(() => {
-    console.log('isPosting', isPosting);
-  }, [isPosting]);
-
-  const [loading, setLoading] = React.useState(false);
-  function handleContinue() {
+  async function handleContinue() {
     setLoading(true);
+    let state = await handleData({ p_managers, w_managers, s_managers });
+    setLoading(false);
+    navigate('/company-admin');
   }
 
   return (
