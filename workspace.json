@@ -11,6 +11,7 @@
     "procurement": "apps/procurement",
     "request-handler": "apps/request-handler",
     "shop": "apps/shop",
-    "user-mgmt": "apps/user-mgmt"
+    "user-mgmt": "apps/user-mgmt",
+    "warehouse": "apps/warehouse"
   }
 }
