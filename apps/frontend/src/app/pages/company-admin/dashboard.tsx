@@ -1,12 +1,14 @@
 import { Grid } from '@mui/material';
 import React from 'react';
 import DashboardCard from '../../components/dashboard-card/dashboard-card';
+import DashboardCardNew from '../../components/dashboard-card-new/dashboard-card-new';
 import Header from '../../components/header/header';
 
-const jsonArr: any[] = [
-  ['Warehouses', 'Shops', 'Tier', 'Shop Managers', 'Warehouse Managers', 'Procument Managers'],
-
-  [10, 25, 'Free', 1, 2, 3],
+const dashboardCards = [
+  { title: 'Procurement Managers', value: 5, top: 5, imgPath: '../../assets/svg/users-gray.svg' },
+  { title: 'No of Shops', value: 45, top: 5, imgPath: '../../assets/svg/shop-gray.svg' },
+  { title: 'No of Warehouses', value: 5, top: 5, imgPath: '../../assets/svg/warehouse-gray.svg' },
+  { title: 'No of Warehouses', value: 5, top: 5, imgPath: '../../assets/svg/warehouse-gray.svg' },
 ];
 
 function dashboard() {
@@ -16,16 +18,14 @@ function dashboard() {
     <>
       <Header title={'Dashboard'} />
 
-      <div className="content">
-        <Grid container sx={{ pl: '2rem' }} rowGap={0}>
-          {jsonArr[0].map((i: string) => {
-            return (
-              <Grid item xs={3} sx={{ mt: 1 }}>
-                <DashboardCard theKey={i} theValue={jsonArr[1][count++]} />
-              </Grid>
-            );
-          })}
-        </Grid>
+      <div style={{ marginTop: '20px', marginLeft: 'auto', marginRight: 'auto', display: 'flex', alignContent: 'space-between' }}>
+        {dashboardCards.map((item: any) => {
+          return (
+            <Grid item xs={3} sx={{ mt: 0 }}>
+              <DashboardCardNew title={item.title} value={item.value} top={item.top} imgPath={item.imgPath} />
+            </Grid>
+          );
+        })}
       </div>
     </>
   );
