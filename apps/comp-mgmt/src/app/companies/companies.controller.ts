@@ -30,13 +30,13 @@ export class CompaniesController {
     return ret;
   }
 
-  @Get(':compId')
+  @Get('find/:compId')
   async findById(@Param('compId') id: string): Promise<Company> {
     let company = await this.companyService.findOne(id);
     return company;
   }
 
-  @Get()
+  @Get('findAll')
   async findAll(): Promise<Company[]> {
     let companies = await this.companyService.findAll();
     return companies;

@@ -31,44 +31,23 @@ export function InitialAddForm({ addEmail }: InitialAddFormProps) {
       console.log(input);
       setInput('');
     }
-    console.log()
+    console.log();
   };
 
   return (
     <Box>
-      <CardContent
-        sx={{
-          mx: 1,
-          '&:last-child': {
-            paddingBottom: 0,
-          },
-        }}
-      >
+      <CardContent sx={{ mr: 1, px: 0, py: 0, height: '80px' }}>
         <form onSubmit={handleSubmit}>
           <Grid container rowGap={0} columnGap={0} direction="row">
-            <Grid item xs={8}>
-              <TextField
-                sx={{ mt: 1, mb: 1 }}
-                fullWidth
-                onChange={(e) => validateEmail(e)}
-                autoComplete="off"
-                id="email"
-                label="Email"
-                variant="standard"
-                type="email"
-                error={emailError}
-                helperText={!emailError ? ' ' : 'Invalid Email'}
-                value={input}
-              />
+            <Grid item xs={9}>
+              <TextField sx={{ mt: 1, mb: 1 }} fullWidth onChange={(e) => validateEmail(e)} autoComplete="off" id="email" label="Email" variant="standard" type="email" error={emailError} helperText={!emailError ? ' ' : 'Invalid Email'} value={input} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <Button
                 sx={{
                   m: 2,
                   backgroundColor: '#1F2937',
-                  '&:hover': {
-                    backgroundColor: '#1F2937',
-                  },
+                  '&:hover': { backgroundColor: '#1F2937' },
                 }}
                 variant="contained"
                 type="submit"

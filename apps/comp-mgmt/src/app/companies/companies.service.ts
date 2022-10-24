@@ -15,7 +15,7 @@ export class CompaniesService {
   // registration of a company
   async register(id: string, createCompanyDto: CreateCompanyDto): Promise<Company> {
     let registeredCompany = null;
-    if (id == null) {
+    if (id == '') {
       registeredCompany = await this.companyModel.create(createCompanyDto);
     } else {
       registeredCompany = await this.companyModel.findByIdAndUpdate(id, createCompanyDto);
