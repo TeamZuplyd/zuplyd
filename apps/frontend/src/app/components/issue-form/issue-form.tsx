@@ -53,8 +53,8 @@ export function IssueForm(props: IssueFormProps) {
       item_name: inputValues.item_name,
       batch_no: inputValues.batch_number,
       desc: inputValues.description,
-      action_taken: '',
-      action_desc: '',
+      action_taken: '-',
+      action_desc: '-',
     };
 
     axios.post('http://localhost:5001/api/issues/create', body).then((res) => {
@@ -104,6 +104,7 @@ export function IssueForm(props: IssueFormProps) {
     axios.post('http://localhost:4444/api/goods/allBatchNosOfItem', body).then((res) => {
       setBatchData(res.data.batchNos);
     });
+    handleClick();
   };
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -17,6 +17,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead } from '@mui/material';
 import { orders } from '../../../data/orders';
+import axios from 'axios';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -68,7 +69,21 @@ export interface IssueTableProps {
 }
 
 export function IssueTable({ itemList }: IssueTableProps) {
-  const [itemInfo, setItemInfo] = React.useState<any>([]);
+  const [itemInfo, setItemInfo] = useState<any>([]);
+  const [itemData, setItemData] = useState<any>([]);
+
+  const getRequestInfo = () => {
+    const companyName = 'qwerty';
+    const userID = 123;
+    axios.get('http://localhost:5001/api/issues/userIssue/' + companyName + '/' + userID).then((res) => {
+      setItemData(res.data);
+      console.log(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getRequestInfo();
+  }, []);
 
   // const getItemInfo = () => {
   //   axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
@@ -81,8 +96,8 @@ export function IssueTable({ itemList }: IssueTableProps) {
   //   getItemInfo();
   // }, []);
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
@@ -101,7 +116,7 @@ export function IssueTable({ itemList }: IssueTableProps) {
       <Table stickyHeader sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            <TableCell component="th">Title </TableCell>
+            <TableCell component="th">Item Name</TableCell>
             <TableCell component="th">Batch Number</TableCell>
             <TableCell component="th">Description</TableCell>
             <TableCell component="th">Action Taken</TableCell>
@@ -109,13 +124,13 @@ export function IssueTable({ itemList }: IssueTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0 ? itemList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : itemList).map((i) => (
+          {(rowsPerPage > 0 ? itemData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : itemData).map((i) => (
             <TableRow>
-              <TableCell style={{}}>{i.title}</TableCell>
-              <TableCell style={{}}>{i.batchNo}</TableCell>
+              <TableCell style={{}}>{i.item_name}</TableCell>
+              <TableCell style={{}}>{i.batch_no}</TableCell>
               <TableCell style={{}}>{i.desc}</TableCell>
-              <TableCell style={{}}>{i.actionTaken}</TableCell>
-              <TableCell style={{}}>{i.actionDesc}</TableCell>
+              <TableCell style={{}}>{i.action_taken}</TableCell>
+              <TableCell style={{}}>{i.action_desc}</TableCell>
             </TableRow>
           ))}
           {emptyRows > 0 && (
