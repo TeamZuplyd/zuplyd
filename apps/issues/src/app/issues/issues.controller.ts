@@ -14,9 +14,15 @@ export class IssuesController {
     return issue;
   }
 
-  @Get('allIssues/:company_id')
-  async findAll(@Param('company_id') comp_id: string): Promise<IssueClass[]> {
-    let issue = await this.issuesService.findAll(comp_id);
+  @Get('allUnsolvedIssues/:company_id')
+  async findAllUnsolved(@Param('company_id') comp_id: string): Promise<IssueClass[]> {
+    let issue = await this.issuesService.findAllunsolved(comp_id);
+    return issue;
+  }
+
+  @Get('allSolvedIssues/:company_id')
+  async findAllSolved(@Param('company_id') comp_id: string): Promise<IssueClass[]> {
+    let issue = await this.issuesService.findAllsolved(comp_id);
     return issue;
   }
 
