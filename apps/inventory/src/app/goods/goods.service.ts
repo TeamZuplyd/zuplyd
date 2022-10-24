@@ -58,6 +58,9 @@ export class GoodsService {
 
   //model creation based on the item type so that specific collection can be accessed
   async itemModel(itemName: string, itemSchema: Schema): Promise<Model<any>> {
+    if (this.connection.models[itemName]) {
+      return this.connection.models[itemName];
+    }
     return this.connection.model(itemName, itemSchema);
   }
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { GoodsService } from './goods.service';
 
 @Controller('goods')
@@ -150,7 +150,7 @@ export class GoodsController {
     */
   }
 
-  @Get('allBatchNosOfItem')
+  @Post('allBatchNosOfItem')
   async getItemBatcheNos(@Body() itemTypeDto: any) {
     /*
     releaseGoodsDto = {
