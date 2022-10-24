@@ -187,6 +187,7 @@ function BasicModal({ open, handleClose, data }: BasicModalProps) {
       issue_title: '',
       batch_number: '',
       description: '',
+      action: '',
     },
   });
 
@@ -202,15 +203,15 @@ function BasicModal({ open, handleClose, data }: BasicModalProps) {
     createIssue(inputValues);
   };
 
-  const [titleName, setTitleName] = useState('');
-  const [batchNumber, setBatchNumber] = useState('');
-  const [desc, setDesc] = useState('');
+  // const [titleName, setTitleName] = useState('');
+  // const [batchNumber, setBatchNumber] = useState('');
+  // const [desc, setDesc] = useState('');
 
-  const discardBtnClick = () => {
-    setTitleName('');
-    setBatchNumber('');
-    setDesc('');
-  };
+  // const discardBtnClick = () => {
+  //   setTitleName('');
+  //   setBatchNumber('');
+  //   setDesc('');
+  // };
 
   const [dropDown, setDropDown] = useState('');
 
@@ -257,11 +258,11 @@ function BasicModal({ open, handleClose, data }: BasicModalProps) {
             <Grid item xs={12} sx={{ mb: 3 }}>
               <TextField
                 {...methods.register('description', { required: true })}
-                onChange={(e) => {
-                  setDesc(e.target.value);
-                }}
+                // onChange={(e) => {
+                //   setDesc(e.target.value);
+                // }}
                 id="outlined-basic"
-                value={desc}
+                // value={desc}
                 label="Description"
                 variant="outlined"
                 rows={5}
@@ -272,17 +273,24 @@ function BasicModal({ open, handleClose, data }: BasicModalProps) {
 
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Action</InputLabel>
-              <Select labelId="demo-select-small" id="demo-select-small" value={dropDown} label="Age" onChange={handleChange}>
-                <MenuItem value={10}>Action-1</MenuItem>
-                <MenuItem value={20}>Action-2</MenuItem>
-                <MenuItem value={30}>Action-3</MenuItem>
+              <Select labelId="demo-select-small" id="demo-select-small"  label="action" {...methods.register('action', { required: true })}>
+                <MenuItem value={'use'}>Use as is</MenuItem>
+                <MenuItem value={'stop temporarily'}>Stop using temporarily</MenuItem>
+                <MenuItem value={'discard'}>Stop using and discard</MenuItem>
               </Select>
             </FormControl>
           </Grid>
         </FormProvider>
 
         <CardActions>
-          <Button variant="contained" color="success" sx={{ mr: 2 }}>
+          <Button
+            variant="contained"
+            color="success"
+            sx={{ mr: 2 }}
+            onClick={() => {
+              console.log(inputValues);
+            }}
+          >
             Send Request
           </Button>
           <Button variant="contained" color="warning" onClick={handleClose}>
