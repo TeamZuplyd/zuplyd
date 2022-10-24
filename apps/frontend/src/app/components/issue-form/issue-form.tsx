@@ -55,6 +55,7 @@ export function IssueForm(props: IssueFormProps) {
       desc: inputValues.description,
       action_taken: '-',
       action_desc: '-',
+      flag: 0,
     };
 
     axios.post('http://localhost:5001/api/issues/create', body).then((res) => {
