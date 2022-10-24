@@ -1,0 +1,13 @@
+.dashboard-card .title {
+  font-weight: 700;
+  font-size: 18px;
+  font-family: 'Public Sans', sans-serif !important;
+}
+
+.dashboard-card .value {
+  line-height: normal;
+  color: #fd8f02 !important;
+  font-weight: 700;
+  font-size: 45px;
+  font-family: 'Barlow', sans-serif !important;
+}

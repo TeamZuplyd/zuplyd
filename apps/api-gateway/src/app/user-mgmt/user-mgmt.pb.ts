@@ -11,6 +11,7 @@ export interface RegisterRequest {
   role: string;
   company_name: string;
   company_id: string;
+  managing_id: string;
 }
 
 export interface RegisterResponse {
@@ -30,6 +31,7 @@ export interface User {
   role: string;
   company_name: string;
   company_id: string;
+  managing_id: string;
   __v: number;
 }
 
