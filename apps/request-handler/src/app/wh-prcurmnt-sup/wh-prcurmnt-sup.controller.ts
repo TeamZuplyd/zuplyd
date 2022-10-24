@@ -21,12 +21,12 @@ export class WhPrcurmntSupController {
     return this.WhPrcurmntSupReqService.findAllBySupplierID(id);
   }
 
-  @Get('findAllByAny/:id')
+  @Get('findAllByAny')
   findAllByAny(@Body() searchParamObj: any) {
     /*
     searchParamObj = { key : value }
     */
-    return this.WhPrcurmntSupReqService.findAllBySupplierID(searchParamObj);
+    return this.WhPrcurmntSupReqService.findAllByAny(searchParamObj);
   }
 
   @Get('delete/:id')
