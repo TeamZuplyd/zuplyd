@@ -65,6 +65,7 @@
     "@heroicons/react": "^1.0.6",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.1",
+    "@mui/x-data-grid": "^5.17.1",
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.2.0",

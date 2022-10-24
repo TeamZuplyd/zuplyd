@@ -134,7 +134,6 @@ const coreData: { [key: number]: any } = {
     userRole: 'Supplier',
     options: [
       [<ViewGridIcon className="sideNav-icon" />, 'Dashboard', '/supplier/dashboard'],
-      [<CollectionIcon className="sideNav-icon" />, 'Products', '/supplier/products'],
       [<ClipboardListIcon className="sideNav-icon" />, 'Orders', '/supplier/orders'],
       [<DocumentTextIcon className="sideNav-icon" />, 'Quotations', '/supplier/quotations'],
       [<OfficeBuildingIcon className="sideNav-icon" />, 'Companies', '/supplier/companies'],
