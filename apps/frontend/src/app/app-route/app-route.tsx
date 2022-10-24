@@ -2,10 +2,10 @@
 import Signup from '../pages/home-page/signup';
 import LandingPage from '../pages/landing-page/landing-page';
 
-import RegPage2 from '../pages/company-admin/regPage2';
-import RegPage3 from '../pages/company-admin/regPage3';
-import RegPage4 from '../pages/company-admin/regPage4';
-import RegPage5 from '../pages/company-admin/regPage5';
+import CompInit1 from '../pages/company-admin/comp-init-1';
+import CompInit2 from '../pages/company-admin/comp-init-2';
+import CompInit3 from '../pages/company-admin/comp-init-3';
+import CompInit4 from '../pages/company-admin/comp-init-4';
 
 import CompanyAdmin from '../pages/company-admin/companyAdmin';
 import CAdashboard from '../pages/company-admin/dashboard';
@@ -55,6 +55,7 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useAuth0, User } from '@auth0/auth0-react';
 import Table from '../pages/warehouse-manager/table';
+import ShopTable from '../pages/shop-manager/table';
 
 import { useQuery } from 'react-query';
 
@@ -189,10 +190,10 @@ export function AppRoute(props: AppRouteProps) {
         </Route>
       </Route>
 
-      <Route path="comp-init-1" element={<RegPage2 />} />
-      <Route path="comp-init-2" element={<RegPage3 />} />
-      <Route path="comp-init-3" element={<RegPage4 />} />
-      <Route path="comp-init-4" element={<RegPage5 />} />
+      <Route path="comp-init-1" element={<CompInit1 />} />
+      <Route path="comp-init-2" element={<CompInit2 />} />
+      <Route path="comp-init-3" element={<CompInit3 />} />
+      <Route path="comp-init-4" element={<CompInit4 />} />
       <Route path="profile-setup" element={<ProfileSetup />} />
       <Route path="signup" element={<SignupButton />} />
       <Route path="logout" element={<LogoutButton />} />
@@ -240,7 +241,7 @@ export function AppRoute(props: AppRouteProps) {
         <Route index element={<Navigate to={'dashboard'} replace />} />
         <Route path="dashboard" element={<SMdashboard />} />
         <Route path="inventory" element={<SMinventory />} />
-        <Route path="inventory/:id" element={<Table />} />
+        <Route path="inventory/:id" element={<ShopTable />} />
         <Route path="orders" element={<SMOrders />} />
         <Route path="issues" element={<SMissues />} />
         <Route path="reports" element={<SMReports />} />

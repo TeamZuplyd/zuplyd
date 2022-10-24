@@ -29,27 +29,23 @@
   background-color: #3268cf !important;
 }
 
-.createAcc {
+.continueBtn {
   background-color: #ff8c04 !important;
+  box-shadow: 0px 4px 25px rgba(253, 143, 2, 0.33) !important;
 }
 
-.createAcc:hover {
+.continueBtn:hover {
   background-color: #f18304 !important;
 }
 
 .goBack {
-  background-color: #d8d8d8 !important;
-  color: #656565 !important;
-  font-size: 10px !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  padding-right: 5px !important;
-  padding-left: 1px !important;
-  width: 85px !important;
+  color: hsl(0, 0%, 26%) !important;
+  padding: 3px 7px 3px 4px !important;
+  border-radius: 8px !important;
 }
 
 .goBack:hover {
-  background-color: #c4c2c2 !important;
+  background-color: #d8d8d8 !important;
 }
 
 .addNumber {
@@ -66,9 +62,11 @@
 }
 
 .spanBtn {
-  background-color: transparent;
-  position: relative;
-  top: 3px;
+  color: #656565 !important;
+  background-color: #e9e9e9 !important;
+  font-size: 15px !important;
+  padding: 0 5px !important;
+  margin: 5px;
   cursor: pointer;
 }
 
@@ -88,4 +86,9 @@
 
 .css-1aquho2-MuiTabs-indicator {
   background: none !important;
+}
+
+.continueBtn {
+  position: relative;
+  bottom: 0 !important;
 }

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { map } from 'rxjs';
-import { Item, ItemIDRequest, ItemResponse, ItemServiceClient, ItemWithID, ITEM_SERVICE_NAME } from './procurement.pb';
+import { filter, lastValueFrom, map } from 'rxjs';
+import { FindAllResponse, Item, ItemIDRequest, ItemResponse, ItemServiceClient, ItemWithID, ITEM_SERVICE_NAME } from './procurement.pb';
 
 @Controller('procurement/item')
 export class ProcurementController {
@@ -27,9 +27,17 @@ export class ProcurementController {
     );
   }
 
-  @Get('findAll')
-  private async findAll(): Promise<any> {
-    return this.procurementSVC.findAll({});
+  @Get('findAll/:companyId')
+  private async findAll(@Param('companyId') companyId: string): Promise<any> {
+    let itemsArrObs = this.procurementSVC.findAll({});
+    let itemsObj = await lastValueFrom(itemsArrObs);
+    let arr = itemsObj.items.filter((val) => {
+      if (val.company_id == companyId) {
+        return val;
+      }
+    });
+
+    return { items: arr };
   }
 
   @Get('find/:id')

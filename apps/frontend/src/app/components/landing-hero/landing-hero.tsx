@@ -7,7 +7,9 @@ import Container from '@mui/material/Container';
 import manWithBox from "../../../assets/imgs/manwithabox.png";
 import vector from "../../../assets/imgs/vector1.png";
 
-export interface LandingHeroProps {}
+export interface LandingHeroProps {
+  getStart: ()=>void
+}
 
 export function LandingHero(props: LandingHeroProps) {
 
@@ -29,24 +31,24 @@ export function LandingHero(props: LandingHeroProps) {
             display="flex"
             justifyContent="center"
             alignItems="flex-start"
-            minHeight="80vh"
+            minHeight="94vh"
             sx={{ flexDirection: "column" }}
             style={{ textAlign: "center" }}
           >
-            <Typography variant="h2" component="h1" gutterBottom style={{ width: "90%", fontWeight: 700,textShadow: "7px 9px 23px rgba(0, 0, 0, 0.15)" }} align="left">
+            <Typography variant="h2" component="h1" gutterBottom style={{ width: "90%", fontWeight: 700,textShadow: "7px 9px 23px rgba(0, 0, 0, 0.15)", fontFamily: 'Barlow'}} align="left">
               Say <span className='highlight'>hello!</span> to your ideal inventory solution
             </Typography>
             <Typography
               variant="body2"
               gutterBottom
               component="p"
-              style={{ width: "90%", color:"#637381" }}
+              style={{ width: "90%", color:"#637381", fontFamily: 'Poppins', fontWeight: 400, fontSize: "16px"}}
               align="left"
             >
               A supply chain management system for small to medium range businesses to stay on top of their inventory, assets, and more.
             </Typography>
             
-            <button style={btnStyle}>Try For Free</button>
+            <button style={btnStyle} onClick={props.getStart}>Try For Free</button>
           </Box>
         </Grid>
         <Grid item sm={12} md={6}>
@@ -60,11 +62,12 @@ export function LandingHero(props: LandingHeroProps) {
             <img
               src={manWithBox}
               alt="a man with a box"
+              style={{position:"absolute", width:"576px",bottom:"-330px",zIndex:-50}}
             />
             <img
               src={vector}
               alt="vector"
-              style={{position:"absolute",zIndex:-100, bottom:"0px"}}
+              style={{position:"absolute",zIndex:-100, bottom:"-105px"}}
             />
           </Box>
         </Grid>

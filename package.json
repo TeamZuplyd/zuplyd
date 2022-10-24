@@ -64,6 +64,7 @@
     "@grpc/proto-loader": "^0.7.0",
     "@heroicons/react": "^1.0.6",
     "@mui/icons-material": "^5.8.4",
+    "@mui/lab": "^5.0.0-alpha.98",
     "@mui/material": "^5.9.1",
     "@mui/x-data-grid": "^5.17.1",
     "@nestjs-modules/mailer": "^1.8.1",

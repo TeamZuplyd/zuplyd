@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import HomeNavBar from './HomeNavBar';
+import InitLayout from './init-layout';
 
-describe('HomeNavBar', () => {
+describe('InitLayout', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<HomeNavBar />);
+    const { baseElement } = render(<InitLayout />);
     expect(baseElement).toBeTruthy();
   });
 });
