@@ -65,26 +65,10 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 export interface IssueTableProps {
-  itemList: any[];
+  itemData: any[];
 }
 
-export function IssueTable({ itemList }: IssueTableProps) {
-  const [itemInfo, setItemInfo] = useState<any>([]);
-  const [itemData, setItemData] = useState<any>([]);
-
-  const getRequestInfo = () => {
-    const companyName = 'qwerty';
-    const userID = 123;
-    axios.get('http://localhost:5001/api/issues/userIssue/' + companyName + '/' + userID).then((res) => {
-      setItemData(res.data);
-      console.log(res.data);
-    });
-  };
-
-  useEffect(() => {
-    getRequestInfo();
-  }, []);
-
+export function IssueTable({ itemData }: IssueTableProps) {
   // const getItemInfo = () => {
   //   axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
   //     setItemInfo(res.data.items);

@@ -26,11 +26,11 @@ export class IssuesService {
 
   // find all issues
   async findAllsolved(id: string): Promise<IssueClass[]> {
-    return this.issueModel.find({ flag: 1 }).exec();
+    return this.issueModel.find({ flag: 1, company_id: id }).exec();
   }
 
   async findAllunsolved(id: string): Promise<IssueClass[]> {
-    return this.issueModel.find({ flag: 0 }).exec();
+    return this.issueModel.find({ flag: 0, company_id: id }).exec();
   }
 
   // find all issues for a users

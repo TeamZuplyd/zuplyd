@@ -17,6 +17,9 @@ export class IssuesController {
   @Get('allUnsolvedIssues/:company_id')
   async findAllUnsolved(@Param('company_id') comp_id: string): Promise<IssueClass[]> {
     let issue = await this.issuesService.findAllunsolved(comp_id);
+    console.log('issue');
+    console.log(issue);
+
     return issue;
   }
 
