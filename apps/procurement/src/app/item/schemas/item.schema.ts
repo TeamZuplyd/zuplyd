@@ -30,6 +30,9 @@ export class Item {
   company_name: string;
 
   @Prop()
+  suppliers: string[];
+
+  @Prop()
   min_release_quantity_unit: string;
 
   @Prop([String])
