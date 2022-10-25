@@ -186,4 +186,10 @@ export class GoodsController {
       }
     */
   }
+
+  @Post('getAllItems/:user_id/')
+  async getAllItems(@Body() itemTypeDto: any, @Param('user_id') user_id: string) {
+    const itemsArray = await this.goodsService.getItemsOfAnOwner(itemTypeDto.itemType, user_id);
+    return { itemsArray: itemsArray };
+  }
 }

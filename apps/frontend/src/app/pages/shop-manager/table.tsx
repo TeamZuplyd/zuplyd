@@ -99,8 +99,9 @@ const table = () => {
   //get data from the backend relating to the category name
   //get item structure from procurement
 
+  const companyID = 'acdf214124 ';
   const getItemStructure = () => {
-    axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
+    axios.get('http://localhost:7000/api/procurement/item/findAll/'+ companyID).then((res) => {
       setItemStructure(res.data.items);
       console.log(res.data.items);
       console.log(itemStructure);
