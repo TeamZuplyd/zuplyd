@@ -36,7 +36,7 @@ export class ItemCategoryController {
     if (categoryObj) {
       return { itemCategory: categoryObj };
     } else {
-      return { error: 'no_such_item' };
+      return { error: 'no_category_data' };
     }
   }
 
