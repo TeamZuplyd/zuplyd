@@ -46,14 +46,20 @@ export function IssueForm(props: IssueFormProps) {
 
   const inputValues = methods.watch();
 
-  const useCreateIssue = () => {
-    return useMutation(createNewIssue);
-  };
+  const handleCreateIssue = () => {
+    const body = {
+      company_id: 'qwerty',
+      user_id: 123,
+      item_name: inputValues.item_name,
+      batch_no: inputValues.batch_number,
+      desc: inputValues.description,
+      action_taken: '',
+      action_desc: '',
+    };
 
-  const { mutate: createIssue } = useCreateIssue();
-
-  const handleCreateIssue = (inputValues: any) => {
-    createIssue(inputValues);
+    axios.post('http://localhost:5001/api/issues/create', body).then((res) => {
+      console.log('Succefull');
+    });
   };
 
   const handleClick = () => {
@@ -61,6 +67,49 @@ export function IssueForm(props: IssueFormProps) {
     methods.resetField('batch_number');
     methods.resetField('item_name');
   };
+
+  const [itemData, setItemData] = useState<any>([]);
+  const [batchData, setBatchData] = useState<any>([]);
+
+  const getRequestInfo = () => {
+    axios.get('http://localhost:7000/api/procurement/item/findAll/qwerty').then((res) => {
+      setItemData(res.data.items);
+      console.log(res.data.items);
+    });
+  };
+
+  const getBatches = () => {
+    let indexOfItem: number = 0;
+
+    for (let index = 0; index < itemData.length; index++) {
+      if (itemData[index].item_name == inputValues.item_name) {
+        indexOfItem = index;
+      }
+    }
+
+    const itemInfo = {
+      _id: itemData[indexOfItem]._id,
+      item_name: itemData[indexOfItem].item_name,
+      company_id: itemData[indexOfItem].company_id,
+      company_name: itemData[indexOfItem].company_name,
+      attributes_array: itemData[indexOfItem].attributes_array,
+      __v: itemData[indexOfItem].__v,
+    };
+
+    const body = {
+      ownerId: 123,
+      itemType: itemInfo,
+    };
+
+    axios.post('http://localhost:4444/api/goods/allBatchNosOfItem', body).then((res) => {
+      setBatchData(res.data.batchNos);
+    });
+  };
+
+  useEffect(() => {
+    getRequestInfo();
+  }, []);
+
   return (
     <Grid container style={{ minHeight: '70vh' }}>
       <Card sx={{ width: '100%', maxWidth: '100%', height: '50%', maxHeight: '50%', justifyContent: 'center', alignItems: 'center', p: 2 }}>
@@ -78,10 +127,10 @@ export function IssueForm(props: IssueFormProps) {
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Item Name</InputLabel>
-                  <Select {...methods.register('item_name')} labelId="demo-simple-select-label" id="demo-simple-select" onChange={()=>console.log('backend call for abtch numbers')}>
-                    <MenuItem value={'10'}>Ten</MenuItem>
-                    <MenuItem value={"20"}>Twenty</MenuItem>
-                    <MenuItem value={"30"}>Thirty</MenuItem>
+                  <Select {...methods.register('item_name')} labelId="demo-simple-select-label" id="demo-simple-select" onChange={getBatches}>
+                    {itemData.map((i: any) => (
+                      <MenuItem value={i.item_name}>{i.item_name}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -89,9 +138,10 @@ export function IssueForm(props: IssueFormProps) {
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Batch Number</InputLabel>
                   <Select {...methods.register('batch_number')} labelId="demo-simple-select-label" id="demo-simple-select">
-                    <MenuItem value={"100"}>Hundred</MenuItem>
-                    <MenuItem value={"200"}>Two hundred</MenuItem>
-                    <MenuItem value={"300"}>Three hundred</MenuItem>
+                    {/* uncomment and add the arr name */}
+                    {/* {batchData.map((i: any) => (
+                      <MenuItem value={i._id}>{i.item_name}</MenuItem>
+                    ))} */}
                   </Select>
                 </FormControl>
               </Grid>
@@ -103,17 +153,7 @@ export function IssueForm(props: IssueFormProps) {
 
           <Grid container rowGap={2} columnGap={1}>
             <Grid item xs={1.5}>
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ width: 140 }}
-                className="saveChangesBtn"
-                type="submit"
-                onClick={() => {
-                  handleCreateIssue({ inputValues });
-                  console.log(inputValues);
-                }}
-              >
+              <Button variant="contained" color="success" sx={{ width: 140 }} className="saveChangesBtn" type="submit" onClick={handleCreateIssue}>
                 {' '}
                 Save Changes{' '}
               </Button>
