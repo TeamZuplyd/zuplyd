@@ -40,17 +40,14 @@ const handleData = async ({ inputValues, numbers, userEmail }: any): Promise<any
     role: 'comp_admin',
     company_name: inputValues.company_name,
     company_id: '',
+    managing_id: '',
   };
 
   userBody.company_id = response1.data.comp_id;
-  console.log(userBody);
 
   const response2 = await axios.post(`http://localhost:7000/api/user-mgmt/register`, userBody);
-  console.log(response1.data.comp_id);
 
   localStorage.setItem('comp_id', response1.data.comp_id);
-
-  console.log('done');
 
   return response1 && response2;
 };
