@@ -3,6 +3,7 @@ import React from 'react';
 import DashboardCard from '../../components/dashboard-card/dashboard-card';
 import DashboardCardNew from '../../components/dashboard-card-new/dashboard-card-new';
 import Header from '../../components/header/header';
+import { useAuth0, User } from '@auth0/auth0-react';
 import axios from 'axios';
 import { setLoggedInUserData } from '../../utils';
 
@@ -14,7 +15,9 @@ const dashboardCards = [
 ];
 
 function dashboard() {
-  setLoggedInUserData();
+  const auth = useAuth0();
+  const userEmail = auth.user?.email || '';
+  setLoggedInUserData(userEmail);
 
   let count: number = 0;
 
