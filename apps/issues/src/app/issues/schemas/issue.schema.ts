@@ -25,6 +25,9 @@ export class IssueClass {
 
   @Prop()
   action_desc: string;
+
+  @Prop()
+  flag: number;
 }
 
 export const IssueSchema = SchemaFactory.createForClass(IssueClass);
