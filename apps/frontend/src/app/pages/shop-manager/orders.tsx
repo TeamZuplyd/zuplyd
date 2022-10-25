@@ -6,6 +6,7 @@ import SMOrderTable from '../../components/smorder-table/smorder-table';
 import { orders as data } from '../../../data/orders';
 import WMOrderTable from '../../components/wmorder-table/wmorder-table';
 import SMorderHistoryTable from '../../components/smorder-history-table/smorder-history-table';
+import axios from 'axios';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -38,6 +39,9 @@ function orders() {
   const [value, setValue] = useState(0);
   const [orderData, setOrderData] = useState(data);
   const [sentRequest, setSentRequest] = useState<any>([]);
+  const [itemData, setItemData] = useState<any>([]);
+  const [completeData, setCompleteData] = useState<any>([]);
+  const [sentData, setSentData] = useState<any>([]);
 
   const addSentRequest = (request: any) => {
     console.log(request);
@@ -76,6 +80,46 @@ function orders() {
     console.log('selected ' + index);
   };
 
+  const getRequestInfo = () => {
+    const shopID = 'S0002';
+    axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllByShopID/' + shopID).then((res) => {
+      setItemData(res.data);
+      console.log(res.data);
+
+      let allItems = res.data;
+      let itemsComplete: any = [];
+      let restItems: any = [];
+
+      for (let index = 0; index < allItems.length; index++) {
+        if (allItems[index].status == 'complete' || allItems[index].status == 'Complete') {
+          itemsComplete.push(allItems[index]);
+        } else {
+          restItems.push(allItems[index]);
+        }
+      }
+      setCompleteData(itemsComplete);
+      setSentData(restItems);
+
+      console.log(completeData);
+      console.log(sentData);
+    });
+  };
+
+  useEffect(() => {
+    getRequestInfo();
+  }, []);
+
+  useEffect(() => {
+    console.log('itemsPending');
+    console.log(completeData);
+  }, [completeData]);
+
+  useEffect(() => {
+    console.log('restItems');
+
+    console.log(sentData);
+  }, [sentData]);
+
   return (
     <>
       <Header title={'Orders'} />
@@ -96,12 +140,12 @@ function orders() {
 
           {/* Sent Requests */}
           <TabPanel value={value} index={0}>
-            <WMOrderTable orders={sentRequest} />
+            <WMOrderTable orders={sentData} />
           </TabPanel>
 
           {/* History */}
           <TabPanel value={value} index={1}>
-            <SMorderHistoryTable orders={orderData} />
+            <SMorderHistoryTable orders={completeData} />
           </TabPanel>
         </Box>
       </div>
