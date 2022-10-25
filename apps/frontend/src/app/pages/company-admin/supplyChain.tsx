@@ -45,6 +45,10 @@ export default function SupplyChain() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // React.useEffect(() => {
+  //   getData(userEmail);
+  // }, []);
+
   return (
     <>
       <Header title={'Supply Chain'} />

@@ -74,6 +74,7 @@ export class CompaniesController {
         role: '',
         company_name: company.company_name,
         company_id: managersDto.company_id,
+        managing_id: null, // TODO: create relevant warehouses or shops and assign that id here
       };
 
       const errBody = {
