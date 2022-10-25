@@ -6,4 +6,5 @@ export class IssueActionDto {
   desc: string;
   action_taken: string;
   action_desc: string;
+  flag: number;
 }
