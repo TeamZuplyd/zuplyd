@@ -30,16 +30,31 @@ export class CompaniesController {
     return ret;
   }
 
-  @Get(':compId')
+  @Get('find/:compId')
   async findById(@Param('compId') id: string): Promise<Company> {
     let company = await this.companyService.findOne(id);
     return company;
   }
 
-  @Get()
+  @Get('findByMail/:mail')
+  async findByMail(@Param('mail') mail: string): Promise<any> {
+    let res = await axios.get('http://localhost:7000/api/user-mgmt/find/' + mail, { responseType: 'json' });
+    const compId = res.data.user.company_id;
+    let companyData = await axios.get('http://localhost:3333/api/companies/find/' + compId, { responseType: 'json' });
+
+    return companyData.data;
+  }
+
+  @Get('findAll')
   async findAll(): Promise<Company[]> {
     let companies = await this.companyService.findAll();
     return companies;
+  }
+
+  @Delete('delete/:compId')
+  async delete(@Param('compId') id: string): Promise<Company[]> {
+    let res = await this.companyService.deleteById(id);
+    return res;
   }
 
   async regManager(body): Promise<any> {

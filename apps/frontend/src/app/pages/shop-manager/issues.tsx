@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../../components/header/header';
 
 import Tabs from '@mui/material/Tabs';
@@ -8,6 +8,8 @@ import Box from '@mui/material/Box';
 
 import IssueForm from '../../components/issue-form/issue-form';
 import IssueTable from '../../components/issue-table/issue-table';
+
+import axios from 'axios';
 
 const itemList = [
   {
@@ -61,11 +63,25 @@ function a11yProps(index: number) {
 }
 
 function issues() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [itemData, setItemData] = useState<any>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const getRequestInfo = () => {
+    const companyID = 'qwerty';
+    const userID = 123;
+
+    axios.get('http://localhost:5001/api/issues/userIssue/' + companyID + '/' + userID).then((res) => {
+      setItemData(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getRequestInfo();
+  }, []);
 
   return (
     <>
@@ -84,7 +100,7 @@ function issues() {
           </TabPanel>
 
           <TabPanel value={value} index={1}>
-            <IssueTable itemList={itemList} />
+            <IssueTable itemData={itemData} />
           </TabPanel>
         </Box>
       </div>

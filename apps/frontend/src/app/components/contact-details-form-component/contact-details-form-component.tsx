@@ -9,8 +9,8 @@ import { useState } from 'react';
 import { ArrowNarrowDownIcon } from '@heroicons/react/outline';
 
 export interface ContactDetailsFormComponentProps {
-  email: string;
-  phoneNumbers: string[];
+  email: string | null;
+  phoneNumbers: any;
 }
 
 export function ContactDetailsFormComponent({ email, phoneNumbers }: ContactDetailsFormComponentProps) {

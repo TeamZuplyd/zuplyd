@@ -15,7 +15,7 @@ export class CompaniesService {
   // registration of a company
   async register(id: string, createCompanyDto: CreateCompanyDto): Promise<Company> {
     let registeredCompany = null;
-    if (id == null) {
+    if (id == '') {
       registeredCompany = await this.companyModel.create(createCompanyDto);
     } else {
       registeredCompany = await this.companyModel.findByIdAndUpdate(id, createCompanyDto);
@@ -32,5 +32,10 @@ export class CompaniesService {
   // find all companies
   async findAll(): Promise<Company[]> {
     return this.companyModel.find().exec();
+  }
+
+  // delete a company by id
+  async deleteById(id: string): Promise<any> {
+    return this.companyModel.deleteOne({ _id: id }).exec();
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../../components/header/header';
 import { Grid } from '@mui/material';
 import FormComponent from '../../components/form-component/form-component';
@@ -10,6 +10,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+
+import axios from 'axios';
 
 const itemList = [
   {
@@ -84,11 +86,28 @@ function a11yProps(index: number) {
 }
 
 function issues() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [unsolvedItemData, setUnsolvedItemData] = useState<any>([]);
+  const [solvedItemData, setSolvedItemData] = useState<any>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const getRequestInfo = () => {
+    const companyName = 'qwerty';
+    axios.get('http://localhost:5001/api/issues/allUnsolvedIssues/' + companyName).then((res) => {
+      setUnsolvedItemData(res.data);
+    });
+
+    axios.get('http://localhost:5001/api/issues/allSolvedIssues/' + companyName).then((res) => {
+      setSolvedItemData(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getRequestInfo();
+  }, []);
 
   return (
     <>
@@ -103,11 +122,11 @@ function issues() {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <PMraisedIssueTable orders={issueList} />
+            <PMraisedIssueTable orders={unsolvedItemData} />
           </TabPanel>
 
           <TabPanel value={value} index={1}>
-            <IssueTable itemList={itemList} />
+            <IssueTable itemData={solvedItemData} />
           </TabPanel>
         </Box>
       </div>

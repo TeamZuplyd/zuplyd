@@ -22,6 +22,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import { AutofpsSelectRounded, HdrOnSelectRounded, Warehouse } from '@mui/icons-material';
+import axios from 'axios';
 
 // import { orders } from '../../../data/orders';
 interface TablePaginationActionsProps {
@@ -107,8 +108,8 @@ export function PMraisedIssueTable({ orders }: PMraisedIssueTableProps) {
       <Table stickyHeader sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            <TableCell component="th">Title</TableCell>
-            <TableCell component="th">Batch Number </TableCell>
+            <TableCell component="th">Item Name</TableCell>
+            <TableCell component="th">Batch Number</TableCell>
             <TableCell component="th">Description</TableCell>
             <TableCell component="th">Action</TableCell>
           </TableRow>
@@ -116,14 +117,14 @@ export function PMraisedIssueTable({ orders }: PMraisedIssueTableProps) {
         <TableBody>
           {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).map((i, index) => (
             <TableRow>
-              <TableCell style={{}}>{i.title}</TableCell>
-              <TableCell style={{}}>{i.batchNo}</TableCell>
+              <TableCell style={{}}>{i.item_name}</TableCell>
+              <TableCell style={{}}>{i.batch_no}</TableCell>
               <TableCell style={{}}>{i.desc}</TableCell>
               <TableCell style={{}}>
                 <Button variant="contained" onClick={() => handleOpen(index)}>
                   Resolve
                 </Button>
-                <BasicModal open={open} handleClose={handleClose} data={[orders[selectedItem].title, orders[selectedItem].batchNo, orders[selectedItem].desc]} />
+                <BasicModal open={open} handleClose={handleClose} data={[orders[selectedItem].item_name, orders[selectedItem].batch_no, orders[selectedItem].desc, orders[selectedItem].user_id, orders[selectedItem].company_id, orders[selectedItem]._id]} />
               </TableCell>
             </TableRow>
           ))}
@@ -184,8 +185,6 @@ function BasicModal({ open, handleClose, data }: BasicModalProps) {
   const methods = useForm({
     mode: 'onBlur',
     defaultValues: {
-      issue_title: '',
-      batch_number: '',
       description: '',
       action: '',
     },
@@ -203,20 +202,37 @@ function BasicModal({ open, handleClose, data }: BasicModalProps) {
     createIssue(inputValues);
   };
 
-  // const [titleName, setTitleName] = useState('');
-  // const [batchNumber, setBatchNumber] = useState('');
-  // const [desc, setDesc] = useState('');
-
-  // const discardBtnClick = () => {
-  //   setTitleName('');
-  //   setBatchNumber('');
-  //   setDesc('');
-  // };
-
   const [dropDown, setDropDown] = useState('');
 
   const handleChange = (event) => {
     setDropDown(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (inputValues.description != '' && inputValues.action != '') {
+      const id = data[5];
+      const body = {
+        company_id: data[4],
+        user_id: data[3],
+        item_name: data[0],
+        batch_no: data[1],
+        desc: data[2],
+        action_taken: inputValues.action,
+        action_desc: inputValues.description,
+        flag: 1,
+      };
+
+      const payload = {
+        id,
+        body,
+      };
+
+      axios.post('http://localhost:5001/api/issues/update', payload).then((res) => {
+        console.log('Succefull');
+      });
+
+      window.location.reload();
+    }
   };
 
   return (
@@ -228,7 +244,7 @@ function BasicModal({ open, handleClose, data }: BasicModalProps) {
 
         <Grid item xs>
           <div className="secondaryText" style={{ marginTop: '1rem' }}>
-            Title
+            Item Name
           </div>
           <div className="primaryText" style={{ paddingTop: '0.5rem' }}>
             {data[0]}
@@ -254,7 +270,16 @@ function BasicModal({ open, handleClose, data }: BasicModalProps) {
         </Grid>
 
         <FormProvider {...methods}>
-          <Grid container xs={12} columnGap={4} sx={{ mb: 3 }}>
+          <Grid container xs={12} columnGap={4} sx={{ mt: 3 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Action</InputLabel>
+              <Select labelId="demo-select-small" id="demo-select-small" label="action" {...methods.register('action', { required: true })}>
+                <MenuItem value={'Use as is'}>Use as is</MenuItem>
+                <MenuItem value={'Stop temporarily'}>Stop using temporarily</MenuItem>
+                <MenuItem value={'Stop using and discard'}>Stop using and discard</MenuItem>
+              </Select>
+            </FormControl>
+
             <Grid item xs={12} sx={{ mb: 3 }}>
               <TextField
                 {...methods.register('description', { required: true })}
@@ -270,27 +295,11 @@ function BasicModal({ open, handleClose, data }: BasicModalProps) {
                 sx={{ mt: 3, width: '100%' }}
               />
             </Grid>
-
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Action</InputLabel>
-              <Select labelId="demo-select-small" id="demo-select-small"  label="action" {...methods.register('action', { required: true })}>
-                <MenuItem value={'use'}>Use as is</MenuItem>
-                <MenuItem value={'stop temporarily'}>Stop using temporarily</MenuItem>
-                <MenuItem value={'discard'}>Stop using and discard</MenuItem>
-              </Select>
-            </FormControl>
           </Grid>
         </FormProvider>
 
         <CardActions>
-          <Button
-            variant="contained"
-            color="success"
-            sx={{ mr: 2 }}
-            onClick={() => {
-              console.log(inputValues);
-            }}
-          >
+          <Button variant="contained" color="success" sx={{ mr: 2 }} onClick={handleSubmit}>
             Send Request
           </Button>
           <Button variant="contained" color="warning" onClick={handleClose}>
