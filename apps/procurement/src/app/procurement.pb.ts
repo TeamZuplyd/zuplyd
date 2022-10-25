@@ -9,12 +9,16 @@ export interface Item {
   item_name: string;
   category_name: string;
   brand_name: string;
+  unitOfMeasure: string;
   min_release_quantity: number;
   min_release_quantity_unit: string;
   output_rule: string;
   output_rule_unit: string;
+  output_rule_type: string;
   company_id: string;
   company_name: string;
+  suppliers: string[];
+  batch_no: string;
   attributes_array: string[];
 }
 
@@ -23,12 +27,16 @@ export interface ItemWithID {
   item_name: string;
   category_name: string;
   brand_name: string;
+  unitOfMeasure: string;
   min_release_quantity: number;
   min_release_quantity_unit: string;
   output_rule: string;
   output_rule_unit: string;
+  output_rule_type: string;
   company_id: string;
   company_name: string;
+  suppliers: string[];
+  batch_no: string;
   attributes_array: string[];
   __v: number;
 }
@@ -46,6 +54,27 @@ export interface FindAllRequest {}
 
 export interface FindAllResponse {
   items: ItemWithID[];
+}
+
+export interface ItemCategory {
+  company_id: string;
+  categoryArr: string;
+}
+
+export interface findByCompanyIDRes {
+  itemCategory: ItemCategoryWithID | undefined;
+  error: string | undefined;
+}
+
+export interface ItemCategoryWithID {
+  _id: string;
+  company_id: string;
+  categoryArr: string[];
+  __v: number;
+}
+
+export interface companyIDReq {
+  companyId: string;
 }
 
 export const PROCUREMENT_PACKAGE_NAME = 'procurement';
@@ -90,3 +119,32 @@ export function ItemServiceControllerMethods() {
 }
 
 export const ITEM_SERVICE_NAME = 'ItemService';
+
+export interface ItemCategoryServiceClient {
+  createCategory(request: ItemCategory): Observable<ItemCategoryWithID>;
+
+  findByCompanyID(request: companyIDReq): Observable<findByCompanyIDRes>;
+}
+
+export interface ItemCategoryServiceController {
+  createCategory(request: ItemCategory): Promise<ItemCategoryWithID> | Observable<ItemCategoryWithID> | ItemCategoryWithID;
+
+  findByCompanyID(request: companyIDReq): Promise<findByCompanyIDRes> | Observable<findByCompanyIDRes> | findByCompanyIDRes;
+}
+
+export function ItemCategoryServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ['createCategory', 'findByCompanyID'];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod('ItemCategoryService', method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod('ItemCategoryService', method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const ITEM_CATEGORY_SERVICE_NAME = 'ItemCategoryService';
