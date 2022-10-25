@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ItemCategoryWithID } from '../procurement.pb';
 import { ItemCategoryDto } from './dto/item-category-obj.dto';
 import { itemCategory, ItemCategoryDocument } from './schema/item-category.schema';
 
@@ -13,7 +14,7 @@ export class ItemCategoryService {
     return createdRequest;
   }
 
-  async findByCompanyID(company_id: string): Promise<itemCategory> {
+  async findByCompanyID(company_id: string): Promise<any> {
     return this.itemCategoryModel.findOne({ company_id: company_id }).exec();
   }
 
