@@ -33,4 +33,9 @@ export class CompaniesService {
   async findAll(): Promise<Company[]> {
     return this.companyModel.find().exec();
   }
+
+  // delete a company by id
+  async deleteById(id: string): Promise<any> {
+    return this.companyModel.deleteOne({ _id: id }).exec();
+  }
 }

@@ -3,7 +3,7 @@ import { Controller } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { GrpcMethod } from '@nestjs/microservices';
-import { USER_MGMT_SERVICE_NAME } from '../user-mgmt.pb';
+import { USER_MGMT_SERVICE_NAME, UserByComp, UserByCompRole } from '../user-mgmt.pb';
 
 @Controller()
 export class UsersController {
@@ -20,9 +20,16 @@ export class UsersController {
     }
   }
 
-  @GrpcMethod(USER_MGMT_SERVICE_NAME, 'findAll')
-  async findAll(): Promise<any> {
-    const users = await this.userService.findAll();
+  @GrpcMethod(USER_MGMT_SERVICE_NAME, 'findAllByComp')
+  async findAllByComp(searchQuery: UserByComp): Promise<any> {
+    const users = await this.userService.findAll(searchQuery);
+    const userList: any = { users: [...users] };
+    return userList;
+  }
+
+  @GrpcMethod(USER_MGMT_SERVICE_NAME, 'findAllByCompRole')
+  async findAllByCompRole(searchQuery: UserByCompRole): Promise<any> {
+    const users = await this.userService.findAll(searchQuery);
     const userList: any = { users: [...users] };
     return userList;
   }

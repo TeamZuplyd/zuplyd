@@ -20,15 +20,15 @@ const postData = {
   comp_data: null,
 };
 
-const getCompId = () => {
-  return localStorage.getItem('comp_id') || '';
-};
+// const getCompId = () => {
+//   return localStorage.getItem('comp_id') || '';
+// };
 
 const handleData = async ({ inputValues, numbers, userEmail }: any): Promise<any> => {
   // Registering company
   inputValues.contact_nums = numbers;
   postData.comp_data = inputValues;
-  postData.comp_id = getCompId();
+  postData.comp_id = '';
 
   console.log(postData);
 
@@ -98,8 +98,7 @@ function compInit1() {
 
   // Retriving email
   const auth = useAuth0();
-  // const userEmail = auth.user?.email;
-  const userEmail = 'dd@mail.com';
+  const userEmail = auth.user?.email;
 
   const methods = useForm({
     mode: 'onBlur',
