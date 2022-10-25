@@ -17,6 +17,12 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead, FormControl, MenuItem, NativeSelect } from '@mui/material';
 import axios from 'axios';
+import TextField from '@mui/material/TextField';
+import { useForm, FormProvider } from 'react-hook-form';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import { Grid } from '@mui/material';
+
 // import { orders } from '../../../data/orders';
 interface TablePaginationActionsProps {
   count: number;
@@ -65,10 +71,9 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
 export interface OrderTableProps {
   orders: any[];
-  handleStatusChange: (event: React.ChangeEvent<{ value: unknown }>, ites: string) => void;
 }
 
-export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
+export function OrderTable({ orders }: OrderTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -86,14 +91,41 @@ export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
     setPage(0);
   };
 
-  const changeStatus = async (text: string, index: number) => {
-    //backendCall
-    orders[index].status = text;
-    const itemToSend = orders[index];
-    await axios.post('http://localhost:5000/api/shopWarehouseRequest/update', itemToSend).then((res) => {
-      console.log(res);
+  // const changeStatus = async (text: string, index: number) => {
+  //   //backendCall
+  //   orders[index].status = text;
+  //   const itemToSend = orders[index];
+  //   await axios.post('http://localhost:5000/api/shopWarehouseRequest/update', itemToSend).then((res) => {
+  //     console.log(res);
+  //   });
+  //   // console.log(orders[index]);
+  // };
+
+  const [dropDownValue, setDropDownValue] = React.useState('');
+
+  const changeStatus = (event, obj) => {
+    setDropDownValue(event.target.value);
+
+    const body = {
+      _id: obj._id,
+      brand: obj.brand,
+      item_code: obj.item_code,
+      name: obj.name,
+      quantity: obj.quantity,
+      request: obj.request,
+      requested_by: obj.requested_by,
+      requested_date: obj.requested_date,
+      required_by: obj.required_by,
+      sentRequest: obj.sentRequest,
+      status: event.target.value,
+      warehouse_id: obj.warehouse_id,
+      company_id: obj.company_id,
+      __v: obj.__v,
+    };
+
+    axios.post('http://localhost:5000/api/shopWarehouseRequest/update', body).then((res) => {
+      window.location.reload();
     });
-    // console.log(orders[index]);
   };
 
   return (
@@ -124,7 +156,18 @@ export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
               <TableCell style={{}}>{order.requested_by}</TableCell>
               <TableCell style={{}}>{order.requested_date}</TableCell>
               <TableCell style={{}}>
-                <StatusDropDown status={order.status} handleStatusChange={handleStatusChange} item={order.item_code} index={index} changeStatus={changeStatus} />
+                <Grid container xs={12} rowGap={2} columnGap={4}>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth sx={{ width: 180 }}>
+                      <InputLabel id="demo-simple-select-label">{order.status}</InputLabel>
+                      <Select labelId="demo-simple-select-label" id="demo-simple-select" onChange={(event, index) => changeStatus(event, order)}>
+                        <MenuItem value={'Pending'}>In Progress</MenuItem>
+                        <MenuItem value={'In delivery'}>In Delivery</MenuItem>
+                        <MenuItem value={'Complete'}>Completed</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Grid>
               </TableCell>
             </TableRow>
           ))}
@@ -160,31 +203,33 @@ export function OrderTable({ orders, handleStatusChange }: OrderTableProps) {
 }
 
 export default OrderTable;
-type StatusDropDownProps = {
-  status: string;
-  handleStatusChange: (event: React.ChangeEvent<{ value: unknown }>, item: string) => void;
-  item: string;
-  index: number;
-  changeStatus: (text: string, index: number) => void;
-};
-function StatusDropDown({ status, handleStatusChange, item, changeStatus, index }: StatusDropDownProps) {
-  const [selected, setSelected] = React.useState('');
 
-  return (
-    <FormControl variant="standard" sx={{}}>
-      <NativeSelect
-        defaultValue={status}
-        value={selected}
-        id="demo-simple-select-standard"
-        onChange={(e) => {
-          setSelected(e.target.value);
-          changeStatus(e.target.value, index);
-        }}
-      >
-        <option value={'Pending'}>In Progress</option>
-        <option value={'in_delivery'}>In Delivery</option>
-        <option value={'complete'}>Completed</option>
-      </NativeSelect>
-    </FormControl>
-  );
-}
+// type StatusDropDownProps = {
+//   status: string;
+//   item: string;
+//   index: number;
+//   orderObj: any;
+// };
+// function StatusDropDown({ status, item, orderObj }: StatusDropDownProps) {
+//   const [selected, setSelected] = React.useState('');
+//   console.log('statusssss');
+//   console.log(status);
+
+//   return (
+//     <FormControl variant="standard" sx={{}}>
+//       <NativeSelect
+//         defaultValue={status}
+//         value={selected}
+//         id="demo-simple-select-standard"
+//         onChange={(e) => {
+//           // setSelected(e.target.value);
+//           // changeStatus(e.target.value, index);
+//         }}
+//       >
+//         <option value={'Pending'}>In Progress</option>
+//         <option value={'In delivery'}>In Delivery</option>
+//         <option value={'Complete'}>Completed</option>
+//       </NativeSelect>
+//     </FormControl>
+//   );
+// }

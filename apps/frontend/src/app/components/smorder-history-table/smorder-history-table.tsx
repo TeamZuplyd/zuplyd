@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -67,8 +67,8 @@ export interface SMorderHistoryTableProps {
 }
 
 export function SMorderHistoryTable({ orders }: SMorderHistoryTableProps) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
@@ -81,6 +81,11 @@ export function SMorderHistoryTable({ orders }: SMorderHistoryTableProps) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  useEffect(() => {
+    console.log('meeeeeeeeeeeee');
+    console.log(orders);
+  }, []);
 
   return (
     <TableContainer component={Paper}>
@@ -99,7 +104,7 @@ export function SMorderHistoryTable({ orders }: SMorderHistoryTableProps) {
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders)
-            .filter((order) => order.sentRequest)
+            // .filter((order) => order.sentRequest)
             .map((order) => (
               <TableRow key={order.item_code}>
                 <TableCell component="th" scope="row">
