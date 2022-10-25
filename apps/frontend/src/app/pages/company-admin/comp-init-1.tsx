@@ -20,15 +20,15 @@ const postData = {
   comp_data: null,
 };
 
-const getCompId = () => {
-  return localStorage.getItem('comp_id') || '';
-};
+// const getCompId = () => {
+//   return localStorage.getItem('comp_id') || '';
+// };
 
 const handleData = async ({ inputValues, numbers, userEmail }: any): Promise<any> => {
   // Registering company
   inputValues.contact_nums = numbers;
   postData.comp_data = inputValues;
-  postData.comp_id = getCompId();
+  postData.comp_id = '';
 
   console.log(postData);
 
@@ -40,17 +40,14 @@ const handleData = async ({ inputValues, numbers, userEmail }: any): Promise<any
     role: 'comp_admin',
     company_name: inputValues.company_name,
     company_id: '',
+    managing_id: '',
   };
 
   userBody.company_id = response1.data.comp_id;
-  console.log(userBody);
 
   const response2 = await axios.post(`http://localhost:7000/api/user-mgmt/register`, userBody);
-  console.log(response1.data.comp_id);
 
   localStorage.setItem('comp_id', response1.data.comp_id);
-
-  console.log('done');
 
   return response1 && response2;
 };
@@ -98,8 +95,7 @@ function compInit1() {
 
   // Retriving email
   const auth = useAuth0();
-  // const userEmail = auth.user?.email;
-  const userEmail = 'dd@mail.com';
+  const userEmail = auth.user?.email;
 
   const methods = useForm({
     mode: 'onBlur',

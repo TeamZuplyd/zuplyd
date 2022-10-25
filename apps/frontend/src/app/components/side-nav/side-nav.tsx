@@ -19,6 +19,8 @@ export function SideNav({ username, userNum }: SideNavProps) {
   const { logout } = useAuth0();
 
   const handleLogout = () => {
+    localStorage.removeItem('userData');
+    localStorage.removeItem('comp_id');
     logout({
       returnTo: window.location.origin,
     });
