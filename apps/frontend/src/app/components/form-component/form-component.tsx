@@ -8,8 +8,8 @@ import { Grid } from '@mui/material';
 import { useState, useRef } from 'react';
 
 export interface FormComponentProps {
-  companyName: string;
-  companyAddress: string;
+  companyName: string | null;
+  companyAddress: string | null;
 }
 
 export function FormComponent({ companyName, companyAddress }: FormComponentProps) {
