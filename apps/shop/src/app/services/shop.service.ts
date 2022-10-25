@@ -2,11 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Shop, ShopDocument } from "../schemas/shop.schema";
+import { StoreItem, StoreItemDocument } from "../schemas/storeitem.schema";
 
 @Injectable()
 export class ShopService {
 
-    constructor(@InjectModel(Shop.name) private shopModel: Model<ShopDocument>) {}
+    constructor(@InjectModel(Shop.name) private shopModel: Model<ShopDocument>, @InjectModel(StoreItem.name) private storeitemModel: Model<StoreItemDocument>) {}
     
     async create(shop: Shop): Promise<Shop> {
         const newShop = new this.shopModel(shop);
@@ -43,6 +44,24 @@ export class ShopService {
 
     async delete(id): Promise<any> {
         return await this.shopModel.findByIdAndRemove(id);
-}
+    }
+
+    //items
+    async readAllItems(id): Promise<StoreItem[]> {
+        return await this.storeitemModel.find({shop_id:id}).exec();
+    }
+
+    async createItem(storeitem: StoreItem): Promise<StoreItem> {
+        const newStoreItem = new this.storeitemModel(storeitem);
+        return newStoreItem.save();
+    }
+
+    async updateItem(id, storeitem: StoreItem): Promise<StoreItem> {
+        return await this.storeitemModel.findByIdAndUpdate(id, storeitem, {new: true})
+    }
+
+    async deleteItem(id): Promise<any> {
+        return await this.storeitemModel.findByIdAndRemove(id);
+    }
 
 }

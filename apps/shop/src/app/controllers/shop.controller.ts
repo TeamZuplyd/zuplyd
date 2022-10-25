@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from "@nestjs/common";
 import { Shop } from "../schemas/shop.schema";
 import { ShopService } from "../services/shop.service";
+import { StoreItem } from "../schemas/storeitem.schema";
 
 @Controller('shops')
 export class ShopController {
@@ -71,6 +72,38 @@ export class ShopController {
         const deletedShop = await this.shopService.delete(id);
         return response.status(HttpStatus.OK).json({
             deletedShop
+        })
+    }
+
+    @Get("getItems/:id")
+    async fetchAllItems(@Res() response, @Param('id') id) {
+        const items = await this.shopService.readAllItems(id);
+        return response.status(HttpStatus.OK).json({
+            items
+        })
+    }
+
+    @Post("createItem")
+    async createItem(@Res() response, @Body() storeitem: StoreItem) {
+        const newStoreItem = await this.shopService.createItem(storeitem);
+        return response.status(HttpStatus.CREATED).json({
+            newStoreItem
+        })
+    }
+
+    @Post('updateItem/:id')
+    async updateItem(@Res() response, @Param('id') id, @Body() storeitem: StoreItem) {
+        const updatedStoreItem = await this.shopService.updateItem(id, storeitem);
+        return response.status(HttpStatus.OK).json({
+            updatedStoreItem
+        })
+    }
+
+    @Post('deleteItem/:id')
+    async deleteItem(@Res() response, @Param('id') id) {
+        const deletedItem = await this.shopService.deleteItem(id);
+        return response.status(HttpStatus.OK).json({
+            deletedItem
         })
     }
 }
