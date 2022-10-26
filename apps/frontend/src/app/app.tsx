@@ -31,7 +31,7 @@ export function App() {
     </QueryClientProvider>
     // <ProfileSetUp />
     // <div className="outerContainer">
-    //     <SideNav username={'Amarabandu Rupasingheeeee'} userNum={1} />
+    //     <SideNav userNum={1} />
     //     {/* <div className="header">Header goes here</div> */}
     //     <Header title={'Dashboard'} />
     //     <div className="content">

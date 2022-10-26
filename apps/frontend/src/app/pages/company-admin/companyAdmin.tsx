@@ -6,7 +6,7 @@ import Header from '../../components/header/header';
 function companyAdmin() {
   return (
     <div className="outerContainer">
-      <SideNav username={'devindsnk25@gmail.com'} userNum={0} />
+      <SideNav userNum={0} />
       {/* <Header title={'Dashboard'} /> */}
 
       <Outlet />
