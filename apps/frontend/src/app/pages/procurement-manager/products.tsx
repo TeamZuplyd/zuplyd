@@ -4,6 +4,7 @@ import Header from '../../components/header/header';
 import Item from './items';
 import AddCategory from './addCategory';
 import AddItem from './addItem';
+import axios from 'axios';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -42,6 +43,19 @@ function products() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [itemInfo, setItemInfo] = React.useState<any>([]);
+
+  const getItemInfo = () => {
+    const company_ID = 'acdf214124';
+    axios.get('http://localhost:7000/api/procurement/item/findAll/' + company_ID).then((res) => {
+      setItemInfo(res.data.items);
+    });
+  };
+
+  React.useEffect(() => {
+    getItemInfo();
+  }, []);
+
   return (
     <>
       <Header title={'Products'} />
@@ -57,11 +71,11 @@ function products() {
           </Box>
 
           <TabPanel value={value} index={0}>
-            <Item />
+            <Item itemInfo={itemInfo} />
           </TabPanel>
 
           <TabPanel value={value} index={1}>
-            <AddCategory />
+            <AddCategory itemInfo={itemInfo} />
           </TabPanel>
 
           <TabPanel value={value} index={2}>

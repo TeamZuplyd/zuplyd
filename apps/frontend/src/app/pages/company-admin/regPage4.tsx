@@ -21,7 +21,7 @@ const selectTier = async (selectedTier: any) => {
   } else {
     postData.comp_id = getCompId();
     postData.comp_data = { tier: selectedTier };
-    const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+    const response = await axios.post(`http://localhost:2525/api/companies/register`, postData);
     return response;
   }
 };

@@ -20,6 +20,7 @@ function addItem() {
   const [minReleaseQTextFieldValue, setMinReleaseQTextFieldValue] = useState('');
 
   const [minReleaseQTextFieldDropDown, setMinReleaseQTextFieldDropDown] = useState('');
+  const [outputRuleTypeDropDown, setOutputRuleTypeDropDown] = useState('');
 
   const [textFieldValue, setTextFieldValue] = useState('');
   const [allAttributes, setAllAttributes] = useState<string[]>([]);
@@ -73,39 +74,46 @@ function addItem() {
     // setAllUnits([]);
   };
 
-  const createItemType = async (data: any) => {
-    const { data: response } = await axios.post('http://localhost:7000/api/procurement/item/create', data);
-    return response.data;
-  };
-
-  const { mutate, isLoading } = useMutation(createItemType, {
-    onSuccess: (data: any) => {
-      handleClose();
-      discardChanges();
-    },
-    onError: () => {
-      alert('there was an error');
-    },
-  });
-
   const saveChanges = () => {
-    const arr: any = {
+    const company_ID = 'acdf214124';
+    const company_name = 'GoGrocer';
+
+    const body: any = {
       item_name: itemNameTextFieldValue,
       category_name: categoryTextFieldValue,
       brand_name: itemBrandTextFieldValue,
+      unitOfMeasure: minReleaseQTextFieldDropDown,
       min_release_quantity: parseInt(minReleaseQTextFieldValue),
       min_release_quantity_unit: minReleaseQTextFieldDropDown,
-      attributes_array: allAttributes,
       output_rule: allAttributes[selected],
       output_rule_unit: unit,
+      output_rule_type: outputRuleTypeDropDown,
+      company_id: company_ID,
+      company_name: company_name,
+      batch_no: '',
+      attributes_array: allAttributes,
     };
 
-    mutate(arr);
-
-    console.table(arr);
+    axios.post('http://localhost:7000/api/procurement/item/create', body).then((res) => {
+      window.location.reload();
+    });
   };
 
   let count: number = -1;
+
+  const [categories, setCategories] = React.useState<any>([]);
+
+  const getItemInfo = () => {
+    const company_ID = 'qwerty';
+    axios.get('http://localhost:7000/api/procurement/item-category/findByCompanyID/' + company_ID).then((res) => {
+      setCategories(res.data.itemCategory.categoryArr);
+      console.log(res.data.itemCategory.categoryArr);
+    });
+  };
+
+  React.useEffect(() => {
+    getItemInfo();
+  }, []);
 
   return (
     <>
@@ -136,7 +144,7 @@ function addItem() {
               </Grid>
 
               <Grid item xs={6}>
-                <SelectLabels categoryTextFieldValue={categoryTextFieldValue} setCategoryTextFieldValue={setCategoryTextFieldValue} />
+                <SelectLabels categoryTextFieldValue={categoryTextFieldValue} setCategoryTextFieldValue={setCategoryTextFieldValue} categories={categories} />
               </Grid>
 
               <Grid item xs={5}>
@@ -169,6 +177,10 @@ function addItem() {
                   size="small"
                   sx={{ mt: 1, width: '340px' }}
                 />
+              </Grid>
+
+              <Grid item xs={6}>
+                <OutputRuleType categoryTextFieldValue={outputRuleTypeDropDown} setCategoryTextFieldValue={setOutputRuleTypeDropDown} />
               </Grid>
             </Grid>
 
@@ -283,9 +295,10 @@ function UnitDropDown({ unit, setUnit }: UnitDropDownProps) {
 type SelectLabelsProps = {
   categoryTextFieldValue: string;
   setCategoryTextFieldValue: any;
+  categories?: any;
 };
 
-function SelectLabels({ categoryTextFieldValue, setCategoryTextFieldValue }: SelectLabelsProps) {
+function SelectLabels({ categoryTextFieldValue, setCategoryTextFieldValue, categories }: SelectLabelsProps) {
   return (
     <div style={{ width: '100' }}>
       <FormControl sx={{ mt: 3.8, minWidth: 340 }} size="small">
@@ -299,9 +312,13 @@ function SelectLabels({ categoryTextFieldValue, setCategoryTextFieldValue }: Sel
             setCategoryTextFieldValue(e.target.value);
           }}
         >
-          <MenuItem value={'Food'}>Food</MenuItem>
+          {categories.map((categorie) => (
+            <MenuItem value={categorie}>{categorie}</MenuItem>
+          ))}
+
+          {/* <MenuItem value={'Food'}>Food</MenuItem>
           <MenuItem value={'Drinks'}>Drinks</MenuItem>
-          <MenuItem value={'Ingredients'}>Ingredients</MenuItem>
+          <MenuItem value={'Ingredients'}>Ingredients</MenuItem> */}
         </Select>
       </FormControl>
     </div>
@@ -337,6 +354,33 @@ function DropDownUnits({ categoryTextFieldValue, setCategoryTextFieldValue }: Se
           <MenuItem value={'m'}>m</MenuItem>
           <MenuItem value={'cm'}>cm</MenuItem>
           <MenuItem value={'foot'}>foot</MenuItem>
+        </Select>
+      </FormControl>
+    </div>
+  );
+}
+
+type OutputRuleTypeProps = {
+  categoryTextFieldValue: string;
+  setCategoryTextFieldValue: any;
+};
+
+function OutputRuleType({ categoryTextFieldValue, setCategoryTextFieldValue }: SelectLabelsProps) {
+  return (
+    <div style={{ width: '100' }}>
+      <FormControl sx={{ mt: 1, minWidth: 340 }} size="small">
+        <InputLabel id="demo-simple-select-helper-label">Output rule type</InputLabel>
+        <Select
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          value={categoryTextFieldValue}
+          label="Age"
+          onChange={(e) => {
+            setCategoryTextFieldValue(e.target.value);
+          }}
+        >
+          <MenuItem value={'minFirst'}>Min first</MenuItem>
+          <MenuItem value={'maxFirst'}>Max first</MenuItem>
         </Select>
       </FormControl>
     </div>

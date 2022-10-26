@@ -84,13 +84,15 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export interface ItemsProps {}
+export interface ItemsProps {
+  itemInfo: any[];
+}
 
-function Items(props: ItemsProps) {
+function Items({ itemInfo }: ItemsProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const [itemInfo, setItemInfo] = React.useState<any>([]);
+  // const [itemInfo, setItemInfo] = React.useState<any>([]);
 
   const [rightSideNav, setrightSideNav] = React.useState(false);
 
@@ -106,15 +108,9 @@ function Items(props: ItemsProps) {
   //   setItemInfo(itemsRes?.data.items);
   // }
 
-  const getItemInfo = () => {
-    axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
-      setItemInfo(res.data.items);
-    });
-  };
-
-  React.useEffect(() => {
-    getItemInfo();
-  }, []);
+  // React.useEffect(() => {
+  //   getItemInfo();
+  // }, []);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
