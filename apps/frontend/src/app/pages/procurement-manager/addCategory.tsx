@@ -3,21 +3,73 @@ import { TextField, Grid, Button, Typography, Box, Modal, Card, CardContent } fr
 import CardActions from '@mui/material/CardActions';
 import { truncate } from 'fs/promises';
 import CategoryCardPM from '../../components/category-card-pm/category-card-pm';
+import axios from 'axios';
 
-const allCategories = [
-  ['Food', '2'],
-  ['Drinks', '3'],
-  ['Ingredients', '5'],
-];
+// const allCategories = [
+//   ['Food', '2'],
+//   ['Drinks', '3'],
+//   ['Ingredients', '5'],
+// ];
 
-function addCategory() {
+export interface addCategoryProps {
+  itemInfo: any[];
+}
+
+function addCategory({ itemInfo }: addCategoryProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // const [itemInfo, setItemInfo] = React.useState<any>([]);
+  const [allCategories, setAllCategories] = React.useState<any>([]);
+  const [changeCateogryName, setChangeCateogryName] = React.useState<any>('');
+
+  const getItemInfo = () => {
+    let obj = {};
+
+    for (let index = 0; index < itemInfo.length; index++) {
+      if (obj.hasOwnProperty(itemInfo[index].category_name)) {
+        obj[itemInfo[index].category_name] = obj[itemInfo[index].category_name] + 1;
+      } else {
+        obj[itemInfo[index].category_name] = 1;
+      }
+    }
+
+    const arr: any = [];
+    const objKeys = Object.keys(obj);
+    const objValues = Object.values(obj);
+
+    for (let index = 0; index < objKeys.length; index++) {
+      arr.push([objKeys[index], objValues[index]]);
+    }
+
+    setAllCategories(arr);
+  };
+
+  const addNewCategory = () => {
+    const company_id = 'qwerty';
+    const body = {
+      company_id: company_id,
+      categoryArr: changeCateogryName,
+    };
+    const company_ID = 'qwerty';
+    axios.post('http://localhost:7000/api/procurement/item-category/createCategory', body).then((res) => {
+      window.location.reload();
+    });
+  };
+
+  React.useEffect(() => {
+    getItemInfo();
+  }, []);
+
   return (
     <>
-      <SearchButton handleOpen={handleOpen} />
+      {/* <SearchButton handleOpen={handleOpen} /> */}
+      <TextField size="small" id="outlined-basic" label="Search" variant="outlined" sx={{ ml: 2, mb: 3 }} />
+      <Button variant="contained" color="primary" sx={{ ml: 2, mb: 2 }} onClick={handleOpen}>
+        Add new
+      </Button>
+
       <Grid container rowGap={2} columnGap={2}>
         {allCategories.map((categoryDetails) => (
           <>
@@ -28,7 +80,7 @@ function addCategory() {
         ))}
       </Grid>
 
-      <ContainerModal open={open} handleClose={handleClose} />
+      <ContainerModal open={open} handleClose={handleClose} addNewCategory={addNewCategory} setChangeCateogryName={setChangeCateogryName} />
     </>
   );
 }
@@ -118,9 +170,11 @@ const style = {
 type ContainerModalProps = {
   open: boolean;
   handleClose: () => void;
+  addNewCategory: () => void;
+  setChangeCateogryName: any;
 };
 
-const ContainerModal = ({ open, handleClose }: ContainerModalProps) => {
+const ContainerModal = ({ open, handleClose, addNewCategory, setChangeCateogryName }: ContainerModalProps) => {
   return (
     <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={style}>
@@ -128,8 +182,8 @@ const ContainerModal = ({ open, handleClose }: ContainerModalProps) => {
           Add New category
         </Typography>
         <form>
-          <TextField id="Email" label="Category Name" variant="outlined" size="small" margin="dense" sx={{ mt: 4 }} fullWidth />
-          <Grid container direction="row" justifyContent="space-between" alignItems="center" sx={{}}>
+          <TextField id="Email" label="Category Name" variant="outlined" size="small" margin="dense" sx={{ mt: 4 }} fullWidth onChange={(e) => setChangeCateogryName(e.target.value)} />
+          <Grid container direction="row" justifyContent="space-between" alignItems="center" sx={{}} onClick={addNewCategory}>
             <Button variant="contained" color="success" sx={{ mt: 4, mr: 4 }}>
               Add
             </Button>
@@ -140,17 +194,6 @@ const ContainerModal = ({ open, handleClose }: ContainerModalProps) => {
         </form>
       </Box>
     </Modal>
-  );
-};
-// search button component
-const SearchButton = ({ handleOpen }: { handleOpen: () => void }) => {
-  return (
-    <>
-      <TextField size="small" id="outlined-basic" label="Search" variant="outlined" sx={{ ml: 2, mb: 3 }} />
-      <Button variant="contained" color="primary" sx={{ ml: 2, mb: 2 }} onClick={handleOpen}>
-        Add new
-      </Button>
-    </>
   );
 };
 

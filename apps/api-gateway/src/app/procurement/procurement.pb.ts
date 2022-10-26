@@ -9,12 +9,16 @@ export interface Item {
   item_name: string;
   category_name: string;
   brand_name: string;
+  unitOfMeasure: string;
   min_release_quantity: number;
   min_release_quantity_unit: string;
   output_rule: string;
   output_rule_unit: string;
+  output_rule_type: string;
   company_id: string;
   company_name: string;
+  suppliers: string[];
+  batch_no: string;
   attributes_array: string[];
 }
 
@@ -23,12 +27,16 @@ export interface ItemWithID {
   item_name: string;
   category_name: string;
   brand_name: string;
+  unitOfMeasure: string;
   min_release_quantity: number;
   min_release_quantity_unit: string;
   output_rule: string;
   output_rule_unit: string;
+  output_rule_type: string;
   company_id: string;
   company_name: string;
+  suppliers: string[];
+  batch_no: string;
   attributes_array: string[];
   __v: number;
 }

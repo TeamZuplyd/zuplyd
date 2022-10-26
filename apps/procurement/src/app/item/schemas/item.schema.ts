@@ -15,7 +15,13 @@ export class Item {
   brand_name: string;
 
   @Prop()
+  unitOfMeasure: string;
+
+  @Prop()
   min_release_quantity: number;
+
+  @Prop()
+  min_release_quantity_unit: string;
 
   @Prop()
   output_rule: string;
@@ -24,13 +30,19 @@ export class Item {
   output_rule_unit: string;
 
   @Prop()
+  output_rule_type: string;
+
+  @Prop()
   company_id: string;
 
   @Prop()
   company_name: string;
 
   @Prop()
-  min_release_quantity_unit: string;
+  suppliers: string[];
+
+  @Prop()
+  batch_no: string;
 
   @Prop([String])
   attributes_array: string[];

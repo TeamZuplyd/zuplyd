@@ -36,14 +36,14 @@ export function CategoryCardPM({ name, itemCount }: CategoryCardPMProps) {
           </Grid>
         </CardContent>
 
-        <CardActions>
+        {/* <CardActions>
           <Button size="small" style={{ position: 'relative', left: 200, bottom: 50 }} onClick={handleEditFormOpen}>
             Edit name
           </Button>
-        </CardActions>
+        </CardActions> */}
       </Card>
 
-      <EditBtnModal openEditForm={openEditForm} handleEditFormClose={handleEditFormClose} textValue={name} textFieldValue={textFieldValue} setTextFieldValue={setTextFieldValue} />
+      {/* <EditBtnModal openEditForm={openEditForm} handleEditFormClose={handleEditFormClose} textValue={name} textFieldValue={textFieldValue} setTextFieldValue={setTextFieldValue} /> */}
     </>
   );
 }
