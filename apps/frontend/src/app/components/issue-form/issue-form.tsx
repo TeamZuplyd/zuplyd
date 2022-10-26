@@ -19,7 +19,7 @@ export interface IssueFormProps {}
 const createNewIssue = async (inputValues: any): Promise<any> => {
   // inputValues.contact_nums = numbers;
   // postData.comp_data = inputValues;
-  // const response1 = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+  // const response1 = await axios.post(`http://localhost:2525/api/companies/register`, postData);
   // const userBody = {
   //   email: userEmail,
   //   role: 'comp_admin',
@@ -53,8 +53,9 @@ export function IssueForm(props: IssueFormProps) {
       item_name: inputValues.item_name,
       batch_no: inputValues.batch_number,
       desc: inputValues.description,
-      action_taken: '',
-      action_desc: '',
+      action_taken: '-',
+      action_desc: '-',
+      flag: 0,
     };
 
     axios.post('http://localhost:5001/api/issues/create', body).then((res) => {
@@ -104,6 +105,7 @@ export function IssueForm(props: IssueFormProps) {
     axios.post('http://localhost:4444/api/goods/allBatchNosOfItem', body).then((res) => {
       setBatchData(res.data.batchNos);
     });
+    handleClick();
   };
 
   useEffect(() => {

@@ -34,7 +34,7 @@ const postManagers = async ({ p_managers, w_managers, s_managers }: comp_data): 
     s_managers: s_managers,
   };
 
-  const response1 = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+  const response1 = await axios.post(`http://localhost:2525/api/companies/register`, postData);
 
   const mangBody = {
     company_id: getCompId(),
@@ -42,7 +42,7 @@ const postManagers = async ({ p_managers, w_managers, s_managers }: comp_data): 
     s_managers: s_managers,
     p_managers: p_managers,
   };
-  const response2 = await axios.post(`http://localhost:3333/api/companies/setupManagers`, mangBody);
+  const response2 = await axios.post(`http://localhost:2525/api/companies/setupManagers`, mangBody);
 
   console.log('done');
 

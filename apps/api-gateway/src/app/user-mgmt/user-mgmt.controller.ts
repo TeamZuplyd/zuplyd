@@ -4,7 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { map } from 'rxjs';
 import { Roles } from '../authz/roles.decorator';
 import { RolesGuard } from '../authz/roles.guard';
-import { RegisterRequest, RegisterResponse, UserMgmtServiceClient, UserRequest, USER_MGMT_SERVICE_NAME, User } from './user-mgmt.pb';
+import { RegisterRequest, RegisterResponse, UserMgmtServiceClient, UserRequest, USER_MGMT_SERVICE_NAME, User, UserByComp, UserByCompRole } from './user-mgmt.pb';
 
 @Controller('user-mgmt')
 export class UserMgmtController {
@@ -31,9 +31,14 @@ export class UserMgmtController {
   }
 
   //@UseGuards(AuthGuard('jwt'))
-  @Get('findall')
-  private async findAll(): Promise<any> {
-    return this.svc.findAll({});
+  @Get('findAllByComp')
+  private async findAllByComp(@Body() searchQuery: UserByComp): Promise<any> {
+    return this.svc.findAllByComp(searchQuery);
+  }
+
+  @Get('findAllByCompRole')
+  private async findAllByCompRole(@Body() searchQuery: UserByCompRole): Promise<any> {
+    return this.svc.findAllByCompRole(searchQuery);
   }
 
   /*
