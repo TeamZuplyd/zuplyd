@@ -1,33 +1,43 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+class Item {
+  @Prop({ type: String, required: true, lowercase: true })
+  _id: string;
+
+  @Prop({ required: true })
+  item_name: string;
+
+  @Prop({ required: true })
+  category_name: string;
+
+  @Prop({ required: true })
+  brand_name: string;
+}
+
+type itemDetails = { item_name: string; category_name: string; brand_name: string };
+
 export type WhPrcurmntSupReqDocument = WhPrcurmntSupReq & Document;
 
 @Schema()
 export class WhPrcurmntSupReq {
-  @Prop()
-  brand: string;
-
   @Prop({ required: true })
-  item_code: string;
+  requiredQuantity: number;
 
-  @Prop({ required: true })
-  name: string;
-
-  @Prop({ required: true })
-  quantity: number;
-
-  @Prop({ required: true })
+  @Prop({ required: false })
   request: boolean;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   requested_by: string;
 
   @Prop({ required: true })
-  requested_date: string;
+  requiredDate: string;
 
-  @Prop()
+  @Prop({ required: false })
   required_by: string;
+
+  @Prop({ required: false })
+  assigned: boolean;
 
   @Prop({ required: true })
   sentRequest: boolean;
@@ -42,7 +52,15 @@ export class WhPrcurmntSupReq {
   company_id: string;
 
   @Prop()
-  supplier_id: string;
+  proc_id: string;
+
+  @Prop({ required: true })
+  suppliers: any[];
+
+  // @Prop({ required: true, type: () => any })
+  // item: { item_name: string; category_name: string; brand_name: string };
+  @Prop({ required: true, type: Item })
+  item: Item;
 }
 
 export const WhPrcurmntSupReqSchema = SchemaFactory.createForClass(WhPrcurmntSupReq);

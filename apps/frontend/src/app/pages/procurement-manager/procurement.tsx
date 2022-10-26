@@ -9,6 +9,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import goodRequests from './goodRequests';
+import axios from 'axios';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -60,10 +61,11 @@ function procurement() {
   };
 
   useEffect(() => {
-    const reorderGoods = localStorage.getItem('reorderRequests');
+    axios.get('http://localhost:5000/api/wh-prcurmnt-sup/findAllDev').then((res) => setRequestGoods(res.data));
+    // const reorderGoods = localStorage.getItem('reorderRequests');
 
-    if (reorderGoods !== null) setRequestGoods(JSON.parse(reorderGoods));
-    console.log(requestGoods);
+    // if (reorderGoods !== null) setRequestGoods(JSON.parse(reorderGoods));
+    // console.log(requestGoods);
 
     //console.log(quotationReqs);
   }, []);
@@ -88,8 +90,8 @@ function procurement() {
           {/* Requested Quotations*/}
           <TabPanel value={value} index={0}>
             <GeneralTable
-              data={requestGoods.length !== 0 ? requestGoods.filter((requestGood: any) => requestGood?.status === 1) : []}
-              displayFields={['item_code', 'name', 'priority', 'quantity']}
+              data={requestGoods.length !== 0 ? requestGoods.filter((requestGood: any) => requestGood?.status === 1 && requestGood?.proc_id === JSON.parse(localStorage.getItem('userData') || '')?.user_id) : []}
+              displayFields={['_id', 'requiredQuantity', 'requiredDate']}
               requiredButton={true}
               noOfButtons={1}
               buttonDetails={[
@@ -103,7 +105,7 @@ function procurement() {
                   },
                 },
               ]}
-              headers={['Item code', 'Item', 'Required By']}
+              headers={['Order ID', 'Required Quantity', 'Required By']}
             />
           </TabPanel>
 
@@ -131,7 +133,7 @@ function procurement() {
             <GeneralTable data={acceptedPO} headers={['Item code', 'Item', 'Brand', 'Required By', 'Qunatity', 'Unit Price', 'Supplier', 'Placed Date', 'Accepted Date', 'Status']} />
           </TabPanel> */}
         </Box>
-        <BasicModal goodRequest={requestGoods[3]} open={openModal} handleClose={handleCloseModal} />
+        <BasicModal goodRequest={requestGoods[4]} open={openModal} handleClose={handleCloseModal} />
       </div>
     </>
   );
@@ -297,7 +299,7 @@ function BasicModal({ goodRequest, open, handleClose }) {
               Item Name:
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-              {goodRequest?.name}
+              {goodRequest?.item?.item_name}
             </Typography>
           </Grid>
 
@@ -306,7 +308,7 @@ function BasicModal({ goodRequest, open, handleClose }) {
               Brand:
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-              {goodRequest?.brand}
+              {goodRequest?.item?.brand_name}
             </Typography>
           </Grid>
           <Grid>

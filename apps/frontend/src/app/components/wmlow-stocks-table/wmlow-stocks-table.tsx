@@ -17,6 +17,7 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead, Modal, Typography, Card, CardContent, CardActions, Grid, styled, Divider, TextField, CardActionArea, MenuItem } from '@mui/material';
 
 import { AutofpsSelectRounded, HdrOnSelectRounded, Warehouse } from '@mui/icons-material';
+import axios from 'axios';
 // import { orders } from '../../../data/orders';
 interface TablePaginationActionsProps {
   count: number;
@@ -234,113 +235,158 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const orderRequest = [
-      {
-        ...order,
-        requiredQuantity: requiredQuantity,
-        requiredDate: requiredDate,
-        priority: priority,
-        assigned: false,
-        status: 0,
-        suppliers: [
-          {
-            _id: '3434efee34234',
-            name: 'Sanka',
-            status: 1,
-          },
-          {
-            _id: '3435efee34234',
-            name: 'Decim',
-            status: 1,
-          },
-          {
-            _id: '3436efee34234',
-            name: 'Kashum',
-            status: 1,
-          },
-        ],
-      },
-      {
-        ...order,
-        requiredQuantity: requiredQuantity,
-        requiredDate: requiredDate,
-        priority: priority,
-        assigned: false,
-        status: 0,
-        suppliers: [
-          {
-            _id: '3434efee34234',
-            name: 'Sanka',
-            status: 1,
-          },
-          {
-            _id: '3435efee34234',
-            name: 'Decim',
-            status: 1,
-          },
-          {
-            _id: '3436efee34234',
-            name: 'Kashum',
-            status: 1,
-          },
-        ],
-      },
-      {
-        ...order,
-        requiredQuantity: requiredQuantity,
-        requiredDate: requiredDate,
-        priority: 'high',
-        assigned: false,
-        status: 0,
-        suppliers: [
-          {
-            _id: '3434efee34234',
-            name: 'Sanka',
-            status: 1,
-          },
-          {
-            _id: '3435efee34234',
-            name: 'Decim',
-            status: 1,
-          },
-          {
-            _id: '3436efee34234',
-            name: 'Kashum',
-            status: 1,
-          },
-        ],
-      },
-      {
-        ...order,
-        requiredQuantity: requiredQuantity,
-        requiredDate: requiredDate,
-        priority: 'moderate',
-        assigned: false,
-        status: 0,
-        suppliers: [
-          {
-            _id: '3434efee34234',
-            name: 'Sanka',
-            status: 1,
-          },
-          {
-            _id: '3435efee34234',
-            name: 'Decim',
-            status: 1,
-          },
-          {
-            _id: '3436efee34234',
-            name: 'Kashum',
-            status: 1,
-          },
-        ],
-      },
-    ];
-    console.log(orderRequest);
+    sendLowStrockRequest();
+    // const orderRequest = [
+    //   {
+    //     ...order,
+    //     requiredQuantity: requiredQuantity,
+    //     requiredDate: requiredDate,
+    //     priority: priority,
+    //     assigned: false,
+    //     status: 0,
+    //     suppliers: [
+    //       {
+    //         _id: '3434efee34234',
+    //         name: 'Sanka',
+    //         status: 1,
+    //       },
+    //       {
+    //         _id: '3435efee34234',
+    //         name: 'Decim',
+    //         status: 1,
+    //       },
+    //       {
+    //         _id: '3436efee34234',
+    //         name: 'Kashum',
+    //         status: 1,
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     ...order,
+    //     requiredQuantity: requiredQuantity,
+    //     requiredDate: requiredDate,
+    //     priority: priority,
+    //     assigned: false,
+    //     status: 0,
+    //     suppliers: [
+    //       {
+    //         _id: '3434efee34234',
+    //         name: 'Sanka',
+    //         status: 1,
+    //       },
+    //       {
+    //         _id: '3435efee34234',
+    //         name: 'Decim',
+    //         status: 1,
+    //       },
+    //       {
+    //         _id: '3436efee34234',
+    //         name: 'Kashum',
+    //         status: 1,
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     ...order,
+    //     requiredQuantity: requiredQuantity,
+    //     requiredDate: requiredDate,
+    //     priority: 'high',
+    //     assigned: false,
+    //     status: 0,
+    //     suppliers: [
+    //       {
+    //         _id: '3434efee34234',
+    //         name: 'Sanka',
+    //         status: 1,
+    //       },
+    //       {
+    //         _id: '3435efee34234',
+    //         name: 'Decim',
+    //         status: 1,
+    //       },
+    //       {
+    //         _id: '3436efee34234',
+    //         name: 'Kashum',
+    //         status: 1,
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     ...order,
+    //     requiredQuantity: requiredQuantity,
+    //     requiredDate: requiredDate,
+    //     priority: 'moderate',
+    //     assigned: false,
+    //     status: 0,
+    //     suppliers: [
+    //       {
+    //         _id: '3434efee34234',
+    //         name: 'Sanka',
+    //         status: 1,
+    //       },
+    //       {
+    //         _id: '3435efee34234',
+    //         name: 'Decim',
+    //         status: 1,
+    //       },
+    //       {
+    //         _id: '3436efee34234',
+    //         name: 'Kashum',
+    //         status: 1,
+    //       },
+    //     ],
+    //   },
+    // ];
+    //console.log(orderRequest);
 
-    localStorage.setItem('reorderRequests', JSON.stringify(orderRequest));
+    //localStorage.setItem('reorderRequests', JSON.stringify(orderRequest));
     // console.log(orderArray);
     // addSentRequest(orderArray);
+  };
+
+  const sendLowStrockRequest = async () => {
+    const userData = localStorage.getItem('userData');
+
+    const comp_id = userData !== null ? JSON.parse(userData)?.company_id : null;
+
+    //const comp_id = JSON.parse(localStorage.getItem('userData') || '')?.company_id;
+
+    console.log(comp_id);
+    const request = {
+      item: {
+        _id: '34343fdfefe2343',
+        item_name: 'Testing3',
+        category_name: 'Food',
+        brand_name: 'memdizzz',
+      },
+      requiredQuantity: requiredQuantity,
+      requiredDate: requiredDate,
+      priority: priority,
+      assigned: false,
+      warehouse_id: '344fdf324343',
+      status: 0,
+      sentRequest: true,
+      company_id: comp_id,
+      suppliers: [
+        {
+          _id: '3434efee34234',
+          name: 'Sanka',
+          status: 1,
+        },
+        {
+          _id: '3435efee34234',
+          name: 'Decim',
+          status: 1,
+        },
+        {
+          _id: '3436efee34234',
+          name: 'Kashum',
+          status: 1,
+        },
+      ],
+    };
+    await axios.post('http://localhost:5000/api/wh-prcurmnt-sup/createRequest', request).then((res) => console.log('Request Sent'));
   };
 
   return (

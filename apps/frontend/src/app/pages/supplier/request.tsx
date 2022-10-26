@@ -19,6 +19,19 @@ type TierItemProps = {
   tierIcon: React.ReactNode;
 };
 
+let request = {
+    _id: 232323314355,
+    item: {
+        _id: 33423423423,
+        itemName: 'Nike Airmax Shoes',
+
+    },
+    requiredDate: '2022/10/22',
+    requiredQuantity: 20,
+    suppliableQuantity: 10,
+    
+}
+
 function TierItem({ id, name, price, description, handleSelect, selected, tierIcon }: TierItemProps) {
   return (
     <Card onClick={() => handleSelect(id)} className={selected === id ? 'highlightTier' : ''}>

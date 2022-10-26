@@ -26,6 +26,11 @@ export class WhPrcurmntSupController {
     return this.WhPrcurmntSupReqService.findAllBySupplierID(id);
   }
 
+  @Get('findAllByCompanyID/:id')
+  findAllByCompanyID(@Param('id') id: string) {
+    return this.WhPrcurmntSupReqService.findAllBySupplierID(id);
+  }
+
   @Get('findAllByAny')
   findAllByAny(@Body() searchParamObj: any) {
     /*

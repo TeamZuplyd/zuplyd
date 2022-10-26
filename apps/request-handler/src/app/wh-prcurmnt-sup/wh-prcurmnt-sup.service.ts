@@ -12,6 +12,7 @@ export class WhPrcurmntSupService {
     return this.WhPrcurmntSupReqModel.findById(id).exec();
   }
   async createRequest(WhPrcurmntSupReqDto: WhPrcurmntSupReqDto): Promise<WhPrcurmntSupReq> {
+    console.log(WhPrcurmntSupReqDto);
     const createdRequest = await this.WhPrcurmntSupReqModel.create(WhPrcurmntSupReqDto);
     return createdRequest;
   }
@@ -22,6 +23,10 @@ export class WhPrcurmntSupService {
 
   async findAllBySupplierID(supplier_id: string): Promise<WhPrcurmntSupReq[]> {
     return this.WhPrcurmntSupReqModel.find({ supplier_id: supplier_id }).exec();
+  }
+
+  async findAllByCompanyID(company_id: string): Promise<WhPrcurmntSupReq[]> {
+    return this.WhPrcurmntSupReqModel.find({ company_id: company_id }).exec();
   }
 
   async findAllByAny(searchParamObj: any): Promise<WhPrcurmntSupReq[]> {

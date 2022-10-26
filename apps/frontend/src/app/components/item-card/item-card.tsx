@@ -1,5 +1,6 @@
 /* eslint-disable-next-line */
 import { Card, CardContent, Grid, Typography, Button } from '@mui/material';
+import axios from 'axios';
 
 // export interface ItemCardProps {
 //   priority?: string;
@@ -12,35 +13,46 @@ import { Card, CardContent, Grid, Typography, Button } from '@mui/material';
 //{ priority = 'High', item, warehouse, quantity, requiredBy, assigned = false }
 
 export function ItemCard({ goodsRequest }) {
-  const assignProcMan = () => {
+  const assignProcMan = async () => {
+    const userData = localStorage.getItem('userData');
+    const proc_id = userData !== null ? JSON.parse(userData)?.user_id : '';
+
     const assignedGoodsRequest = {
       ...goodsRequest,
-      proc_man: '3434234asd324234',
+      proc_id: proc_id,
       assigned: true,
     };
 
-    const response = localStorage.getItem('reorderRequests');
+    await axios.post('http://localhost:5000/api/wh-prcurmnt-sup/update', assignedGoodsRequest);
 
-    const parsed_res = response !== null ? JSON.parse(response) : [];
+    // const response = localStorage.getItem('reorderRequests');
 
-    parsed_res[3] = assignedGoodsRequest;
+    // const parsed_res = response !== null ? JSON.parse(response) : [];
 
-    localStorage.setItem('reorderRequests', JSON.stringify(parsed_res));
+    // parsed_res[3] = assignedGoodsRequest;
 
-    console.log(parsed_res);
+    // localStorage.setItem('reorderRequests', JSON.stringify(parsed_res));
+
+    // console.log(parsed_res);
   };
 
-  const sendQuotationRequests = () => {
-    const response = localStorage.getItem('reorderRequests');
+  const sendQuotationRequests = async () => {
+    // const response = localStorage.getItem('reorderRequests');
 
-    const parsed_res = response !== null ? JSON.parse(response) : [];
+    // const parsed_res = response !== null ? JSON.parse(response) : [];
 
-    parsed_res[3] = { ...parsed_res[3], status: 1 };
+    // parsed_res[3] = { ...parsed_res[3], status: 1 };
 
-    localStorage.setItem('reorderRequests', JSON.stringify(parsed_res));
+    // localStorage.setItem('reorderRequests', JSON.stringify(parsed_res));
 
-    console.log('reached');
-    console.log(parsed_res);
+    // console.log('reached');
+    // console.log(parsed_res);
+    const quotationGoodsRequest = {
+      ...goodsRequest,
+      status: 1,
+    };
+
+    await axios.post('http://localhost:5000/api/wh-prcurmnt-sup/update', quotationGoodsRequest).then((res) => console.log('Updated!'));
   };
 
   return (
@@ -73,7 +85,7 @@ export function ItemCard({ goodsRequest }) {
               <Grid item xs={7}>
                 <Typography className="secondaryText">Item</Typography>
                 <Typography sx={{ wordWrap: 'break-word' }} className="primaryText">
-                  {goodsRequest?.name}
+                  {goodsRequest?.item.item_name}
                 </Typography>
               </Grid>
               <Grid item xs={5}>
