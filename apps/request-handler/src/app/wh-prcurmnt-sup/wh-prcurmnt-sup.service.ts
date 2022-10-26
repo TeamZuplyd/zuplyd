@@ -8,6 +8,9 @@ import { WhPrcurmntSupReqDto } from './dto/wh-prcurmnt-sup-req.dto';
 export class WhPrcurmntSupService {
   constructor(@InjectModel(WhPrcurmntSupReq.name) private WhPrcurmntSupReqModel: Model<WhPrcurmntSupReqDocument>) {}
 
+  async findByRequestID(id: string): Promise<any> {
+    return this.WhPrcurmntSupReqModel.findById(id).exec();
+  }
   async createRequest(WhPrcurmntSupReqDto: WhPrcurmntSupReqDto): Promise<WhPrcurmntSupReq> {
     const createdRequest = await this.WhPrcurmntSupReqModel.create(WhPrcurmntSupReqDto);
     return createdRequest;

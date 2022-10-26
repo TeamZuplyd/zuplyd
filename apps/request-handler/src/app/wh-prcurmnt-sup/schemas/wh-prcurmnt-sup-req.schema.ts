@@ -33,7 +33,7 @@ export class WhPrcurmntSupReq {
   sentRequest: boolean;
 
   @Prop({ required: true })
-  status: string;
+  status: number;
 
   @Prop({ required: true })
   warehouse_id: string;

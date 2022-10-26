@@ -14,7 +14,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { Button, TableHead, Modal, Typography, Card, CardContent, CardActions, Grid, styled, Divider, TextField, CardActionArea } from '@mui/material';
+import { Button, TableHead, Modal, Typography, Card, CardContent, CardActions, Grid, styled, Divider, TextField, CardActionArea, MenuItem } from '@mui/material';
 
 import { AutofpsSelectRounded, HdrOnSelectRounded, Warehouse } from '@mui/icons-material';
 // import { orders } from '../../../data/orders';
@@ -120,27 +120,30 @@ export function WMlowStocksTable({ orders, handleStatusChange, setSelected, sele
         <TableBody>
           {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders)
             .filter((order) => !order.sentRequest && order.request)
-            .map((order) => (
-              <TableRow key={order.item_code}>
-                <TableCell component="th" scope="row">
-                  {order.item_code}
-                </TableCell>
-                <TableCell style={{}}>{order.name}</TableCell>
-                <TableCell style={{}}>{order.brand}</TableCell>
-                <TableCell style={{}}>{order.quantity}</TableCell>
-                {/* <TableCell style={{}}>{order.status}</TableCell> */}
-                {/* <TableCell style={{}}>{order.required_by}</TableCell> */}
-                {/* <TableCell style={{}}>{order.requested_by}</TableCell> */}
-                {/* <TableCell style={{}}>{order.requested_date}</TableCell> */}
-                <TableCell style={{}}>
-                  {/* <Button variant="contained" onClick={handleStatusChange}> */}
-                  <Button variant="contained" onClick={() => handleOpen(order.item_code)}>
-                    Request
-                  </Button>
-                  <BasicModal open={open} handleClose={handleClose} data={[order.name, order.brand]} handleSelect={handleSelected} selected={selected} handleStatusChange={handleStatusChange} selectedItem={selectedItem} order={order} addSentRequest={addSentRequest} />
-                </TableCell>
-              </TableRow>
-            ))}
+            .map((order) => {
+              console.log(order);
+              return (
+                <TableRow key={order.item_code}>
+                  <TableCell component="th" scope="row">
+                    {order.item_code}
+                  </TableCell>
+                  <TableCell style={{}}>{order.name}</TableCell>
+                  <TableCell style={{}}>{order.brand}</TableCell>
+                  <TableCell style={{}}>{order.quantity}</TableCell>
+                  {/* <TableCell style={{}}>{order.status}</TableCell> */}
+                  {/* <TableCell style={{}}>{order.required_by}</TableCell> */}
+                  {/* <TableCell style={{}}>{order.requested_by}</TableCell> */}
+                  {/* <TableCell style={{}}>{order.requested_date}</TableCell> */}
+                  <TableCell style={{}}>
+                    {/* <Button variant="contained" onClick={handleStatusChange}> */}
+                    <Button variant="contained" onClick={() => handleOpen(order.item_code)}>
+                      Request
+                    </Button>
+                    <BasicModal open={open} handleClose={handleClose} data={[order.name, order.brand]} handleSelect={handleSelected} selected={selected} handleStatusChange={handleStatusChange} selectedItem={selectedItem} order={order} addSentRequest={addSentRequest} />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
               <TableCell colSpan={6} />
@@ -199,18 +202,143 @@ type BasicModalProps = {
   // setSelectedItem: (item: string) => void;
 };
 
+const prioritySet = [
+  {
+    label: 'Low',
+    value: 'low',
+  },
+  {
+    label: 'Moderate',
+    value: 'moderate',
+  },
+  {
+    label: 'High',
+    value: 'high',
+  },
+];
+
 function BasicModal({ open, handleClose, data, handleSelect, selected, handleStatusChange, selectedItem, order, addSentRequest }: BasicModalProps) {
-  const [warehouseOne, setWarehouseOne] = React.useState(0);
-  const [warehouseTwo, setWarehouseTwo] = React.useState(0);
+  // const [warehouseOne, setWarehouseOne] = React.useState(0);
+  // const [warehouseTwo, setWarehouseTwo] = React.useState(0);
   const [requiredDate, setRequiredDate] = React.useState('');
-
-  const handleRequest = () => {
-    handleStatusChange(0, selectedItem);
-    handleSubmit();
-    console.log('click req');
+  const [requiredQuantity, setRequiredQuantity] = React.useState(0);
+  const [priority, setPriority] = React.useState('low');
+  const handleChange = (event) => {
+    setPriority(event.target.value);
   };
+  // const handleRequest = () => {
+  //   handleStatusChange(0, selectedItem);
+  //   handleSubmit();
+  //   console.log('click req');
+  // };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const orderRequest = [
+      {
+        ...order,
+        requiredQuantity: requiredQuantity,
+        requiredDate: requiredDate,
+        priority: priority,
+        assigned: false,
+        status: 0,
+        suppliers: [
+          {
+            _id: '3434efee34234',
+            name: 'Sanka',
+            status: 1,
+          },
+          {
+            _id: '3435efee34234',
+            name: 'Decim',
+            status: 1,
+          },
+          {
+            _id: '3436efee34234',
+            name: 'Kashum',
+            status: 1,
+          },
+        ],
+      },
+      {
+        ...order,
+        requiredQuantity: requiredQuantity,
+        requiredDate: requiredDate,
+        priority: priority,
+        assigned: false,
+        status: 0,
+        suppliers: [
+          {
+            _id: '3434efee34234',
+            name: 'Sanka',
+            status: 1,
+          },
+          {
+            _id: '3435efee34234',
+            name: 'Decim',
+            status: 1,
+          },
+          {
+            _id: '3436efee34234',
+            name: 'Kashum',
+            status: 1,
+          },
+        ],
+      },
+      {
+        ...order,
+        requiredQuantity: requiredQuantity,
+        requiredDate: requiredDate,
+        priority: 'high',
+        assigned: false,
+        status: 0,
+        suppliers: [
+          {
+            _id: '3434efee34234',
+            name: 'Sanka',
+            status: 1,
+          },
+          {
+            _id: '3435efee34234',
+            name: 'Decim',
+            status: 1,
+          },
+          {
+            _id: '3436efee34234',
+            name: 'Kashum',
+            status: 1,
+          },
+        ],
+      },
+      {
+        ...order,
+        requiredQuantity: requiredQuantity,
+        requiredDate: requiredDate,
+        priority: 'moderate',
+        assigned: false,
+        status: 0,
+        suppliers: [
+          {
+            _id: '3434efee34234',
+            name: 'Sanka',
+            status: 1,
+          },
+          {
+            _id: '3435efee34234',
+            name: 'Decim',
+            status: 1,
+          },
+          {
+            _id: '3436efee34234',
+            name: 'Kashum',
+            status: 1,
+          },
+        ],
+      },
+    ];
+    console.log(orderRequest);
+
+    localStorage.setItem('reorderRequests', JSON.stringify(orderRequest));
     // console.log(orderArray);
     // addSentRequest(orderArray);
   };
@@ -259,27 +387,43 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
           Order Information
         </Typography>
 
-        <Grid container item>
-          <Grid item xs={2} sx={{ mt: 0.5, mb: 0.5 }}>
-            <span className="secondaryText">Required Date</span>
-          </Grid>
-          <Grid item xs={6}>
-            <input type="date" style={{ marginLeft: 2 }} value={requiredDate} onChange={(e) => setRequiredDate(e.target.value)} />
-          </Grid>
+        <form onSubmit={handleSubmit}>
+          <Grid container item sx={{ display: 'flex', gap: '20px', mt: 1, mb: 1 }}>
+            <Grid>
+              <Grid item sx={{ mb: 0.5 }}>
+                <span className="secondaryText">Required Date</span>
+              </Grid>
+              <Grid item>
+                <input type="date" style={{ marginLeft: 2 }} value={requiredDate} onChange={(e) => setRequiredDate(e.target.value)} />
+              </Grid>
+            </Grid>
 
-          <Grid item xs>
-            <div className="secondaryText">Requesting Quantity</div>
-            <TextField id="outlined-basic" size="small" type="number" InputProps={{ inputProps: { min: 1 } }} variant="outlined" sx={{ pt: 1 }} value={warehouseTwo} onChange={(e) => setWarehouseTwo(parseInt(e.target.value))} />
+            <Grid item>
+              <div className="secondaryText">Requesting Quantity</div>
+              <TextField id="outlined-basic" size="small" type="number" InputProps={{ inputProps: { min: 1 } }} variant="outlined" sx={{ pt: 1 }} value={requiredQuantity} onChange={(e) => setRequiredQuantity(parseInt(e.target.value))} />
+            </Grid>
+            <Grid>
+              <Grid item sx={{ mt: 0.5, mb: 0.5 }}>
+                <span className="secondaryText">Please select your priority</span>
+              </Grid>
+              <TextField fullWidth size="small" id="outlined-select-currency" value={'low'} select onChange={handleChange}>
+                {prioritySet.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
           </Grid>
-        </Grid>
-        <CardActions>
-          <Button variant="contained" color="success" sx={{ mr: 2 }} onClick={handleRequest}>
-            Send Request
-          </Button>
-          <Button variant="contained" color="warning" onClick={handleClose}>
-            Cancel
-          </Button>
-        </CardActions>
+          <CardActions>
+            <Button variant="contained" color="success" sx={{ mr: 2 }} type="submit">
+              Send Request
+            </Button>
+            <Button variant="contained" color="warning" onClick={handleClose}>
+              Cancel
+            </Button>
+          </CardActions>
+        </form>
       </Box>
     </Modal>
   );

@@ -8,7 +8,7 @@ export class WhPrcurmntSupReqDto {
   readonly requested_date: string;
   readonly required_by: string;
   readonly sentRequest: boolean;
-  readonly status: string;
+  readonly status: number;
   readonly warehouse_id: string;
   readonly company_id: number;
   readonly supplier_id: number;

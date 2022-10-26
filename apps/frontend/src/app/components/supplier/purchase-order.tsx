@@ -16,15 +16,15 @@ export default function PurchaseOrder({ setSelectedStep, selectedStep }) {
             optional?: React.ReactNode;
             error?: boolean;
           } = {};
-          if (isStepFailed(index)) {
-            labelProps.optional = (
-              <Typography variant="caption" color="error">
-                Alert message
-              </Typography>
-            );
+          //   if (isStepFailed(index)) {
+          //     labelProps.optional = (
+          //       <Typography variant="caption" color="error">
+          //         Alert message
+          //       </Typography>
+          //     );
 
-            labelProps.error = true;
-          }
+          //     labelProps.error = true;
+          //   }
 
           return (
             <Step key={label}>

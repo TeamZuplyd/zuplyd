@@ -1,16 +1,48 @@
 /* eslint-disable-next-line */
 import { Card, CardContent, Grid, Typography, Button } from '@mui/material';
 
-export interface ItemCardProps {
-  urgencyLevel?: string;
-  item: string;
-  warehouse: string;
-  quantity: number;
-  requiredBy: string;
-  assigned?: boolean;
-}
+// export interface ItemCardProps {
+//   priority?: string;
+//   item: string;
+//   warehouse: string;
+//   quantity: number;
+//   requiredBy: string;
+//   assigned?: boolean;
+// }
+//{ priority = 'High', item, warehouse, quantity, requiredBy, assigned = false }
 
-export function ItemCard({ urgencyLevel = 'High', item, warehouse, quantity, requiredBy, assigned = false }: ItemCardProps) {
+export function ItemCard({ goodsRequest }) {
+  const assignProcMan = () => {
+    const assignedGoodsRequest = {
+      ...goodsRequest,
+      proc_man: '3434234asd324234',
+      assigned: true,
+    };
+
+    const response = localStorage.getItem('reorderRequests');
+
+    const parsed_res = response !== null ? JSON.parse(response) : [];
+
+    parsed_res[3] = assignedGoodsRequest;
+
+    localStorage.setItem('reorderRequests', JSON.stringify(parsed_res));
+
+    console.log(parsed_res);
+  };
+
+  const sendQuotationRequests = () => {
+    const response = localStorage.getItem('reorderRequests');
+
+    const parsed_res = response !== null ? JSON.parse(response) : [];
+
+    parsed_res[3] = { ...parsed_res[3], status: 1 };
+
+    localStorage.setItem('reorderRequests', JSON.stringify(parsed_res));
+
+    console.log('reached');
+    console.log(parsed_res);
+  };
+
   return (
     <Card
       sx={{
@@ -41,37 +73,46 @@ export function ItemCard({ urgencyLevel = 'High', item, warehouse, quantity, req
               <Grid item xs={7}>
                 <Typography className="secondaryText">Item</Typography>
                 <Typography sx={{ wordWrap: 'break-word' }} className="primaryText">
-                  {item}
+                  {goodsRequest?.name}
                 </Typography>
               </Grid>
               <Grid item xs={5}>
                 <Typography className="secondaryText">Quantity</Typography>
                 <Typography sx={{ wordWrap: 'break-word' }} className="primartText">
-                  {quantity + ' pcs'}
+                  {goodsRequest?.requiredQuantity + ' pcs'}
                 </Typography>
               </Grid>
               <Grid item xs={7}>
                 <Typography className="secondaryText">Warehouse</Typography>
                 <Typography sx={{ wordWrap: 'break-word' }} className="primaryText">
-                  {warehouse}
+                  {goodsRequest?.warehouse_id}
                 </Typography>
               </Grid>
               <Grid item xs={5} alignContent="center">
                 <Typography className="secondaryText">Required By</Typography>
-                <Typography className="primaryText">{requiredBy}</Typography>
+                <Typography className="primaryText">{goodsRequest?.requiredDate}</Typography>
               </Grid>
               <Grid item xs={7}>
-                {assigned && <Button sx={{ p: 0 }}>Request Quotations</Button>}
+                {goodsRequest?.assigned && (
+                  <Button sx={{ p: 0 }} onClick={sendQuotationRequests}>
+                    Request Quotations
+                  </Button>
+                )}
               </Grid>
               <Grid item xs={5}>
-                {(assigned && <Button sx={{ p: 0 }}>Unassign</Button>) || (!assigned && <Button sx={{ p: 0 }}>Assign to me</Button>)}
+                {(goodsRequest?.assigned && <Button sx={{ p: 0 }}>Unassign</Button>) ||
+                  (!goodsRequest?.assigned && (
+                    <Button sx={{ p: 0 }} onClick={assignProcMan}>
+                      Assign to me
+                    </Button>
+                  ))}
               </Grid>
             </Grid>
           </Grid>
           <Grid
             item
             xs={1}
-            bgcolor={urgencyLevel === 'High' ? '#F60303' : urgencyLevel === 'Moderate' ? '#FD8F02' : urgencyLevel === 'Normal' ? '#24CC08' : 'white'}
+            bgcolor={goodsRequest?.priority === 'high' ? '#F60303' : goodsRequest?.priority === 'moderate' ? '#FD8F02' : goodsRequest?.priority === 'low' ? '#24CC08' : 'white'}
             sx={{
               p: 0,
               m: 0,

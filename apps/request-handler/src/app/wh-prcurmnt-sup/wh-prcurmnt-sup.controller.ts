@@ -11,6 +11,11 @@ export class WhPrcurmntSupController {
     return this.WhPrcurmntSupReqService.createRequest(WhPrcurmntSupReqDto);
   }
 
+  @Get('findByRequestID/:id')
+  findByRequestID(@Param('id') id: string) {
+    return this.WhPrcurmntSupReqService.findByRequestID(id);
+  }
+
   @Get('findAllByWarehouseID/:id')
   findAllByWarehouseID(@Param('id') id: string) {
     return this.WhPrcurmntSupReqService.findAllByWarehouseID(id);

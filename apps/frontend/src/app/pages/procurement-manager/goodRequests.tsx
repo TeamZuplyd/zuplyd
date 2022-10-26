@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../../components/header/header';
 import ItemCard from '../../components/item-card/item-card';
 import { Tabs, Tab, Typography, Box, Grid, Card } from '@mui/material';
@@ -33,6 +33,7 @@ function a11yProps(index: number) {
 }
 function goodRequests() {
   const [value, setValue] = useState(0);
+  const [orderRequests, setOrderRequests] = useState([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -40,6 +41,12 @@ function goodRequests() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    const storedGoodsRequests = localStorage.getItem('reorderRequests');
+    setOrderRequests(storedGoodsRequests !== null ? JSON.parse(storedGoodsRequests) : []);
+  }, []);
+
   return (
     <>
       <Header title="Good Requests" />
@@ -55,15 +62,18 @@ function goodRequests() {
           <TabPanel value={value} index={0}>
             <UrgencyLevels />
             <Grid container spacing={2}>
-              {requests
-                .filter((request) => !request.assigned)
-                .map((goodRequest) => {
-                  return (
-                    <Grid item>
-                      <ItemCard key={goodRequest.id} item={goodRequest.item} quantity={goodRequest.quantity} urgencyLevel={goodRequest.urgencyLevel} requiredBy={goodRequest.requiredBy} assigned={goodRequest.assigned} warehouse={goodRequest.warehouse} />
-                    </Grid>
-                  );
-                })}
+              {orderRequests &&
+                orderRequests
+                  .filter((request: any) => !request.assigned)
+                  .map((goodRequest: any) => {
+                    console.log(goodRequest);
+                    return (
+                      <Grid item>
+                        {/* <ItemCard key={goodRequest.id} item={goodRequest.item} quantity={goodRequest.quantity} urgencyLevel={goodRequest.urgencyLevel} requiredBy={goodRequest.requiredBy} assigned={goodRequest.assigned} warehouse={goodRequest.warehouse} /> */}
+                        <ItemCard key={goodRequest.id} goodsRequest={goodRequest} />
+                      </Grid>
+                    );
+                  })}
             </Grid>
           </TabPanel>
 
@@ -71,15 +81,16 @@ function goodRequests() {
           <TabPanel value={value} index={1}>
             <UrgencyLevels />
             <Grid container spacing={2}>
-              {requests
-                .filter((request) => request.assigned)
-                .map((goodRequest) => {
-                  return (
-                    <Grid item>
-                      <ItemCard key={goodRequest.id} item={goodRequest.item} quantity={goodRequest.quantity} urgencyLevel={goodRequest.urgencyLevel} requiredBy={goodRequest.requiredBy} assigned={goodRequest.assigned} warehouse={goodRequest.warehouse} />
-                    </Grid>
-                  );
-                })}
+              {orderRequests &&
+                orderRequests
+                  .filter((request: any) => request.assigned)
+                  .map((goodRequest: any) => {
+                    return (
+                      <Grid item>
+                        <ItemCard key={goodRequest.id} goodsRequest={goodRequest} />
+                      </Grid>
+                    );
+                  })}
             </Grid>
           </TabPanel>
         </Box>
