@@ -10,6 +10,9 @@ export class Shop {
     company_id: string;
 
     @Prop()
+    name: string;
+
+    @Prop()
     location: string;
 
     @Prop()
@@ -20,6 +23,9 @@ export class Shop {
 
     @Prop()
     address: string;
+
+    @Prop()
+    assigned_warehouses: string[];
 }
 
 export const ShopSchema = SchemaFactory.createForClass(Shop);
