@@ -10,7 +10,7 @@ export class CreateItemTypeDto {
   readonly output_rule_type: string;
   readonly company_id: string;
   readonly company_name: string;
-  readonly suppliers: string[];
+  readonly suppliers: any[];
   readonly batch_no: string;
   readonly attributes_array: string[];
 }

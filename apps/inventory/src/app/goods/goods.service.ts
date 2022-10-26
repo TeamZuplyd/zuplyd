@@ -88,7 +88,8 @@ export class GoodsService {
     } else {
       let session = null;
       let transferObj = null;
-      this.connection
+      let cretedObj = null;
+      return this.connection
         .startSession()
         .then((_session) => {
           session = _session;
@@ -106,9 +107,14 @@ export class GoodsService {
             session: session,
           });
         })
-        .then(() => itemModel.create([transferObj], { session: session }))
+        .then(async () => {
+          cretedObj = await itemModel.create([transferObj], { session: session });
+        })
         .then(() => session.commitTransaction())
-        .then(() => session.endSession());
+        .then(() => session.endSession())
+        .then(() => {
+          return cretedObj[0];
+        });
     }
   }
 
