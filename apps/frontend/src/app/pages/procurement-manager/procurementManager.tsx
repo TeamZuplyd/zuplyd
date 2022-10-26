@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 function procurementManager() {
   return (
     <div className="outerContainer">
-      <SideNav username={'gallagesanka03@gmail.com'} userNum={1} />
+      <SideNav userNum={1} />
       <Outlet />
     </div>
   );

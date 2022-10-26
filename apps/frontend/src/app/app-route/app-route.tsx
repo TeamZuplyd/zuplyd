@@ -64,6 +64,7 @@ import SignupButton from '../components/signup-button/signup-button';
 import LogoutButton from '../components/logout-button/logout-button';
 import ProfileSetup from '../pages/procurement-manager/initialization/profileSetUp';
 import RequestProg from '../pages/supplier/request';
+import { setLoggedInUserData } from '../utils';
 
 export interface AppRouteProps {}
 
@@ -168,6 +169,8 @@ export function AppRoute(props: AppRouteProps) {
   const [user, setUser] = React.useState<User>();
 
   const auth = useAuth0();
+  const userEmail = auth.user?.email || '';
+  setLoggedInUserData(userEmail);
 
   useEffect(() => {
     setUser(auth.user);

@@ -8,6 +8,7 @@ export const protobufPackage = 'userMgmt';
 export interface RegisterRequest {
   email: string;
   role: string;
+  name: string;
   company_name: string;
   company_id: string;
   managing_id: string;
@@ -36,6 +37,7 @@ export interface UserByCompRole {
 export interface User {
   _id: string;
   email: string;
+  name: string;
   role: string;
   company_name: string;
   company_id: string;
