@@ -12,6 +12,8 @@ import CategoryCardPM from '../../components/category-card-pm/category-card-pm';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { useMutation } from 'react-query';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import { Theme, useTheme } from '@mui/material/styles';
 
 function addItem() {
   const [itemNameTextFieldValue, setItemNameTextFieldValue] = useState('');
@@ -102,6 +104,7 @@ function addItem() {
   let count: number = -1;
 
   const [categories, setCategories] = React.useState<any>([]);
+  const [supNames, setSupNames] = React.useState<any>([]);
 
   const getItemInfo = () => {
     const company_ID = 'qwerty';
@@ -109,11 +112,42 @@ function addItem() {
       setCategories(res.data.itemCategory.categoryArr);
       console.log(res.data.itemCategory.categoryArr);
     });
+
+    const body = {
+      company_id: null,
+      role: 'supl',
+    };
+
+    axios.post('http://localhost:7000/api/user-mgmt/findAllByCompRole', body).then((res) => {
+      setSupNames(res.data.users);
+    });
   };
 
   React.useEffect(() => {
     getItemInfo();
   }, []);
+
+  const [personName, setPersonName] = React.useState<string[]>([]);
+  const theme = useTheme();
+
+  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    // const name = event.target.value[1];
+    const ID = event.target.value[0];
+
+    // alert(name);
+    console.log(event.target.value);
+    console.log(event.target.value[0]);
+    console.log(event.target.value[0][0]);
+    const {
+      target: { value },
+    } = event;
+    // setPersonName(
+    //   // On autofill we get a stringified value.
+    //   typeof name === 'string' ? name.split(',') : name
+    // );
+  };
+
+  const names = ['Oliver Hansen', 'Van Henry', 'April Tucker', 'Ralph Hubbard', 'Omar Alexander', 'Carlos Abbott', 'Miriam Wagner', 'Bradley Wilkerson', 'Virginia Andrews', 'Kelly Snyder'];
 
   return (
     <>
@@ -186,30 +220,66 @@ function addItem() {
 
             <Divider sx={{ mt: 3, mb: 3 }} />
 
-            <Grid container rowGap={2} columnGap={2.5}>
-              <Grid item xs={12}>
-                <Typography variant="h5" component="div" sx={{ fontWeight: 700, textAlign: 'left' }} style={{ color: '#1f2937' }}>
-                  Item Attributes
-                </Typography>
+            <Grid container item xs={12} sx={{ mt: 4, mb: 3 }}>
+              <Grid item xs={6} sx={{ mt: 4, mb: 3 }}>
+                <Grid container rowGap={2} columnGap={2.5}>
+                  <Grid item xs={12} sx={{ mb: 3 }}>
+                    <Typography variant="h5" component="div" sx={{ fontWeight: 700, textAlign: 'left' }} style={{ color: '#1f2937' }}>
+                      Item Attributes
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <TextField
+                  id="standard-basic"
+                  label="Attribute name"
+                  variant="standard"
+                  onChange={(e) => {
+                    setTextFieldValue(e.target.value);
+                  }}
+                  value={textFieldValue}
+                />
+
+                {/* unit drop down */}
+                {/* <UnitDropDown unit={unit} setUnit={setUnit} /> */}
+                <Button variant="contained" color="primary" sx={{ ml: 3, mt: 1.5 }} onClick={addAttribute}>
+                  Add new
+                </Button>
               </Grid>
-            </Grid>
 
-            <Grid item xs={12} sx={{ mt: 4, mb: 3 }}>
-              <TextField
-                id="standard-basic"
-                label="Attribute name"
-                variant="standard"
-                onChange={(e) => {
-                  setTextFieldValue(e.target.value);
-                }}
-                value={textFieldValue}
-              />
+              <Grid item xs={6} sx={{ mt: 4, mb: 3 }}>
+                <Grid container rowGap={2} columnGap={2.5}>
+                  <Grid item xs={12}>
+                    <Typography variant="h5" component="div" sx={{ fontWeight: 700, textAlign: 'left' }} style={{ color: '#1f2937' }}>
+                      Supliers
+                    </Typography>
+                  </Grid>
+                </Grid>
 
-              {/* unit drop down */}
-              {/* <UnitDropDown unit={unit} setUnit={setUnit} /> */}
-              <Button variant="contained" color="primary" sx={{ ml: 3, mt: 1.5 }} onClick={addAttribute}>
-                Add new
-              </Button>
+                <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
+                  <Select
+                    multiple
+                    displayEmpty
+                    value={personName}
+                    onChange={handleChange}
+                    input={<OutlinedInput />}
+                    renderValue={(selected) => {
+                      if (selected.length === 0) {
+                        return <em>Suplier name</em>;
+                      }
+
+                      return selected.join(', ');
+                    }}
+                    MenuProps={MenuProps}
+                    inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                    {supNames.map((name) => (
+                      <MenuItem key={name._id} value={[name._id, name.company_name]} style={getStyles(name, personName, theme)}>
+                        {name.company_name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
 
             <Grid container xs={12} rowGap={2} columnGap={4} sx={{ mb: 6 }}>
@@ -264,6 +334,23 @@ function addItem() {
     </>
   );
 }
+
+function getStyles(name: string, personName: readonly string[], theme: Theme) {
+  return {
+    fontWeight: personName.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
+  };
+}
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 type UnitDropDownProps = {
   unit: string;

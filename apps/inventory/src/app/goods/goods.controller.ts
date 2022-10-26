@@ -44,7 +44,7 @@ export class GoodsController {
     return this.goodsService.addItem(addItemDto.ownerId, addItemDto.qty, addItemDto.itemType.item_name, addItemDto.itemType, addItemDto.itemDetails);
   }
 
-  @Get('transferGoods')
+  @Post('transferGoods')
   transferGoods(@Body() transferGoodsDto: any) {
     /*
     transferGoodsDto structure that should be sent form the frontend

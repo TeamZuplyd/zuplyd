@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
+import { Any } from './google/protobuf/any.pb';
 import { Observable } from 'rxjs';
 
 export const protobufPackage = 'procurement';
@@ -17,14 +18,9 @@ export interface Item {
   output_rule_type: string;
   company_id: string;
   company_name: string;
-  suppliers: Supplier[];
+  suppliers: Any[];
   batch_no: string;
   attributes_array: string[];
-}
-
-export interface Supplier {
-  supplierName: string;
-  id: string;
 }
 
 export interface ItemWithID {
@@ -40,7 +36,7 @@ export interface ItemWithID {
   output_rule_type: string;
   company_id: string;
   company_name: string;
-  suppliers: Supplier[];
+  suppliers: Any[];
   batch_no: string;
   attributes_array: string[];
   __v: number;

@@ -31,12 +31,12 @@ export class UserMgmtController {
   }
 
   //@UseGuards(AuthGuard('jwt'))
-  @Get('findAllByComp')
+  @Post('findAllByComp')
   private async findAllByComp(@Body() searchQuery: UserByComp): Promise<any> {
     return this.svc.findAllByComp(searchQuery);
   }
 
-  @Get('findAllByCompRole')
+  @Post('findAllByCompRole')
   private async findAllByCompRole(@Body() searchQuery: UserByCompRole): Promise<any> {
     return this.svc.findAllByCompRole(searchQuery);
   }

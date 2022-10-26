@@ -84,6 +84,7 @@ export function WMOrderTable({ orders }: WMOrderTableProps) {
   };
 
   const confirmDelivery = (item: any) => {
+    console.log('itemmmmmm');
     console.log(item);
 
     const body = {
@@ -103,8 +104,38 @@ export function WMOrderTable({ orders }: WMOrderTableProps) {
       __v: item.__v,
     };
 
-    axios.post('http://localhost:5000/api/shopWarehouseRequest/update', body).then((res) => {
-      window.location.reload();
+    // axios.post('http://localhost:5000/api/shopWarehouseRequest/update', body).then((res) => {
+    //   window.location.reload();
+    // });
+
+    axios.get('http://localhost:7000/api/procurement/item/findByName/' + item.company_id + '/' + item.name).then((res) => {
+      console.log('res.dataaaaa');
+      console.log(res.data);
+
+      const payload = {
+        itemType: {
+          item_name: res.data.item_name,
+          company_id: item.company_id,
+          company_name: res.data.company_name,
+          brand_name: res.data.brand_name,
+          category_name: res.data.category_name,
+          unitOfMeasure: res.data.unitOfMeasure,
+          output_rule: res.data.output_rule,
+          output_rule_unit: res.data.output_rule_unit,
+          output_rule_type: res.data.output_rule_type,
+          attributes_array: res.data.attributes_array,
+          min_release_quantity: res.data.min_release_quantity,
+        },
+        transferQty: item.quantity,
+        transferToEntity: item.required_by,
+        transferFromEntity: item._id,
+        // transferFromEntity: 'qwerty',
+      };
+      console.log(payload);
+
+      // axios.post('http://localhost:4444/api/goods/transferGoods', payload).then((res) => {
+      //   window.location.reload();
+      // });
     });
   };
 
