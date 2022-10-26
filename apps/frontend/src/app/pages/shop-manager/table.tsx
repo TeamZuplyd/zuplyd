@@ -6,8 +6,8 @@ import { items } from '../../../data/items';
 import CustomTable from '../../components/custom-table/custom-table';
 import Header from '../../components/header/header';
 import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent, Skeleton } from '@mui/material';
-import WMlowStocksTable from '../../components/wmlow-stocks-table/wmlow-stocks-table';
 import axios from 'axios';
+import SMLowStocksTable from '../../components/smlow-stocks-table/smlow-stocks-table';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -69,64 +69,39 @@ const table = () => {
   };
 
   const { id } = useParams(); //holds the category name
-  const [itemStructure, setItemStructure] = React.useState<any>(null);
-  const [goods, setGoods] = React.useState<any>([]);
+  const [allGoods, setAllGoods] = React.useState<any>([]); // items from inventory
+  const [lowStocks, setLowStocks] = React.useState<any>([]); // items from inventory
+  const [filteredAllGoods, setFilteredAllGoods] = React.useState<any>(null); // filtered items from inventory
+  const [filteredLowStocks, setFilteredLowStocks] = React.useState<any>(null); // filtered items from inventory
 
   const companyID = 'acdf214124 ';
+  // const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
   const managing_id = 'qwerty'; //owner_id
-  const body = { itemType: {}, ownerId: managing_id };
-
-  //get item structure from procurement
-  const getItemStructure = () => {
-    axios.get('http://localhost:7000/api/procurement/item/findAll/' + companyID).then((res) => {
-      setItemStructure(res.data.items);
-      // console.log(res.data.items[0]);
-      // console.log(itemStructure);
+  // const managing_id = JSON.parse(localStorage.getItem('userData') || '').managing_id;
+ 
+  const getItemsFromAPI = () => {
+    axios.get('http://localhost:7000/api/inventoryAPI/items/' + companyID + '/' + managing_id).then((res) => {
+      console.log(res.data);
+    setAllGoods([...res.data.allItems]);
+    setLowStocks([...res.data.lowStockItems]);
     });
   };
 
-  const getItems = () => {
-    itemStructure !== null &&
-      itemStructure
-        // .filter((item: any) => id !== undefined && item.category_name !== undefined && id.toLowerCase() === item.category_name.toLowerCase())
-        .map((item: any) => {
-          body.itemType = item;
-          console.log(body);
-          axios.post('http://localhost:4444/api/goods/getAllItems/' + managing_id, body).then((res) => {
-            // setGoods([...data, res.data.itemsAray]);
-            console.log('data => ', res.data);
-            // console.log(goods);
-          });
-          axios.post('http://localhost:4444/api/goods/getItemStock/', body).then((res) => {
-            //assign total stock value to the goods array
-            //gets the total of all batches. compare with the minimum stock value
-            //filter those which are below the minimum stock value
-          });
-        });
-  };
-
-  //get min max limits from the shop
-
-  //filter the low stocks
-
   React.useEffect(() => {
-    getItemStructure();
+    getItemsFromAPI();
   }, []);
 
   React.useEffect(() => {
-    // console.log(itemStructure);
-  }, [itemStructure]);
+    const filterAllGoods = allGoods.filter((item) =>  item.category_name ?  item.category_name.toLowerCase() === id?.toLowerCase() :false); 
+    setFilteredAllGoods(filterAllGoods);
+  }, [allGoods ,id]);
 
   React.useEffect(() => {
-    getItems();
-    console.log('items get');
-  }, [itemStructure]);
+    const filterLowStocks = lowStocks.filter((item) =>  item.category_name ?  item.category_name.toLowerCase() === id?.toLowerCase() :false); 
+    setFilteredLowStocks(filterLowStocks);
+  }, [lowStocks ,id]);
 
-  if (itemStructure === null) {
-    return <Skeleton />;
-  }
 
-  const data = items.filter((item) => id !== undefined && item.category.toLowerCase() === id.toLowerCase()); //mock data
   return (
     <>
       <Header title="Inventory" />
@@ -140,11 +115,11 @@ const table = () => {
           </Box>
 
           <TabPanel value={value} index={0}>
-            <WMlowStocksTable orders={orderData} handleStatusChange={() => handleStatusChange2(selected, selectedItem)} selected={selected} setSelected={setSelected} handleSelected={handleSelected} selectedItem={selectedItem} setSelectedItem={setSelectedItem} addSentRequest={addSentRequest} />
+            <SMLowStocksTable orders={lowStocks} handleStatusChange={() => handleStatusChange2(selected, selectedItem)} selected={selected} setSelected={setSelected} handleSelected={handleSelected} selectedItem={selectedItem} setSelectedItem={setSelectedItem} addSentRequest={addSentRequest} />
           </TabPanel>
 
           <TabPanel value={value} index={1}>
-            <CustomTable headerNames={['Name', 'Minimum Limit', 'Maximum Limit', 'Brand', 'Available Units', 'More Info', 'Reorder']} rows={data} />
+            <CustomTable headerNames={['Name', 'Minimum Limit', 'Maximum Limit', 'Brand', 'Available Units', 'More Info', 'Reorder']} rows={filteredAllGoods} />
           </TabPanel>
         </Box>
       </div>
