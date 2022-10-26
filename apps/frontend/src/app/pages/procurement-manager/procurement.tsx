@@ -61,7 +61,9 @@ function procurement() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/wh-prcurmnt-sup/findAllDev').then((res) => setRequestGoods(res.data));
+    axios.get('http://localhost:5000/api/wh-prcurmnt-sup/findAllDev').then((res) => {
+      setRequestGoods(res.data);
+    });
     // const reorderGoods = localStorage.getItem('reorderRequests');
 
     // if (reorderGoods !== null) setRequestGoods(JSON.parse(reorderGoods));
@@ -71,7 +73,9 @@ function procurement() {
   }, []);
 
   useEffect(() => {
-    req_goods = extractQuotaions(requestGoods);
+    //req_goods = extractQuotaions(requestGoods);
+    setQuotationReqs(requestGoods.length !== 0 ? requestGoods.filter((requestGood: any) => requestGood?.status === 1 && requestGood?.proc_id === JSON.parse(localStorage.getItem('userData') || '')?.user_id) : []);
+    console.log(quotationReqs);
   }, [requestGoods]);
 
   return (
@@ -99,8 +103,9 @@ function procurement() {
                   name: 'View',
                   color: 'primary',
                   action: (index) => {
-                    handleOpenModal();
                     setSelectedIndex(index);
+                    handleOpenModal();
+                    console.log(index);
                     //console.log('white white white');
                   },
                 },
@@ -133,7 +138,7 @@ function procurement() {
             <GeneralTable data={acceptedPO} headers={['Item code', 'Item', 'Brand', 'Required By', 'Qunatity', 'Unit Price', 'Supplier', 'Placed Date', 'Accepted Date', 'Status']} />
           </TabPanel> */}
         </Box>
-        <BasicModal goodRequest={requestGoods[4]} open={openModal} handleClose={handleCloseModal} />
+        <BasicModal goodRequest={quotationReqs[selectedIndex]} open={openModal} handleClose={handleCloseModal} />
       </div>
     </>
   );
