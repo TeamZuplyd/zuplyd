@@ -104,9 +104,9 @@ export function WMOrderTable({ orders }: WMOrderTableProps) {
       __v: item.__v,
     };
 
-    // axios.post('http://localhost:5000/api/shopWarehouseRequest/update', body).then((res) => {
-    //   window.location.reload();
-    // });
+    axios.post('http://localhost:5000/api/shopWarehouseRequest/update', body).then((res) => {
+      window.location.reload();
+    });
 
     axios.get('http://localhost:7000/api/procurement/item/findByName/' + item.company_id + '/' + item.name).then((res) => {
       console.log('res.dataaaaa');
@@ -128,14 +128,15 @@ export function WMOrderTable({ orders }: WMOrderTableProps) {
         },
         transferQty: item.quantity,
         transferToEntity: item.required_by,
-        transferFromEntity: item._id,
-        // transferFromEntity: 'qwerty',
+        // transferFromEntity: item._id,
+        transferFromEntity: 'qwerty',
       };
-      console.log(payload);
 
-      // axios.post('http://localhost:4444/api/goods/transferGoods', payload).then((res) => {
-      //   window.location.reload();
-      // });
+      axios.post('http://localhost:4444/api/goods/transferGoods', payload).then((res) => {
+        console.log('res.data');
+        console.log(res.data);
+        console.log(res.data.batch_no);
+      });
     });
   };
 
@@ -152,6 +153,7 @@ export function WMOrderTable({ orders }: WMOrderTableProps) {
             {/* <TableCell component="th">Requested By</TableCell> */}
             <TableCell component="th">Requested Date</TableCell>
             <TableCell component="th">Requested Warehouse</TableCell>
+            {/* <TableCell component="th">Batch Number</TableCell> */}
             <TableCell component="th">Status</TableCell>
             <TableCell component="th">Confirmation</TableCell>
           </TableRow>
@@ -171,8 +173,9 @@ export function WMOrderTable({ orders }: WMOrderTableProps) {
                 {/* <TableCell style={{}}>{order.requested_by}</TableCell> */}
                 <TableCell style={{}}>{new Date().toISOString().split('T')[0]}</TableCell>
                 <TableCell style={{}}>{order.warehouse_id}</TableCell>
+                {/* <TableCell style={{}}>-</TableCell> */}
                 <TableCell style={{}}>{order.status}</TableCell>
-                <Button variant="contained" sx={{ mt: 1 }} onClick={() => confirmDelivery(order)}>
+                <Button variant="contained" sx={{ mt: 1 }} onClick={() => confirmDelivery(order)} disabled={order.status == 'In Delivery' ? false : true}>
                   confirm
                 </Button>
               </TableRow>
