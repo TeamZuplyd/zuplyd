@@ -5,9 +5,11 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { CheckCircleOutlineOutlined, LocalAtmOutlined, LocalShippingOutlined } from '@mui/icons-material';
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardHeader, Chip, Divider, FormGroup, Grid, List, ListItem, Switch, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PurchaseOrder from '../../components/supplier/purchase-order';
 import FormComponent from '../../components/form-component/form-component';
+import axios from 'axios';
+import supplier from './supplier';
 
 type TierItemProps = {
   id: number;
@@ -20,17 +22,15 @@ type TierItemProps = {
 };
 
 let request = {
-    _id: 232323314355,
-    item: {
-        _id: 33423423423,
-        itemName: 'Nike Airmax Shoes',
-
-    },
-    requiredDate: '2022/10/22',
-    requiredQuantity: 20,
-    suppliableQuantity: 10,
-    
-}
+  _id: 232323314355,
+  item: {
+    _id: 33423423423,
+    itemName: 'Nike Airmax Shoes',
+  },
+  requiredDate: '2022/10/22',
+  requiredQuantity: 20,
+  suppliableQuantity: 10,
+};
 
 function TierItem({ id, name, price, description, handleSelect, selected, tierIcon }: TierItemProps) {
   return (
@@ -68,79 +68,171 @@ function TierItem({ id, name, price, description, handleSelect, selected, tierIc
   );
 }
 
-const OrderItem = ({ item }) => {
+const OrderItem = ({ request, setSelectedStep }) => {
+  const [supplier, setSupplier] = useState<any[]>([]);
+  const [supplierIndex, setSupplierIndex] = useState(-1);
+  const [suppliableQuantity, setSuppliableQuantity] = useState(0);
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    const supplier_id = JSON.parse(localStorage.getItem('userData') || '')?.user_id;
+    // console.log(
+    //   request?.suppliers.filter((supplier, index) => {
+    //     if (supplier._id === supplier_id) {
+    //       setSupplierIndex(index);
+    //       return supplier;
+    //     }
+    //   })
+    // );
+    // console.log(request);
+    request &&
+      setSupplier(
+        request?.suppliers.filter((supplier, index) => {
+          if (supplier._id === supplier_id) {
+            setSupplierIndex(index);
+            return supplier;
+          }
+        })
+      );
+    //request && acceptRequest();
+  }, [request]);
+
+  const acceptRequest = (suppliableQuantity, price) => {
+    if (supplier[0]) {
+      supplier[0].status = 2;
+      supplier[0].suppliableQuantity = suppliableQuantity;
+      supplier[0].price = price;
+      const newRequest = request;
+      newRequest.suppliers[supplierIndex] = supplier[0];
+      console.log(newRequest);
+      console.log('Reached');
+
+      axios.post('http://localhost:5000/api/wh-prcurmnt-sup/update', newRequest).then((res) => {
+        console.log('Updated');
+      });
+    }
+  };
+
+  const [selected, setSelected] = useState(0);
+
+  const handleSelected = (index: number) => {
+    setSelected(index);
+    // console.log('selected ' + index);
+  };
+
+  const handleSubmit = (event) => {
+    console.log(price);
+    console.log(suppliableQuantity);
+    acceptRequest(suppliableQuantity, price);
+    setSelectedStep(1);
+  };
+
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100px', height: '100px', backgroundColor: '#F7F7F7', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #EBEBEB', borderRadius: '16px' }} component={'img'} src={'../../../assets/imgs/nike.png'} />
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', marginLeft: '20px' }}>
-        <Typography sx={{ fontWeight: 500, fontSize: 18, color: '#575757' }} component="div">
-          Nike Air Max Shoes
-        </Typography>
-        <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
-          White | Nike
-        </Typography>
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'flex-end', marginLeft: 'auto', marginRight: '20px' }}>
-        {/* <Switch /> */}
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757' }} component="div">
-            Required Quantity:
+    <>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ width: '100px', height: '100px', backgroundColor: '#F7F7F7', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #EBEBEB', borderRadius: '16px' }} component={'img'} src={'../../../assets/imgs/nike.png'} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', marginLeft: '20px' }}>
+          <Typography sx={{ fontWeight: 500, fontSize: 18, color: '#575757' }} component="div">
+            {request?.item?.item_name}
           </Typography>
-          <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757', alignSelf: 'flex-end' }} component="div">
-            25
+          <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
+            {request?.item?.brand_name}
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757', alignSelf: 'flex-end' }} component="div">
-            Suppliable Quantity:
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'flex-end', marginLeft: 'auto', marginRight: '20px' }}>
+          {/* <Switch /> */}
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757' }} component="div">
+              Required Quantity:
+            </Typography>
+            <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757', alignSelf: 'flex-end' }} component="div">
+              {request?.requiredQuantity}
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757', alignSelf: 'flex-end' }} component="div">
+              Suppliable Quantity:
+            </Typography>
+            <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'flex-end', marginLeft: 'auto' }}>
+              <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
+                Qty:
+              </Typography>
+              {supplier && supplier[0]?.status === 1 ? (
+                <TextField
+                  sx={{ width: '25%' }}
+                  id="outlined-number"
+                  label=""
+                  type="number"
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={suppliableQuantity}
+                  onInput={(event) => setSuppliableQuantity(parseInt((event.target as HTMLInputElement).value))}
+                />
+              ) : (
+                <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
+                  {request?.item?.suppliableQuantity}
+                </Typography>
+              )}
+              <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
+                x
+              </Typography>
+              {supplier && supplier[0]?.status === 1 ? (
+                <TextField
+                  sx={{ width: '25%' }}
+                  id="outlined-number"
+                  label=""
+                  type="number"
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={price}
+                  onInput={(event) => setPrice(parseInt((event.target as HTMLInputElement).value))}
+                />
+              ) : (
+                <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
+                  {request?.item?.price}
+                </Typography>
+              )}
+            </Box>
+          </Box>
+
+          <Typography sx={{ fontWeight: 600, fontSize: 18, color: 'black' }} component="div">
+            Rs. {price * suppliableQuantity}
           </Typography>
-          <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'flex-end', marginLeft: 'auto' }}>
-            <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
-              Qty:
-            </Typography>
-            {item ? (
-              <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
-                {item.quantity}
-              </Typography>
-            ) : (
-              <TextField
-                sx={{ width: '25%' }}
-                id="outlined-number"
-                label=""
-                type="number"
-                size="small"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            )}
-            <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
-              x
-            </Typography>
-            {item ? (
-              <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
-                {item.price}
-              </Typography>
-            ) : (
-              <TextField
-                sx={{ width: '25%' }}
-                id="outlined-number"
-                label=""
-                type="number"
-                size="small"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            )}
+        </Box>
+      </Box>
+      <Box>
+        <Divider sx={{ margin: '25px 0' }} />
+        <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757' }} component="div">
+          Available Delivery Methods:
+        </Typography>
+        <Box sx={{ width: '35%', display: 'flex', gap: '10px', marginTop: 1 }}>
+          <Box sx={{ width: '50%' }}>
+            <TierItem id={2} name={'Delivery'} price={22} description={['This is a description']} handleSelect={handleSelected} selected={selected} tierIcon={<LocalShippingOutlinedIcon sx={{ marginRight: 1 }} />} />
+          </Box>
+          <Box sx={{ width: '50%' }}>
+            <TierItem id={1} name={'Pickup'} price={22} description={['This is a description']} handleSelect={handleSelected} selected={selected} tierIcon={<InventoryIcon sx={{ marginRight: 1 }} />} />
           </Box>
         </Box>
-
-        <Typography sx={{ fontWeight: 600, fontSize: 18, color: 'black' }} component="div">
-          $2500.00
-        </Typography>
       </Box>
-    </Box>
+
+      {supplier && supplier[0]?.status === 1 && (
+        <>
+          <Divider sx={{ margin: '25px 0' }} />
+          <Box>
+            <Button startIcon={<CheckCircleIcon />} size="large" variant="contained" color={'success'} onClick={(e) => handleSubmit(e)}>
+              Accept
+            </Button>
+            <Button startIcon={<CancelIcon />} size="large" variant="outlined" color={'error'}>
+              Reject
+            </Button>
+          </Box>
+        </>
+      )}
+    </>
   );
 };
 
@@ -193,7 +285,7 @@ const OrderDetails = () => {
   );
 };
 
-const CardHeading = ({ orderStatus, orderId, progress }) => {
+const CardHeading = ({ orderStatus, orderId, progress, requiredDate }) => {
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -215,7 +307,7 @@ const CardHeading = ({ orderStatus, orderId, progress }) => {
           |
         </Typography>
         <Typography sx={{ fontWeight: 400, fontSize: 13.5, color: '#BDBDBD' }} component="div">
-          Required Date: <span style={{ color: '#575757' }}>Feb 16, 2022</span>
+          Required Date: <span style={{ color: '#575757' }}>{requiredDate}</span>
         </Typography>
       </Box>
     </>
@@ -223,42 +315,18 @@ const CardHeading = ({ orderStatus, orderId, progress }) => {
 };
 
 const QuotationRequest = ({ setSelectedStep, item }) => {
-  const [selected, setSelected] = useState(0);
-
-  const handleSelected = (index: number) => {
-    setSelected(index);
-    // console.log('selected ' + index);
-  };
   return (
     <Grid container item xs={12} alignItems="center" justifyContent="center">
       <Grid container xs={12} direction="column" rowSpacing={1}>
         <Card sx={{ minWidth: 275, padding: 3 }}>
           <CardContent>
-            <CardHeading orderStatus={1} orderId={12222} progress={1} />
+            <CardHeading orderStatus={1} orderId={item?._id} requiredDate={item?.requiredDate} progress={1} />
             <Divider sx={{ margin: '25px 0' }} />
-            <OrderItem item={item} />
-            <Divider sx={{ margin: '25px 0' }} />
+            <OrderItem request={item} setSelectedStep={setSelectedStep} />
+
             {/* <OrderDetails /> */}
-            <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757' }} component="div">
-              Available Delivery Methods:
-            </Typography>
-            <Box sx={{ width: '35%', display: 'flex', gap: '10px', marginTop: 1 }}>
-              <Box sx={{ width: '50%' }}>
-                <TierItem id={2} name={'Delivery'} price={22} description={['This is a description']} handleSelect={handleSelected} selected={selected} tierIcon={<LocalShippingOutlinedIcon sx={{ marginRight: 1 }} />} />
-              </Box>
-              <Box sx={{ width: '50%' }}>
-                <TierItem id={1} name={'Pickup'} price={22} description={['This is a description']} handleSelect={handleSelected} selected={selected} tierIcon={<InventoryIcon sx={{ marginRight: 1 }} />} />
-              </Box>
-            </Box>
           </CardContent>
-          <CardActions sx={{ display: 'flex', justifyContent: 'flex-end', height: '100%' }}>
-            <Button startIcon={<CheckCircleIcon />} size="large" variant="contained" color={'success'} onClick={() => setSelectedStep(1)}>
-              Accept
-            </Button>
-            <Button startIcon={<CancelIcon />} size="large" variant="outlined" color={'error'}>
-              Reject
-            </Button>
-          </CardActions>
+          <CardActions sx={{ display: 'flex', justifyContent: 'flex-end', height: '100%' }}></CardActions>
         </Card>
       </Grid>
     </Grid>
@@ -277,9 +345,9 @@ const PurchaseOrderCard = ({ setSelectedStep, item, progress }) => {
       <Grid container xs={12} direction="column" rowSpacing={1}>
         <Card sx={{ minWidth: 275, padding: 3 }}>
           <CardContent>
-            <CardHeading orderStatus={2} orderId={122222} progress={progress} />
+            <CardHeading orderStatus={2} orderId={item?._id} progress={progress} requiredDate={item?.requiredDate} />
             <Divider sx={{ margin: '25px 0' }} />
-            <OrderItem item={item} />
+            <OrderItem request={item} setSelectedStep={setSelectedStep} />
             <Divider sx={{ margin: '25px 0' }} />
             {/* <OrderDetails /> */}
             <Box sx={{ width: '100%', display: 'flex' }}>
@@ -317,12 +385,27 @@ const PurchaseOrderCard = ({ setSelectedStep, item, progress }) => {
 
 export default function RequestProg() {
   const [selectedStep, setSelectedStep] = useState(0);
+  const [requestOrder, setRequestOrder] = useState<any>();
+  const [supplier, setSupplier] = useState<any[]>([]);
+
+  const orderId = '63597338562bbde586291095';
+
+  useEffect(() => {
+    const supplier_id = JSON.parse(localStorage.getItem('userData') || '')?.user_id;
+    console.log(supplier_id);
+    axios.get(`http://localhost:5000/api/wh-prcurmnt-sup/findByRequestID/${orderId}`).then((res) => {
+      console.log(res.data);
+      setRequestOrder(res.data);
+      setSupplier(res.data.suppliers.filter((supplier) => supplier._id === supplier_id));
+      console.log(supplier);
+    });
+  }, []);
 
   return (
     <Grid md={12} container alignItems="center" justifyContent="center" sx={{ height: '100vh' }}>
       <Grid md={6}>
-        <PurchaseOrder selectedStep={selectedStep} setSelectedStep={(step) => setSelectedStep(step)} />
-        {selectedStep === 0 ? <QuotationRequest item={null} setSelectedStep={(step) => setSelectedStep(step)} /> : <PurchaseOrderCard item={{ quantity: 20, price: 20 }} setSelectedStep={(step) => setSelectedStep(step)} progress={2} />}
+        <PurchaseOrder selectedStep={supplier ? supplier[0]?.status - 1 : 0} setSelectedStep={(step) => setSelectedStep(step)} />
+        {supplier && supplier[0]?.status === 1 ? <QuotationRequest item={requestOrder} setSelectedStep={(step) => setSelectedStep(step)} /> : <PurchaseOrderCard item={requestOrder} setSelectedStep={(step) => setSelectedStep(step)} progress={2} />}
       </Grid>
     </Grid>
   );

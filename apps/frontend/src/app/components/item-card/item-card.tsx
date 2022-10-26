@@ -85,7 +85,7 @@ export function ItemCard({ goodsRequest }) {
               <Grid item xs={7}>
                 <Typography className="secondaryText">Item</Typography>
                 <Typography sx={{ wordWrap: 'break-word' }} className="primaryText">
-                  {goodsRequest?.item.item_name}
+                  {goodsRequest?.item?.item_name}
                 </Typography>
               </Grid>
               <Grid item xs={5}>

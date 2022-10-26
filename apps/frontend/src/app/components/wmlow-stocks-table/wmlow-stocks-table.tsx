@@ -349,10 +349,12 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
     const userData = localStorage.getItem('userData');
 
     const comp_id = userData !== null ? JSON.parse(userData)?.company_id : null;
+    const comp_name = userData !== null ? JSON.parse(userData)?.company_name : null;
 
     //const comp_id = JSON.parse(localStorage.getItem('userData') || '')?.company_id;
 
     console.log(comp_id);
+    console.log(comp_name);
     const request = {
       item: {
         _id: '34343fdfefe2343',
@@ -368,6 +370,7 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
       status: 0,
       sentRequest: true,
       company_id: comp_id,
+      company_name: comp_name,
       suppliers: [
         {
           _id: '3434efee34234',

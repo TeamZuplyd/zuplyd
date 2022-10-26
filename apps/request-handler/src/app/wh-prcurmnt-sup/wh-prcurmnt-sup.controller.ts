@@ -22,14 +22,27 @@ export class WhPrcurmntSupController {
   }
 
   @Get('findAllBySupplierID/:id')
-  findAllBySupplierID(@Param('id') id: string) {
-    return this.WhPrcurmntSupReqService.findAllBySupplierID(id);
+  findAllBySupplierIDGroup(@Param('id') id: string) {
+    // const goodsRequests = this.WhPrcurmntSupReqService.findAllDev();
+
+    // goodsRequests.filter((goodsRequest) => {})
+
+    return this.WhPrcurmntSupReqService.findBySupplierIDGroupedToCompany(id);
   }
 
-  @Get('findAllByCompanyID/:id')
-  findAllByCompanyID(@Param('id') id: string) {
-    return this.WhPrcurmntSupReqService.findAllBySupplierID(id);
+  @Get('findAllBySupplierIDAndCompany/:compId/:supId')
+  findAllBySupplierIDAndCompany(@Param('compId') compId: string, @Param('supId') supId: string) {
+    // const goodsRequests = this.WhPrcurmntSupReqService.findAllDev();
+
+    // goodsRequests.filter((goodsRequest) => {})
+
+    return this.WhPrcurmntSupReqService.findAllBySupplierIDAndCompany(supId, compId);
   }
+
+  // @Get('findAllByCompanyID/:id')
+  // findAllByCompanyID(@Param('id') id: string) {
+  //   return this.WhPrcurmntSupReqService.findAllBySupplierID(id);
+  // }
 
   @Get('findAllByAny')
   findAllByAny(@Body() searchParamObj: any) {

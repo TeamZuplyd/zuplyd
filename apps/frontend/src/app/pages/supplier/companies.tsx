@@ -3,6 +3,7 @@ import { DataGrid, GridRowsProp, GridColDef, GridToolbar } from '@mui/x-data-gri
 import Header from '../../components/header/header';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Grid, Typography } from '@mui/material';
+import axios from 'axios';
 
 function getQuotation(params) {
   console.log(params);
@@ -43,9 +44,27 @@ const columns: GridColDef[] = [
 ];
 
 export function CompaniesTable() {
+  const [rowsData, setRows] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    const supplier_id = JSON.parse(localStorage.getItem('userData') || '')?.user_id;
+    var dataRows: any[] = [];
+    axios.get(`http://localhost:5000/api/wh-prcurmnt-sup/findAllBySupplierID/${supplier_id}`).then((res) => {
+      res.data.map((row) =>
+        dataRows.push({
+          id: 1,
+          col1: row?._id,
+          col2: row?.count,
+        })
+      );
+      console.log(dataRows);
+      setRows(dataRows);
+    });
+  }, []);
+
   return (
     <div style={{ height: 300, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} onRowClick={(rowData) => console.log(rowData)} components={{ Toolbar: GridToolbar }} />
+      <DataGrid rows={rowsData} columns={columns} onRowClick={(rowData) => console.log(rowData)} components={{ Toolbar: GridToolbar }} />
     </div>
   );
 }

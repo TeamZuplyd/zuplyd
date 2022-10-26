@@ -51,6 +51,9 @@ export class WhPrcurmntSupReq {
   @Prop({ required: true })
   company_id: string;
 
+  @Prop({ required: true })
+  company_name: string;
+
   @Prop()
   proc_id: string;
 

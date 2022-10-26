@@ -12,5 +12,6 @@ export class WhPrcurmntSupReqDto {
   readonly status: number;
   readonly warehouse_id: string;
   readonly company_id: number;
+  readonly company_name: string;
   readonly suppliers: [];
 }

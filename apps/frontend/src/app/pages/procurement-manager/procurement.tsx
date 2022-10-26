@@ -287,6 +287,16 @@ const style = {
 
 function BasicModal({ goodRequest, open, handleClose }) {
   console.log(goodRequest);
+
+  const placeOrder = (supplier, index) => {
+    console.log(supplier);
+    console.log(index);
+    const updatedGoodsRequest = goodRequest;
+    updatedGoodsRequest.suppliers[index] = { ...supplier, status: 3 };
+    console.log(updatedGoodsRequest);
+    axios.post(`http://localhost:5000/api/wh-prcurmnt-sup/update`, updatedGoodsRequest).then((res) => console.log('updated'));
+  };
+
   return (
     <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={style}>
@@ -346,36 +356,31 @@ function BasicModal({ goodRequest, open, handleClose }) {
             </TableHead>
             <TableBody>
               {goodRequest?.suppliers &&
-                goodRequest?.suppliers.map((supplier) => (
+                goodRequest?.suppliers.map((supplier, index) => (
                   <TableRow>
                     <TableCell component="th">{supplier._id}</TableCell>
                     <TableCell component="th">{goodRequest.requiredDate}</TableCell>
-                    {supplier?.status === 2 ? (
+                    {supplier?.status === 2 || supplier?.status === 3 ? (
                       <>
                         <TableCell component="th">
                           {supplier.suppliableQuantity}/{goodRequest.requiredQuantity}
                         </TableCell>
                         <TableCell component="th">Rs. {supplier.price}</TableCell>
                         <TableCell component="th">Rs. {supplier.suppliableQuantity * supplier.price}</TableCell>
-                        {supplier?.status === 3 ? (
-                          <>
-                            <TableCell component="th">
-                              <Button variant="contained" color={'primary'}>
-                                Place Order
-                              </Button>
-                            </TableCell>
-                            <TableCell component="th">
-                              <Button variant="contained" color={'primary'}>
-                                Accept
-                              </Button>
-                            </TableCell>
-                          </>
-                        ) : (
+                        {supplier?.status === 2 ? (
                           <TableCell component="th">
-                            <Button variant="contained" color={'primary'}>
-                              Accept
+                            <Button onClick={() => placeOrder(supplier, index)} variant="contained" color={'primary'}>
+                              Place Order
                             </Button>
                           </TableCell>
+                        ) : (
+                          supplier?.status === 3 && (
+                            <TableCell component="th">
+                              <Button variant="contained" color={'success'}>
+                                Completed
+                              </Button>
+                            </TableCell>
+                          )
                         )}
                       </>
                     ) : (

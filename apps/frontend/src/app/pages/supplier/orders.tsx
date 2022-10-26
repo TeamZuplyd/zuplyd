@@ -1,6 +1,7 @@
 import { Box, Chip, Grid } from '@mui/material';
 import { DataGrid, GridColDef, GridRowsProp, GridToolbar } from '@mui/x-data-grid';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/header/header';
 import OrderTable from '../../components/supplier/order-table';
 
@@ -22,10 +23,9 @@ const rows: GridRowsProp = [
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'Order ID', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
-  { field: 'col1', headerName: 'Customer', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
-  { field: 'col2', headerName: 'Order', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
-  { field: 'col3', headerName: 'Delivery Date', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
-  { field: 'col4', headerName: 'Delivery Pricing ($)', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
+  { field: 'col1', headerName: 'Item Name', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
+  { field: 'col2', headerName: 'Required Quantity', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
+  { field: 'col3', headerName: 'Required Date', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
   {
     field: 'col5',
     headerName: 'Delivery Status',
@@ -37,6 +37,27 @@ const columns: GridColDef[] = [
 ];
 
 function orders() {
+  const [rowData, setRowData] = useState<any[]>([]);
+
+  useEffect(() => {
+    var rows: any[] = [];
+    const comp_id = '6358d81729f842203326dd5f';
+    const sup_id = JSON.parse(localStorage.getItem('userData') || '')?.user_id;
+    axios.get(`http://localhost:5000/api/wh-prcurmnt-sup/findAllBySupplierIDAndCompany/${comp_id}/${sup_id}`).then((res) => {
+      console.log(res.data);
+      res.data.map((row) => {
+        rows.push({
+          id: row?._id,
+          col1: row?.item?.item_name,
+          col2: row?.requiredQuantity,
+          col3: row?.requiredDate,
+          col5: row?._id,
+        });
+      });
+      setRowData(rows);
+    });
+  }, []);
+
   return (
     <>
       <Header title={'Orders'} />
@@ -62,7 +83,7 @@ function orders() {
                 },
               }}
             >
-              <DataGrid rows={rows} columns={columns} onRowClick={(rowData) => console.log(rowData)} components={{ Toolbar: GridToolbar }} />
+              <DataGrid rows={rowData} columns={columns} onRowClick={(rowData) => console.log(rowData?.row?.id)} components={{ Toolbar: GridToolbar }} />
             </Box>
           </div>
         </Grid>
