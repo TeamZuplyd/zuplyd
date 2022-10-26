@@ -86,8 +86,8 @@ function addItem() {
       for (let j = 0; j < supNames.length; j++) {
         if (personName[i] == supNames[j].company_name) {
           allSupNames.push({
-            id: supNames[j]._id,
-            sup_name: supNames[j].company_name,
+            _id: supNames[j]._id,
+            suppierName: supNames[j].company_name,
           });
         }
       }
