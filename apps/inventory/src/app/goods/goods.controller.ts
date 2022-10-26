@@ -5,7 +5,7 @@ import { GoodsService } from './goods.service';
 export class GoodsController {
   constructor(private readonly goodsService: GoodsService) {}
 
-  @Get('addItem')
+  @Post('addItem')
   addItem(@Body() addItemDto: any) {
     /*
     addItemDto structure that should be sent form the frontend
@@ -125,7 +125,7 @@ export class GoodsController {
     // return this.goodsService.itemRelease(item, releaseQty, releaseGoodsDto.itemType);
   }
 
-  @Get('getItemStock')
+  @Post('getItemStock')
   async getItemStock(@Body() itemTypeDto: any) {
     /*
     releaseGoodsDto = {
@@ -185,5 +185,11 @@ export class GoodsController {
         ]
       }
     */
+  }
+
+  @Post('getAllItems/:user_id')
+  async getAllItems(@Body() itemTypeDto: any, @Param('user_id') user_id: string) {
+    const itemsArray = await this.goodsService.getItemsOfAnOwner(itemTypeDto.itemType, user_id);
+    return { itemsArray: itemsArray };
   }
 }
