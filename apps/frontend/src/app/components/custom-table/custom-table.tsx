@@ -1,9 +1,10 @@
 /* eslint-disable-next-line */
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Button, Box, Table, TableBody, TableCell, TableContainer, TableFooter, TablePagination, TableRow, Paper, IconButton, TableHead } from '@mui/material';
+import { Button, Box, Table, TableBody, TableCell, TextField, TableContainer, TableFooter, TablePagination, TableRow, Paper, IconButton, TableHead } from '@mui/material';
 import { FirstPage as FirstPageIcon, KeyboardArrowLeft, KeyboardArrowRight, LastPage as LastPageIcon } from '@mui/icons-material';
 import ItemSideOver from '../item-side-over/item-side-over';
+import { useForm, FormProvider } from 'react-hook-form';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -70,6 +71,7 @@ export function CustomTable({ headerNames, rows }: CustomTableProps) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   //side over
   const [rightSideNav, setrightSideNav] = React.useState(false);
 
@@ -80,8 +82,13 @@ export function CustomTable({ headerNames, rows }: CustomTableProps) {
 
     setrightSideNav(!rightSideNav);
   };
+
   //setting the state to hold the clicked row
   const [selectedRow, setSelectedRow] = React.useState({});
+
+  React.useEffect(() => {
+    console.log(rows);
+  }, []);
 
   return (
     <>
@@ -91,20 +98,19 @@ export function CustomTable({ headerNames, rows }: CustomTableProps) {
           <TableHead>
             <TableRow>
               {headerNames.map((headerName) => (
-                <TableCell key={headerName} align={headerName === 'Minimum Limit' || headerName === 'Maximum Limit' || headerName === 'Available Units' ? 'right' : 'left'}>
-                  {headerName}
-                </TableCell>
+                <TableCell key={headerName}>{headerName}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row: any, j: number) => (
               <TableRow key={j} onClick={() => setSelectedRow(row)}>
-                <TableCell scope="row">{row.name}</TableCell>
-                <TableCell align="right">{row.min_limit}</TableCell>
-                <TableCell align="right">{row.max_limit}</TableCell>
-                <TableCell>{row.brand}</TableCell>
-                <TableCell align="right">{row.units}</TableCell>
+                <TableCell scope="row">{row.item_name}</TableCell>           
+
+                <TableCell>{row.min ? row.min : '-'}</TableCell>
+                <TableCell>{row.max ? row.max : '-'}</TableCell>
+                <TableCell>{row.brand_name}</TableCell>
+                <TableCell>{row.totalStock}</TableCell>
                 <TableCell>
                   <Button variant="contained" onClick={toggleDrawer(true)}>
                     More Info
