@@ -80,6 +80,19 @@ function addItem() {
     const company_ID = 'acdf214124';
     const company_name = 'GoGrocer';
 
+    let allSupNames: any[] = [];
+
+    for (let i = 0; i < personName.length; i++) {
+      for (let j = 0; j < supNames.length; j++) {
+        if (personName[i] == supNames[j].company_name) {
+          allSupNames.push({
+            id: supNames[j]._id,
+            sup_name: supNames[j].company_name,
+          });
+        }
+      }
+    }
+
     const body: any = {
       item_name: itemNameTextFieldValue,
       category_name: categoryTextFieldValue,
@@ -93,6 +106,7 @@ function addItem() {
       company_id: company_ID,
       company_name: company_name,
       batch_no: '',
+      suppliers: allSupNames,
       attributes_array: allAttributes,
     };
 
@@ -128,23 +142,27 @@ function addItem() {
   }, []);
 
   const [personName, setPersonName] = React.useState<string[]>([]);
+  const [suplierDetails, setSuplierDetails] = React.useState<any[]>([]);
   const theme = useTheme();
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    // const name = event.target.value[1];
-    const ID = event.target.value[0];
+  // const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+  //   const data = {
+  //     id: event.target.value[0][0],
+  //     sup_name: event.target.value[0][1],
+  //   };
 
-    // alert(name);
-    console.log(event.target.value);
-    console.log(event.target.value[0]);
-    console.log(event.target.value[0][0]);
+  //   setSuplierDetails([...suplierDetails, data]);
+
+  //   const fullNames = event.target.value[0][1];
+
+  //   setPersonName([...personName, fullNames]);
+  // };
+
+  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
     const {
       target: { value },
     } = event;
-    // setPersonName(
-    //   // On autofill we get a stringified value.
-    //   typeof name === 'string' ? name.split(',') : name
-    // );
+    setPersonName(typeof value === 'string' ? value.split(',') : value);
   };
 
   const names = ['Oliver Hansen', 'Van Henry', 'April Tucker', 'Ralph Hubbard', 'Omar Alexander', 'Carlos Abbott', 'Miriam Wagner', 'Bradley Wilkerson', 'Virginia Andrews', 'Kelly Snyder'];
@@ -255,7 +273,7 @@ function addItem() {
                   </Grid>
                 </Grid>
 
-                <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
+                {/* <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
                   <Select
                     multiple
                     displayEmpty
@@ -274,6 +292,17 @@ function addItem() {
                   >
                     {supNames.map((name) => (
                       <MenuItem key={name._id} value={[name._id, name.company_name]} style={getStyles(name, personName, theme)}>
+                        {name.company_name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl> */}
+
+                <FormControl sx={{ m: 1, width: 300 }}>
+                  <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+                  <Select labelId="demo-multiple-name-label" id="demo-multiple-name" multiple value={personName} onChange={handleChange} input={<OutlinedInput label="Name" />} MenuProps={MenuProps}>
+                    {supNames.map((name) => (
+                      <MenuItem key={name._id} value={name.company_name} style={getStyles(name.company_name, personName, theme)}>
                         {name.company_name}
                       </MenuItem>
                     ))}
