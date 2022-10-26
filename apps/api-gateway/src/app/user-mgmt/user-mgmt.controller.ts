@@ -31,12 +31,12 @@ export class UserMgmtController {
   }
 
   //@UseGuards(AuthGuard('jwt'))
-  @Get('findAllByComp')
+  @Post('findAllByComp')
   private async findAllByComp(@Body() searchQuery: UserByComp): Promise<any> {
     return this.svc.findAllByComp(searchQuery);
   }
 
-  @Get('findAllByCompRole')
+  @Post('findAllByCompRole')
   private async findAllByCompRole(@Body() searchQuery: UserByCompRole): Promise<any> {
     return this.svc.findAllByCompRole(searchQuery);
   }
@@ -94,7 +94,7 @@ export class UserMgmtController {
     );
   }
 
-  @Get('update')
+  @Post('update')
   private async update(@Body() userData: User): Promise<any> {
     return this.svc.update(userData).pipe(
       map((res) => {

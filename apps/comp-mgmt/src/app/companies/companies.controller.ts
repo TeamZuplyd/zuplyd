@@ -56,6 +56,10 @@ export class CompaniesController {
     return await axios.post('http://localhost:7000/api/user-mgmt/register', body);
   }
 
+  async updateManager(body): Promise<any> {
+    return await axios.post('http://localhost:7000/api/user-mgmt/update', body);
+  }
+
   async createWarehouse(body): Promise<any> {
     return await axios.post('http://localhost:1234/api/warehouses/createWarehouse', body);
   }
@@ -119,6 +123,14 @@ export class CompaniesController {
 
         if (warehouseBody.manager_id != '') {
           let res2 = await this.createWarehouse(warehouseBody);
+
+          let updateManagerData = {
+            _id: warehouseBody.manager_id,
+            managing_id: res2.data.newWarehouse._id,
+          };
+
+          let res3 = await this.updateManager(updateManagerData);
+
           warehouseBody.manager_id = '';
         }
       }
@@ -133,6 +145,13 @@ export class CompaniesController {
 
         if (shopBody.manager_id != '') {
           let res2 = await this.createShop(shopBody);
+          let updateManagerData = {
+            _id: shopBody.manager_id,
+            managing_id: res2.data.newShop._id,
+          };
+
+          let res3 = await this.updateManager(updateManagerData);
+
           shopBody.manager_id = '';
         }
       }

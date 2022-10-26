@@ -16,6 +16,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead } from '@mui/material';
+import axios from 'axios';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -66,7 +67,7 @@ export interface WMOrderTableProps {
   orders: any[];
 }
 
-export function WMOrderTable({orders}: WMOrderTableProps) {
+export function WMOrderTable({ orders }: WMOrderTableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -80,6 +81,62 @@ export function WMOrderTable({orders}: WMOrderTableProps) {
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const confirmDelivery = (item: any) => {
+    console.log('itemmmmmm');
+    console.log(item);
+
+    const body = {
+      _id: item._id,
+      brand: item.brand,
+      item_code: item.item_code,
+      name: item.name,
+      quantity: item.quantity,
+      request: item.request,
+      requested_by: item.requested_by,
+      requested_date: item.requested_date,
+      required_by: item.required_by,
+      sentRequest: item.sentRequest,
+      status: 'Complete',
+      warehouse_id: item.warehouse_id,
+      company_id: item.company_id,
+      __v: item.__v,
+    };
+
+    // axios.post('http://localhost:5000/api/shopWarehouseRequest/update', body).then((res) => {
+    //   window.location.reload();
+    // });
+
+    axios.get('http://localhost:7000/api/procurement/item/findByName/' + item.company_id + '/' + item.name).then((res) => {
+      console.log('res.dataaaaa');
+      console.log(res.data);
+
+      const payload = {
+        itemType: {
+          item_name: res.data.item_name,
+          company_id: item.company_id,
+          company_name: res.data.company_name,
+          brand_name: res.data.brand_name,
+          category_name: res.data.category_name,
+          unitOfMeasure: res.data.unitOfMeasure,
+          output_rule: res.data.output_rule,
+          output_rule_unit: res.data.output_rule_unit,
+          output_rule_type: res.data.output_rule_type,
+          attributes_array: res.data.attributes_array,
+          min_release_quantity: res.data.min_release_quantity,
+        },
+        transferQty: item.quantity,
+        transferToEntity: item.required_by,
+        transferFromEntity: item._id,
+        // transferFromEntity: 'qwerty',
+      };
+      console.log(payload);
+
+      // axios.post('http://localhost:4444/api/goods/transferGoods', payload).then((res) => {
+      //   window.location.reload();
+      // });
+    });
   };
 
   return (
@@ -96,6 +153,7 @@ export function WMOrderTable({orders}: WMOrderTableProps) {
             <TableCell component="th">Requested Date</TableCell>
             <TableCell component="th">Requested Warehouse</TableCell>
             <TableCell component="th">Status</TableCell>
+            <TableCell component="th">Confirmation</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -114,6 +172,9 @@ export function WMOrderTable({orders}: WMOrderTableProps) {
                 <TableCell style={{}}>{new Date().toISOString().split('T')[0]}</TableCell>
                 <TableCell style={{}}>{order.warehouse_id}</TableCell>
                 <TableCell style={{}}>{order.status}</TableCell>
+                <Button variant="contained" sx={{ mt: 1 }} onClick={() => confirmDelivery(order)}>
+                  confirm
+                </Button>
               </TableRow>
             ))}
           {emptyRows > 0 && (
