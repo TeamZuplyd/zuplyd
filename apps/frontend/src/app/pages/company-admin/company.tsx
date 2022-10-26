@@ -66,7 +66,7 @@ function company() {
     console.log('serching', email);
 
     let compData = await axios
-      .get('http://localhost:3333/api/companies/findByMail/' + email, { responseType: 'json' })
+      .get('http://localhost:2525/api/companies/findByMail/' + email, { responseType: 'json' })
       .then((result) => {
         console.log(result.data);
         setCompanyData(result.data);

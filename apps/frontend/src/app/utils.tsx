@@ -20,7 +20,7 @@ export async function setLoggedInUserData(userEmail: any) {
       loggedInUser.company_id = userData.company_id;
       loggedInUser.company_name = userData.company_name;
       loggedInUser.managing_id = userData.managing_id;
-      localStorage.setItem('userData', JSON.stringify(loggedInUser)!);
+      localStorage.setItem('userData', JSON.stringify(loggedInUser));
     })
     .catch((err) => {});
 }
