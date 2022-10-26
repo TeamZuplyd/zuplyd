@@ -125,7 +125,7 @@ export class GoodsController {
     // return this.goodsService.itemRelease(item, releaseQty, releaseGoodsDto.itemType);
   }
 
-  @Get('getItemStock')
+  @Post('getItemStock')
   async getItemStock(@Body() itemTypeDto: any) {
     /*
     releaseGoodsDto = {

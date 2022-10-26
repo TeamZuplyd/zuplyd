@@ -37,10 +37,8 @@ function a11yProps(index: number) {
 }
 
 const table = () => {
-  // const [itemInfo, setItemInfo] = useState<any>([]);
   const [value, setValue] = React.useState(0);
   const [orderData, setOrderData] = React.useState<any>([]);
-  // const [open, setOpen] = useState(false);
   const [selected, setSelected] = React.useState(-1); //selected Warehouse
   const [selectedItem, setSelectedItem] = React.useState(''); //selected Item
   const [sentRequest, setSentRequest] = React.useState<any>([]);
@@ -70,64 +68,64 @@ const table = () => {
     //SentRequest -> backend object
   };
 
-  // const getRequestInfo = () => {
-  //   axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllDev').then((res) => {
-  //     console.log(res.data);
-
-  //     setOrderData(res.data);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   getRequestInfo();
-  // }, []);
-
-  // const getItemInfo = () => {
-  //   axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
-  //     setItemInfo(res.data.items);
-  //     console.log(res.data.items);
-  //   });
-  // };
-
-  // React.useEffect(() => {
-  //   getItemInfo();
-  // }, []);
-
   const { id } = useParams(); //holds the category name
   const [itemStructure, setItemStructure] = React.useState<any>(null);
-  // const [items, setItems] = React.useState<any>(null);
-  //get data from the backend relating to the category name
-  //get item structure from procurement
+  const [goods, setGoods] = React.useState<any>([]);
 
   const companyID = 'acdf214124 ';
+  const managing_id = 'qwerty'; //owner_id
+  const body = { itemType: {}, ownerId: managing_id };
+
+  //get item structure from procurement
   const getItemStructure = () => {
-    axios.get('http://localhost:7000/api/procurement/item/findAll/'+ companyID).then((res) => {
+    axios.get('http://localhost:7000/api/procurement/item/findAll/' + companyID).then((res) => {
       setItemStructure(res.data.items);
-      console.log(res.data.items);
-      console.log(itemStructure);
+      // console.log(res.data.items[0]);
+      // console.log(itemStructure);
     });
   };
 
-  // const getItems = () => {
-  //   axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllDev').then((res) => {
-  //     setItems(res.data);
-  //     console.log(res.data);
-  //     console.log(items);
-  //   });
+  const getItems = () => {
+    itemStructure !== null &&
+      itemStructure
+        // .filter((item: any) => id !== undefined && item.category_name !== undefined && id.toLowerCase() === item.category_name.toLowerCase())
+        .map((item: any) => {
+          body.itemType = item;
+          console.log(body);
+          axios.post('http://localhost:4444/api/goods/getAllItems/' + managing_id, body).then((res) => {
+            // setGoods([...data, res.data.itemsAray]);
+            console.log('data => ', res.data);
+            // console.log(goods);
+          });
+          axios.post('http://localhost:4444/api/goods/getItemStock/', body).then((res) => {
+            //assign total stock value to the goods array
+            //gets the total of all batches. compare with the minimum stock value
+            //filter those which are below the minimum stock value
+          });
+        });
+  };
+
+  //get min max limits from the shop
+
+  //filter the low stocks
 
   React.useEffect(() => {
     getItemStructure();
   }, []);
 
   React.useEffect(() => {
-    console.log(itemStructure);
+    // console.log(itemStructure);
   }, [itemStructure]);
 
-  //get the item details from inventory
+  React.useEffect(() => {
+    getItems();
+    console.log('items get');
+  }, [itemStructure]);
 
-  // if (itemStructure === null) {
-  //   return <Skeleton />
-  // }
+  if (itemStructure === null) {
+    return <Skeleton />;
+  }
+
   const data = items.filter((item) => id !== undefined && item.category.toLowerCase() === id.toLowerCase()); //mock data
   return (
     <>
