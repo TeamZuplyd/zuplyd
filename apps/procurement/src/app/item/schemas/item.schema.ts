@@ -39,7 +39,7 @@ export class Item {
   company_name: string;
 
   @Prop()
-  suppliers: string[];
+  suppliers: any[];
 
   @Prop()
   batch_no: string;
