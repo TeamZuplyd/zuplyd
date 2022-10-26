@@ -28,7 +28,7 @@ const selectDistStruct = async (selectedStruct: any) => {
     postData.comp_data = { distribution_struct: selectedStruct };
     postData.comp_id = getCompId();
 
-    const response = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+    const response = await axios.post(`http://localhost:2525/api/companies/register`, postData);
     return response;
   }
 };

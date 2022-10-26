@@ -30,9 +30,7 @@ const handleData = async ({ inputValues, numbers, userEmail }: any): Promise<any
   postData.comp_data = inputValues;
   postData.comp_id = '';
 
-  console.log(postData);
-
-  const response1 = await axios.post(`http://localhost:3333/api/companies/register`, postData);
+  const response1 = await axios.post(`http://localhost:2525/api/companies/register`, postData);
 
   // Registering user
   const userBody = {
