@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent } from '@mui/material';
-
+import axios from 'axios';
 import CompanyAdminCard from '../../components/company-admin-card/company-admin-card';
 import Header from '../../components/header/header';
+import { CompanyHierarchy } from '../../components/company-hierarchy/company-hierarchy';
 
 import { warehouses } from '../../../data/warehouse';
 import { shops } from '../../../data/shop';
@@ -13,6 +14,27 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
+
+let warehouse = [
+  {
+    _id: '6358d852a885532728a30598',
+    company_id: '6358d81729f842203326dd5f',
+    location: '',
+    manager_id: '6358d8521c0e2278b80b8aeb',
+    contact_no: [],
+    address: '',
+    __v: 0,
+  },
+  {
+    _id: '6358d853a885532728a3059a',
+    company_id: '6358d81729f842203326dd5f',
+    location: '',
+    manager_id: '6358d8531c0e2278b80b8aef',
+    contact_no: [],
+    address: '',
+    __v: 0,
+  },
+];
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -36,6 +58,41 @@ function a11yProps(index: number) {
 }
 
 export default function SupplyChain() {
+  let userData = localStorage.getItem('userData') || null;
+  const company_id = userData ? JSON.parse(userData).company_id : '';
+  // const company_id = '6305038955e694c59482fd9a';
+
+  const [fetching, setFetching] = React.useState(true);
+  const [warehouseData, setWarehouseData] = React.useState([]);
+  const [shopData, setShopData] = React.useState([]);
+  // const [warehouseData, setWarehouseData] = React.useState(null);
+
+  async function getData(): Promise<void> {
+    //fetching warehouse data
+    let whData = await axios.get('http://localhost:1234/api/warehouses/findAll').then((result) => {
+      setWarehouseData(result.data);
+    });
+    // let whData = await axios.get('http://localhost:1234/api/warehouses/findByCompany/' + company_id).then((result) => {
+    //   setWarehouseData(result.data);
+    // });
+    // let whData = await axios
+    //   .post('http://localhost:7000/api/user-mgmt/findAllByCompRole', {
+    //     company_id: company_id,
+    //     role: 'wh_mngr',
+    //   })
+    //   .then((result) => {
+    //     setWarehouseData(result.data);
+    //   });
+
+    //fetching shop data
+    // let shData = await axios.get('http://localhost:4321/api/shops/findByCompany/' + company_id, { responseType: 'json' }).then((result) => {
+    //   setShopData(result.data['shop']);
+    // });
+    setFetching(false);
+
+    // console.log(shopData);
+  }
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -45,9 +102,9 @@ export default function SupplyChain() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // React.useEffect(() => {
-  //   getData(userEmail);
-  // }, []);
+  React.useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <>
@@ -65,11 +122,25 @@ export default function SupplyChain() {
         <TabPanel value={value} index={0}>
           <SearchButton handleOpen={handleOpen} />
           <Grid container rowGap={2} columnGap={2}>
-            {warehouses.map((warehouse) => (
+            {/* {warehouseData &&
+              warehouseData.map((warehouse) => (
+                <Grid item>
+                  <CompanyAdminCard
+                    name={warehouse['manager_id']}
+                    telephoneNumber="322424"
+                    //{warehouse['Manager Info']['Contact No']}
+                    warehouse={warehouse['_id']}
+                    // {warehouse['Warehouse Info']['Warehouse ID']}
+                    data={warehouse}
+                    title="Warehouse"
+                  />
+                </Grid>
+              ))} */}
+            {/* {warehouses.map((warehouse) => (
               <Grid item>
                 <CompanyAdminCard name={warehouse['Manager Info']['Name']} telephoneNumber={warehouse['Manager Info']['Contact No']} warehouse={warehouse['Warehouse Info']['Warehouse ID']} data={warehouse} title="Warehouse" />
               </Grid>
-            ))}
+            ))} */}
           </Grid>
           <ContainerModal open={open} handleClose={handleClose} title="Warehouse" />
         </TabPanel>
@@ -102,7 +173,7 @@ export default function SupplyChain() {
 
         {/* Hierarchy tab */}
         <TabPanel value={value} index={3}>
-          Hierarchy
+          <CompanyHierarchy warehouseData={warehouseData} />
         </TabPanel>
       </Box>
     </>

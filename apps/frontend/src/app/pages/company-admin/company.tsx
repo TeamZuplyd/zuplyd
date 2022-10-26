@@ -63,8 +63,6 @@ function company() {
   };
 
   async function getData(email: any): Promise<void> {
-    console.log('serching', email);
-
     let compData = await axios
       .get('http://localhost:2525/api/companies/findByMail/' + email, { responseType: 'json' })
       .then((result) => {
@@ -72,14 +70,12 @@ function company() {
         setCompanyData(result.data);
       })
       .catch((err) => {});
-    // console.log(compData.data);
     setFetching(false);
-    // return compData.data;
   }
 
   // Retrieving email
   const auth = useAuth0();
-  const userEmail = auth.user?.email || '2019cs041@stu.ucsc.cmb.ac.lk';
+  const userEmail = auth.user?.email || '2019cs041@stu.ucsc.cmb.ac.lk'; // TODO : check this
 
   React.useEffect(() => {
     getData(userEmail);
