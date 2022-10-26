@@ -22,29 +22,122 @@ const style = {
 };
 
 export interface CompanyHierarchyProps {
+  shopData: any;
   warehouseData: any;
 }
 
-export function CompanyHierarchy({ warehouseData }: CompanyHierarchyProps) {
+export function CompanyHierarchy({ shopData, warehouseData }: CompanyHierarchyProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [selectedWarehouse, setSelectedWarehouse] = React.useState(null);
 
   return (
     <>
       <Grid sx={{ maxHeight: '800px', overflow: 'scroll' }} container rowGap={2} columnGap={2}>
         {warehouseData &&
           warehouseData.warehouses.map((warehouse) => {
-            console.log(warehouse);
-
-            return <WarehouseCard handleOpen={handleOpen} warehouse={warehouse} />;
+            return <WarehouseCard open={open} handleOpen={handleOpen} handleClose={handleClose} warehouse={warehouse} setSelectedWarehouse={setSelectedWarehouse} />;
           })}
-        {/* <WarehouseCard handleOpen={handleOpen} warehouse={''} />
-        <WarehouseCard handleOpen={handleOpen} warehouse={''} />
-        <WarehouseCard handleOpen={handleOpen} warehouse={''} />
-        <WarehouseCard handleOpen={handleOpen} warehouse={''} /> */}
       </Grid>
+      <AssignShopModal open={open} handleClose={handleClose} shopData={shopData} selectedWarehouse={selectedWarehouse} />
+    </>
+  );
+}
 
+export default CompanyHierarchy;
+
+type WarehouseCardProps = {
+  open: boolean;
+  handleOpen: () => void;
+  handleClose: () => void;
+  warehouse: any;
+  setSelectedWarehouse: (warehouse) => any;
+};
+
+const WarehouseCard = ({ open, handleOpen, handleClose, warehouse, setSelectedWarehouse }: WarehouseCardProps) => {
+  let assignedShops = warehouse.assigned_shops;
+
+  return (
+    <>
+      <div className="warehouseCard">
+        <span className="whName">{warehouse.name}</span>
+        {/* <br />
+        <span>{warehouse.manager_id!}</span>
+        <br />
+        <span>{warehouse.contact_no[0]!}</span> */}
+        <div>
+          <h2>Currently Assigned Shops</h2>
+          <div className="assignedShops">
+            {assignedShops &&
+              assignedShops.map((shop) => {
+                return <ShopSection shop={shop} warehouse_id={warehouse._id} flag={true} />;
+              })}
+          </div>
+          <Button
+            onClick={() => {
+              setSelectedWarehouse(warehouse);
+              handleOpen();
+            }}
+          >
+            <h2>Assign Shops</h2>
+          </Button>
+        </div>
+      </div>
+    </>
+  );
+};
+
+type ShopSectionProp = {
+  warehouse_id: any;
+  shop: any;
+  flag: boolean;
+};
+
+const ShopSection = ({ warehouse_id, shop, flag }: ShopSectionProp) => {
+  // console.log(shop);
+
+  return (
+    <>
+      <div className="shop">
+        {flag && (
+          <>
+            <span>{shop.shop_name}</span>
+            <button onClick={() => unassignShop(warehouse_id, shop.shop_id)}>Unassign</button>
+          </>
+        )}
+        {!flag && (
+          <>
+            <span>{shop.name}</span>
+            <button onClick={() => assignShop(warehouse_id, shop.shop_id)}>Assign</button>
+          </>
+        )}
+      </div>
+    </>
+  );
+};
+
+type AssignShopModalProps = {
+  open: boolean;
+  handleClose: () => void;
+  shopData: any;
+  selectedWarehouse: any;
+};
+
+const AssignShopModal = ({ open, handleClose, shopData, selectedWarehouse }) => {
+  let unassignedShopList = [];
+  unassignedShopList = selectedWarehouse
+    ? shopData.shop.filter((shop) => {
+        return !selectedWarehouse.assigned_shops.find((element) => {
+          return element.shop_id === shop._id;
+        });
+      })
+    : [];
+  // open && console.log(unassignedShopList);
+
+  return (
+    <>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -62,69 +155,26 @@ export function CompanyHierarchy({ warehouseData }: CompanyHierarchyProps) {
               Assign shops
             </Typography>
             <div className="unassignedShops">
-              <div className="shop">
-                <span>Shop Name</span>
-                <button>Assign</button>
-              </div>
-              <div className="shop">
-                <span>Shop Name</span>
-                <button>Assign</button>
-              </div>
-              <div className="shop">
-                <span>Shop Name</span>
-                <button>Assign</button>
-              </div>
+              {unassignedShopList.length !== 0 &&
+                unassignedShopList.map((unassignedShop) => {
+                  return <ShopSection shop={unassignedShop} warehouse_id={selectedWarehouse._id} flag={false} />;
+                })}
+              {/* {shopData &&
+            shopData.shop.map((shop) => {
+              return <ShopSection shop={shop} warehouse_id={warehouse._id} />;
+            })} */}
             </div>
           </Box>
         </Fade>
       </Modal>
     </>
   );
+};
+
+async function unassignShop(warehouse_id: any, shop_id: any) {
+  console.log(`Unassigning ${shop_id} from ${warehouse_id}`);
 }
 
-export default CompanyHierarchy;
-
-type WarehouseCardProps = {
-  handleOpen: () => void;
-  warehouse: any;
-};
-
-const WarehouseCard = ({ handleOpen, warehouse }: WarehouseCardProps) => {
-  // let assignedShops = warehouse.assigned_shops;
-  // console.log('shops', assignedShops);
-  // console.log(warehouse);
-
-  return (
-    <>
-      <div className="warehouseCard">
-        <span className="whName">Kottawa Warehouse</span>
-        <div>
-          <h2>Currently Assigned Shops</h2>
-          <div className="assignedShops">
-            {/* {assignedShops &&
-              assignedShops.map((shop) => {
-                return <ShopSection />;
-              })} */}
-            {/* <ShopSection />
-            <ShopSection />
-            <ShopSection /> */}
-          </div>
-          <Button onClick={handleOpen}>
-            <h2>Assign Shops</h2>
-          </Button>
-        </div>
-      </div>
-    </>
-  );
-};
-
-const ShopSection = () => {
-  return (
-    <>
-      <div className="shop">
-        <span>Shop Name</span>
-        <button>Unassign</button>
-      </div>
-    </>
-  );
-};
+async function assignShop(warehouse_id: any, shop_id: any) {
+  console.log(`Assigning ${shop_id} to ${warehouse_id}`);
+}

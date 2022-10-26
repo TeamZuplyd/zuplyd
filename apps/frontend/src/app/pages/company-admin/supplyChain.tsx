@@ -85,9 +85,9 @@ export default function SupplyChain() {
     //   });
 
     //fetching shop data
-    // let shData = await axios.get('http://localhost:4321/api/shops/findByCompany/' + company_id, { responseType: 'json' }).then((result) => {
-    //   setShopData(result.data['shop']);
-    // });
+    let shData = await axios.get('http://localhost:4321/api/shops/findByCompany/' + company_id, { responseType: 'json' }).then((result) => {
+      setShopData(result.data);
+    });
     setFetching(false);
 
     // console.log(shopData);
@@ -173,7 +173,7 @@ export default function SupplyChain() {
 
         {/* Hierarchy tab */}
         <TabPanel value={value} index={3}>
-          <CompanyHierarchy warehouseData={warehouseData} />
+          <CompanyHierarchy shopData={shopData} warehouseData={warehouseData} />
         </TabPanel>
       </Box>
     </>
