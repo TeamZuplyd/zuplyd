@@ -46,6 +46,19 @@ export class WarehouseService {
         return await this.warehouseModel.findByIdAndRemove(id);
     }
 
+    async assignShop(id, shop: {shop_id:string, shop_name:string}): Promise<Warehouse> {
+        const warehouse = await this.warehouseModel.findById(id).exec();
+        warehouse.assigned_shops.push(shop);
+        return await this.warehouseModel.findByIdAndUpdate(id, warehouse, {new: true})
+    }
+
+    async unAssignShop(id, shop_id): Promise<Warehouse> {
+        const warehouse = await this.warehouseModel.findById(id).exec();
+        const newShopList = warehouse.assigned_shops.filter(shop => shop.shop_id != shop_id);
+        warehouse.assigned_shops = newShopList;
+        return await this.warehouseModel.findByIdAndUpdate(id, warehouse, {new: true})
+    }
+
     //items
     async readAllItems(id): Promise<StoreItem[]> {
         return await this.storeitemModel.find({warehouse_id:id}).exec();
