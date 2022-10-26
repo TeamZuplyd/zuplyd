@@ -25,7 +25,7 @@ export class Shop {
     address: string;
 
     @Prop()
-    assigned_warehouses: string[];
+    assigned_warehouses: {warehouse_id:string, warehouse_name:string}[];
 }
 
 export const ShopSchema = SchemaFactory.createForClass(Shop);
