@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent } from '@mui/material';
 import Header from '../../components/header/header';
 import OrderTable from '../../components/order-table/order-table';
@@ -48,25 +48,20 @@ function orders() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const getRequestInfo = () => {
-    axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllDev').then((res) => {
-      console.log(res.data);
+  // const getRequestInfo = () => {
+  //   axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllDev').then((res) => {
+  //     console.log(res.data);
 
-      setOrderData(res.data);
-    });
-  };
+  //     setOrderData(res.data);
+  //   });
+  // };
 
-  React.useEffect(() => {
-    getRequestInfo();
-  }, []);
+  // React.useEffect(() => {
+  //   getRequestInfo();
+  // }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
-
-  const handleStatusChange = (e: ChangeEvent<{ value: unknown }>, item: string) => {
-    console.log(e.target.value);
-    console.log(item);
   };
 
   const handleStatusChange2 = (warehouseIndex: number, selectedItem: string) => {
@@ -90,6 +85,49 @@ function orders() {
     //SentRequest -> backend object
   };
 
+  const [itemData, setItemData] = useState<any>([]);
+  const [completeData, setCompleteData] = useState<any>([]);
+  const [sentData, setSentData] = useState<any>([]);
+
+  const getRequestInfo = () => {
+    const warehouseID = 'W0001';
+    axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllByWarehouseID/' + warehouseID).then((res) => {
+      setItemData(res.data);
+      console.log(res.data);
+
+      let allItems = res.data;
+      let itemsComplete: any = [];
+      let restItems: any = [];
+
+      for (let index = 0; index < allItems.length; index++) {
+        if (allItems[index].status == 'complete') {
+          itemsComplete.push(allItems[index]);
+        } else {
+          restItems.push(allItems[index]);
+        }
+      }
+      setCompleteData(itemsComplete);
+      setSentData(restItems);
+
+      console.log(completeData);
+      console.log(sentData);
+    });
+  };
+
+  useEffect(() => {
+    getRequestInfo();
+  }, []);
+
+  useEffect(() => {
+    console.log('completeData');
+    console.log(completeData);
+  }, [completeData]);
+
+  useEffect(() => {
+    console.log('restItems');
+    console.log(sentData);
+  }, [sentData]);
+
   return (
     <>
       <Header title={'Orders'} />
@@ -111,7 +149,7 @@ function orders() {
 
           {/* Received Requests */}
           <TabPanel value={value} index={0}>
-            <OrderTable orders={orderData} handleStatusChange={handleStatusChange} />
+            <OrderTable orders={sentData} />
           </TabPanel>
 
           {/* Sent Requests */}
