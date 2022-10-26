@@ -40,6 +40,29 @@ export class ProcurementController {
     return { items: arr };
   }
 
+  @Get('findByName/:companyId/:itemName')
+  private async findByName(@Param('companyId') companyId: string, @Param('itemName') itemName: string): Promise<any> {
+    let itemsArrObs = this.procurementSVC.findAll({});
+    let itemsObj = await lastValueFrom(itemsArrObs);
+    let arr = itemsObj.items.filter((val) => {
+      if (val.company_id == companyId) {
+        return val;
+      }
+    });
+
+    if (itemName != ':itemName') {
+      console.log(itemName);
+      arr = itemsObj.items.filter((val) => {
+        if (val.item_name == itemName) {
+          return val;
+        }
+      });
+      return arr[0];
+    }
+
+    return { items: arr };
+  }
+
   @Get('find/:id')
   private async findById(@Param() id: ItemIDRequest): Promise<any> {
     return this.procurementSVC.findByIdPublic(id).pipe(
