@@ -32,7 +32,11 @@ export class ItemController {
   async findAll(): Promise<any> {
     const items = await this.itemService.findAll();
     const itemList: any = { items: [...items] };
-    return itemList;
+    if (items) {
+      return itemList;
+    } else {
+      return { error: 'No Items' };
+    }
   }
 
   @GrpcMethod(ITEM_SERVICE_NAME, 'findByIdPublic')

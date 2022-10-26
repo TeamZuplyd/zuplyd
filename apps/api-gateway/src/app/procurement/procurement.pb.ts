@@ -17,9 +17,14 @@ export interface Item {
   output_rule_type: string;
   company_id: string;
   company_name: string;
-  suppliers: string[];
+  suppliers: Supplier[];
   batch_no: string;
   attributes_array: string[];
+}
+
+export interface Supplier {
+  supplierName: string;
+  id: string;
 }
 
 export interface ItemWithID {
@@ -35,7 +40,7 @@ export interface ItemWithID {
   output_rule_type: string;
   company_id: string;
   company_name: string;
-  suppliers: string[];
+  suppliers: Supplier[];
   batch_no: string;
   attributes_array: string[];
   __v: number;

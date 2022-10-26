@@ -75,6 +75,24 @@ export class ShopController {
         })
     }
 
+    @Post('assignWarehouse/:id')
+    async assignWarehouse(@Res() response, @Param('id') id, @Body() warehouse: {warehouse_id:string, warehouse_name:string}) {
+        const updatedStoreItem = await this.shopService.assignWarehouse(id, warehouse);
+        return response.status(HttpStatus.OK).json({
+            updatedStoreItem
+        })
+    }
+
+    @Post('unAssignWarehouse/:id/:warehouse_id')
+    async unAssignWarehouse(@Res() response, @Param('id') id, @Param('warehouse_id') warehouse_id) {
+        const updatedStoreItem = await this.shopService.unAssignWarehouse(id, warehouse_id);
+        return response.status(HttpStatus.OK).json({
+            updatedStoreItem
+        })
+    }
+
+    //items
+
     @Get("getItems/:id")
     async fetchAllItems(@Res() response, @Param('id') id) {
         const items = await this.shopService.readAllItems(id);

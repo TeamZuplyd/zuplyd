@@ -107,4 +107,20 @@ export class WarehouseController {
             deletedItem
         })
     }
+
+    @Post('assignShop/:id')
+    async assignShop(@Res() response, @Param('id') id, @Body() shop: {shop_id:string, shop_name:string}) {
+        const updatedStoreItem = await this.warehouseService.assignShop(id, shop);
+        return response.status(HttpStatus.OK).json({
+            updatedStoreItem
+        })
+    }
+
+    @Post('unAssignShop/:id/:shop_id')
+    async unAssignShop(@Res() response, @Param('id') id, @Param('shop_id') shop_id) {
+        const updatedStoreItem = await this.warehouseService.unAssignShop(id, shop_id);
+        return response.status(HttpStatus.OK).json({
+            updatedStoreItem
+        })
+    }
 }
