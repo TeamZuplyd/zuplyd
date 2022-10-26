@@ -3,11 +3,12 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Warehouse, WarehouseDocument } from "../schemas/warehouse.schema";
 import { StoreItem, StoreItemDocument } from "../schemas/storeitem.schema";
+import { Shop, ShopDocument } from "../schemas/shop.schema";
 
 @Injectable()
 export class WarehouseService {
 
-    constructor(@InjectModel(Warehouse.name) private warehouseModel: Model<WarehouseDocument>, @InjectModel(StoreItem.name) private storeitemModel: Model<StoreItemDocument>) {}
+    constructor(@InjectModel(Warehouse.name) private warehouseModel: Model<WarehouseDocument>, @InjectModel(StoreItem.name) private storeitemModel: Model<StoreItemDocument>, @InjectModel(Shop.name) private shopModel: Model<ShopDocument>) {}
     
     async create(warehouse: Warehouse): Promise<Warehouse> {
         const newWarehouse = new this.warehouseModel(warehouse);
@@ -44,6 +45,31 @@ export class WarehouseService {
 
     async delete(id): Promise<any> {
         return await this.warehouseModel.findByIdAndRemove(id);
+    }
+
+    async assignShop(id, shop: {shop_id:string, shop_name:string}): Promise<Warehouse> {
+        const warehouse = await this.warehouseModel.findById(id).exec();
+        warehouse.assigned_shops.push(shop);
+        
+        const shopOther = await this.shopModel.findById(shop.shop_id).exec();
+        shopOther.assigned_warehouses.push({warehouse_id:id, warehouse_name:warehouse.name});
+        const newShopOther = await this.shopModel.findByIdAndUpdate(shop.shop_id, shopOther, {new: true})
+        console.log(newShopOther);
+
+        return await this.warehouseModel.findByIdAndUpdate(id, warehouse, {new: true})
+    }
+
+    async unAssignShop(id, shop_id): Promise<Warehouse> {
+        const warehouse = await this.warehouseModel.findById(id).exec();
+        const newShopList = warehouse.assigned_shops.filter(shop => shop.shop_id != shop_id);
+        warehouse.assigned_shops = newShopList;
+
+        const shop = await this.shopModel.findById(shop_id).exec();
+        const newWarehouseList = shop.assigned_warehouses.filter(warehouseNew => warehouseNew.warehouse_id != id);
+        shop.assigned_warehouses = newWarehouseList;
+        this.shopModel.findByIdAndUpdate(shop_id, shop, {new: true})
+
+        return await this.warehouseModel.findByIdAndUpdate(id, warehouse, {new: true})
     }
 
     //items
