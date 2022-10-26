@@ -74,6 +74,7 @@ const OrderItem = ({ request, setSelectedStep }) => {
   const [supplierIndex, setSupplierIndex] = useState(-1);
   const [suppliableQuantity, setSuppliableQuantity] = useState(0);
   const [price, setPrice] = useState(0);
+  const [delivery, setDelivery] = useState<any | string>();
 
   useEffect(() => {
     const supplier_id = JSON.parse(localStorage.getItem('userData') || '')?.user_id;
@@ -103,6 +104,7 @@ const OrderItem = ({ request, setSelectedStep }) => {
       supplier[0].status = 2;
       supplier[0].suppliableQuantity = suppliableQuantity;
       supplier[0].price = price;
+      supplier[0].delivery = delivery;
       const newRequest = request;
       newRequest.suppliers[supplierIndex] = supplier[0];
       console.log(newRequest);
@@ -118,6 +120,7 @@ const OrderItem = ({ request, setSelectedStep }) => {
 
   const handleSelected = (index: number) => {
     setSelected(index);
+    setDelivery(index === 0 ? 'Delivery' : 'Pickup');
     // console.log('selected ' + index);
   };
 
@@ -173,7 +176,7 @@ const OrderItem = ({ request, setSelectedStep }) => {
                 />
               ) : (
                 <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
-                  {request?.item?.suppliableQuantity}
+                  {supplier[0]?.suppliableQuantity}
                 </Typography>
               )}
               <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
@@ -194,34 +197,34 @@ const OrderItem = ({ request, setSelectedStep }) => {
                 />
               ) : (
                 <Typography sx={{ fontWeight: 400, fontSize: 16, color: '#BDBDBD' }} component="div">
-                  {request?.item?.price}
+                  {supplier[0]?.price}
                 </Typography>
               )}
             </Box>
           </Box>
 
           <Typography sx={{ fontWeight: 600, fontSize: 18, color: 'black' }} component="div">
-            Rs. {price * suppliableQuantity}
+            Rs. {supplier[0] && supplier[0].status !== 1 ? supplier[0]?.suppliableQuantity * supplier[0]?.price : price * suppliableQuantity}
           </Typography>
-        </Box>
-      </Box>
-      <Box>
-        <Divider sx={{ margin: '25px 0' }} />
-        <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757' }} component="div">
-          Available Delivery Methods:
-        </Typography>
-        <Box sx={{ width: '35%', display: 'flex', gap: '10px', marginTop: 1 }}>
-          <Box sx={{ width: '50%' }}>
-            <TierItem id={2} name={'Delivery'} price={22} description={['This is a description']} handleSelect={handleSelected} selected={selected} tierIcon={<LocalShippingOutlinedIcon sx={{ marginRight: 1 }} />} />
-          </Box>
-          <Box sx={{ width: '50%' }}>
-            <TierItem id={1} name={'Pickup'} price={22} description={['This is a description']} handleSelect={handleSelected} selected={selected} tierIcon={<InventoryIcon sx={{ marginRight: 1 }} />} />
-          </Box>
         </Box>
       </Box>
 
       {supplier && supplier[0]?.status === 1 && (
         <>
+          <Box>
+            <Divider sx={{ margin: '25px 0' }} />
+            <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757' }} component="div">
+              Available Delivery Methods:
+            </Typography>
+            <Box sx={{ width: '35%', display: 'flex', gap: '10px', marginTop: 1 }}>
+              <Box sx={{ width: '50%' }}>
+                <TierItem id={2} name={'Delivery'} price={22} description={['This is a description']} handleSelect={handleSelected} selected={selected} tierIcon={<LocalShippingOutlinedIcon sx={{ marginRight: 1 }} />} />
+              </Box>
+              <Box sx={{ width: '50%' }}>
+                <TierItem id={1} name={'Pickup'} price={22} description={['This is a description']} handleSelect={handleSelected} selected={selected} tierIcon={<InventoryIcon sx={{ marginRight: 1 }} />} />
+              </Box>
+            </Box>
+          </Box>
           <Divider sx={{ margin: '25px 0' }} />
           <Box>
             <Button startIcon={<CheckCircleIcon />} size="large" variant="contained" color={'success'} onClick={(e) => handleSubmit(e)}>
@@ -271,14 +274,14 @@ const OrderDetails = () => {
               </Typography>
               <Chip icon={<LocalShippingOutlined sx={{ padding: '6px', backgroundColor: 'white', borderRadius: '50%', height: 'fit-content', minHeight: '30px', minWidth: '30px' }} />} label="Pick Up" color="default" sx={{ fontSize: 15, padding: '20px 10px', borderRadius: '7px', border: '0.5px solid #EBEBEB', backgroundColor: '#F7F7F7' }} />
             </Box>
-            <Box>
+            {/* <Box>
               <Typography sx={{ fontWeight: 400, fontSize: 17, color: '#575757', marginBottom: 1 }} component="div">
                 Delivery Address:
               </Typography>
               <Typography sx={{ fontWeight: 300, fontSize: 15, color: '#575757', marginBottom: 1 }} component="div">
                 Nike Store<br></br>Shop No 42 /43 / 44<br></br>Level 3<br></br>One Galle Face Mall<br></br>Colombo 2, 00200
               </Typography>
-            </Box>
+            </Box> */}
           </Box>
         </Grid>
       </Grid>
@@ -334,7 +337,7 @@ const QuotationRequest = ({ setSelectedStep, item }) => {
   );
 };
 
-const PurchaseOrderCard = ({ setSelectedStep, item, progress }) => {
+const PurchaseOrderCard = ({ setSelectedStep, item, progress, supplier }) => {
   const [selected, setSelected] = useState(0);
 
   const handleSelected = (index: number) => {
@@ -357,17 +360,17 @@ const PurchaseOrderCard = ({ setSelectedStep, item, progress }) => {
                   Delivery Methods:
                 </Typography>
                 <Typography sx={{ fontWeight: 500, fontSize: 15, color: '#575757' }} component="div">
-                  Pickup
+                  {supplier && supplier?.delivery}
                 </Typography>
               </Box>
-              <Box sx={{ width: '50%' }}>
+              {/* <Box sx={{ width: '50%' }}>
                 <Typography sx={{ fontWeight: 500, fontSize: 16, color: '#575757' }} component="div">
                   Delivery Location:
                 </Typography>
                 <Typography sx={{ fontWeight: 500, fontSize: 15, color: '#575757' }} component="div">
                   No. 86, Araliya Uyana, Mattegoda
                 </Typography>
-              </Box>
+              </Box> */}
             </Box>
           </CardContent>
           {/* <CardActions sx={{ display: 'flex', justifyContent: 'flex-end', height: '100%' }}>
@@ -407,7 +410,7 @@ export default function RequestProg() {
     <Grid md={12} container alignItems="center" justifyContent="center" sx={{ height: '100vh' }}>
       <Grid md={6}>
         <PurchaseOrder selectedStep={supplier ? supplier[0]?.status - 1 : 0} setSelectedStep={(step) => setSelectedStep(step)} />
-        {supplier && supplier[0]?.status === 1 ? <QuotationRequest item={requestOrder} setSelectedStep={(step) => setSelectedStep(step)} /> : <PurchaseOrderCard item={requestOrder} setSelectedStep={(step) => setSelectedStep(step)} progress={2} />}
+        {supplier && supplier[0]?.status === 1 ? <QuotationRequest item={requestOrder} setSelectedStep={(step) => setSelectedStep(step)} /> : <PurchaseOrderCard item={requestOrder} supplier={supplier[0]} setSelectedStep={(step) => setSelectedStep(step)} progress={2} />}
       </Grid>
     </Grid>
   );
