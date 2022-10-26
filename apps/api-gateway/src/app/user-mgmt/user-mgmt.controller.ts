@@ -94,7 +94,7 @@ export class UserMgmtController {
     );
   }
 
-  @Get('update')
+  @Post('update')
   private async update(@Body() userData: User): Promise<any> {
     return this.svc.update(userData).pipe(
       map((res) => {

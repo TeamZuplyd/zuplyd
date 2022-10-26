@@ -6,15 +6,17 @@ import { ChevronLeftIcon, CogIcon, LogoutIcon, ViewGridIcon, OfficeBuildingIcon,
 import { useAuth0 } from '@auth0/auth0-react';
 
 export interface SideNavProps {
-  username: string;
   userNum: number;
 }
 
-export function SideNav({ username, userNum }: SideNavProps) {
+export function SideNav({ userNum }: SideNavProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [selected, setSelected] = useState(() => 0);
   let providedOpts = coreData[userNum]['options'];
   let userRole = coreData[userNum]['userRole'];
+
+  let userData = localStorage.getItem('userData') || null;
+  const userEmail = userData ? JSON.parse(userData).email : 'Not logged in';
 
   const { logout } = useAuth0();
 
@@ -51,12 +53,12 @@ export function SideNav({ username, userNum }: SideNavProps) {
 
       {/* Profile operations section - Start  */}
       <div className="profileOperations">
-        <Link to="settings">
+        {/* <Link to="settings">
           <div className="sideNav-option">
             <CogIcon className="sideNav-icon" />
             <span className="optionName">Settings</span>
           </div>
-        </Link>
+        </Link> */}
         <div className="sideNav-option">
           <LogoutIcon className="sideNav-icon" />
           <span onClick={handleLogout} className="optionName">
@@ -75,7 +77,7 @@ export function SideNav({ username, userNum }: SideNavProps) {
           className="profileImg"
         />
         <div className="usernameContainer">
-          <span className="username">{username}</span>
+          <span className="username">{userEmail}</span>
           <span className="userRole">{userRole}</span>
         </div>
       </div>

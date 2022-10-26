@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 function whManager() {
   return (
     <div className="outerContainer">
-      <SideNav username={'isurunishadha@gmail.com'} userNum={2} />
+      <SideNav userNum={2} />
       <Outlet />
     </div>
   );
