@@ -4,6 +4,7 @@ import Header from '../../components/header/header';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Grid, Typography } from '@mui/material';
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function getQuotation(params) {
   console.log(params);
@@ -45,15 +46,18 @@ const columns: GridColDef[] = [
 
 export function CompaniesTable() {
   const [rowsData, setRows] = React.useState<any[]>([]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
+    console.log(location);
     const supplier_id = JSON.parse(localStorage.getItem('userData') || '')?.user_id;
     var dataRows: any[] = [];
     axios.get(`http://localhost:5000/api/wh-prcurmnt-sup/findAllBySupplierID/${supplier_id}`).then((res) => {
       res.data.map((row) =>
         dataRows.push({
-          id: 1,
-          col1: row?._id,
+          id: row?._id,
+          col1: row?.company_name[0],
           col2: row?.count,
         })
       );
@@ -64,7 +68,15 @@ export function CompaniesTable() {
 
   return (
     <div style={{ height: 300, width: '100%' }}>
-      <DataGrid rows={rowsData} columns={columns} onRowClick={(rowData) => console.log(rowData)} components={{ Toolbar: GridToolbar }} />
+      <DataGrid
+        rows={rowsData}
+        columns={columns}
+        onRowClick={(rowData) => {
+          console.log(rowData.row.id);
+          navigate(`/supplier/orders/${rowData.row.id}`);
+        }}
+        components={{ Toolbar: GridToolbar }}
+      />
     </div>
   );
 }

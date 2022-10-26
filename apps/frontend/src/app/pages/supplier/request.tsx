@@ -10,6 +10,7 @@ import PurchaseOrder from '../../components/supplier/purchase-order';
 import FormComponent from '../../components/form-component/form-component';
 import axios from 'axios';
 import supplier from './supplier';
+import { useParams } from 'react-router-dom';
 
 type TierItemProps = {
   id: number;
@@ -387,13 +388,14 @@ export default function RequestProg() {
   const [selectedStep, setSelectedStep] = useState(0);
   const [requestOrder, setRequestOrder] = useState<any>();
   const [supplier, setSupplier] = useState<any[]>([]);
+  const params = useParams();
 
   const orderId = '63597338562bbde586291095';
 
   useEffect(() => {
     const supplier_id = JSON.parse(localStorage.getItem('userData') || '')?.user_id;
     console.log(supplier_id);
-    axios.get(`http://localhost:5000/api/wh-prcurmnt-sup/findByRequestID/${orderId}`).then((res) => {
+    axios.get(`http://localhost:5000/api/wh-prcurmnt-sup/findByRequestID/${params['id']}`).then((res) => {
       console.log(res.data);
       setRequestOrder(res.data);
       setSupplier(res.data.suppliers.filter((supplier) => supplier._id === supplier_id));

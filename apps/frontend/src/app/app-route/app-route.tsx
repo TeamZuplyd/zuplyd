@@ -257,10 +257,10 @@ export function AppRoute(props: AppRouteProps) {
         <Route index element={<Navigate to={'dashboard'} replace />} />
         <Route path="dashboard" element={<SupDashboard />} />
         <Route path="products" element={<SupProducts />} />
-        <Route path="orders" element={<SupOrders />} />
-        <Route path="quotations" element={<SupQuotations />} />
         <Route path="companies" element={<SupCompanies />} />
-        <Route path="reports" element={<RequestProg />} />
+        <Route path="orders/:id" element={<SupOrders />} />
+        <Route path="reports/:id" element={<RequestProg />} />
+        <Route path="quotations" element={<SupQuotations />} />
         <Route path="settings" element={<SupSettings />} />
       </Route>
       {/* </Route> */}

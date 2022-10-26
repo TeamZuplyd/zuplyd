@@ -67,8 +67,9 @@ export class WhPrcurmntSupService {
       },
       {
         $group: {
-          _id: '$company_name',
+          _id: '$company_id',
           count: { $sum: 1 },
+          company_name: { $push: '$company_name' },
         },
       },
     ]).exec();

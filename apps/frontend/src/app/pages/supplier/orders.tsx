@@ -2,6 +2,7 @@ import { Box, Chip, Grid } from '@mui/material';
 import { DataGrid, GridColDef, GridRowsProp, GridToolbar } from '@mui/x-data-grid';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
 import OrderTable from '../../components/supplier/order-table';
 
@@ -38,12 +39,15 @@ const columns: GridColDef[] = [
 
 function orders() {
   const [rowData, setRowData] = useState<any[]>([]);
+  const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(params);
     var rows: any[] = [];
     const comp_id = '6358d81729f842203326dd5f';
     const sup_id = JSON.parse(localStorage.getItem('userData') || '')?.user_id;
-    axios.get(`http://localhost:5000/api/wh-prcurmnt-sup/findAllBySupplierIDAndCompany/${comp_id}/${sup_id}`).then((res) => {
+    axios.get(`http://localhost:5000/api/wh-prcurmnt-sup/findAllBySupplierIDAndCompany/${params['id']}/${sup_id}`).then((res) => {
       console.log(res.data);
       res.data.map((row) => {
         rows.push({
@@ -83,7 +87,15 @@ function orders() {
                 },
               }}
             >
-              <DataGrid rows={rowData} columns={columns} onRowClick={(rowData) => console.log(rowData?.row?.id)} components={{ Toolbar: GridToolbar }} />
+              <DataGrid
+                rows={rowData}
+                columns={columns}
+                onRowClick={(rowData) => {
+                  console.log(rowData?.row?.id);
+                  navigate(`/supplier/reports/${rowData?.row?.id}`);
+                }}
+                components={{ Toolbar: GridToolbar }}
+              />
             </Box>
           </div>
         </Grid>
