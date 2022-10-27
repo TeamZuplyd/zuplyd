@@ -32,6 +32,7 @@ import WHMShops from '../pages/warehouse-manager/shops';
 import WHMReports from '../pages/warehouse-manager/reports';
 import WHMSettings from '../pages/warehouse-manager/settings';
 
+import ShopInit from '../pages/shop-manager/shop-init';
 import ShopManager from '../pages/shop-manager/shopManager';
 import SMdashboard from '../pages/shop-manager/dashboard';
 import SMinventory from '../pages/shop-manager/inventory';
@@ -248,6 +249,7 @@ export function AppRoute(props: AppRouteProps) {
         <Route path="issues" element={<SMissues />} />
         <Route path="reports" element={<SMReports />} />
         <Route path="settings" element={<SMSettings />} />
+        <Route path="shop-init" element={<ShopInit />} />
       </Route>
       {/* </Route> */}
 

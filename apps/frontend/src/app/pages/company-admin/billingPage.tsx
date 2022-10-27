@@ -5,7 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useState } from 'react';
 import checkMark from '../../../assets/imgs/ic_check.png';
 
-function billingPage() {
+function billingPage(selectedTier: any) {
   const [selected, setSelected] = useState(0);
   const [loading, setLoading] = React.useState(false);
 
@@ -47,6 +47,7 @@ function billingPage() {
     setLoading(false);
     // TODO: redirect if success only
   }
+  console.log('selected', selectedTier);
 
   return (
     <Grid>
@@ -56,7 +57,7 @@ function billingPage() {
             {tiers.map((item, index) => {
               return (
                 <Grid item xs={3.8}>
-                  <PaymentPlan id={tiers[index].id} name={tiers[index].name} price={tiers[index].price} iconPath={tiers[index].iconPath} description={tiers[index].description} handleSelect={handleSelected} points={tiers[index].points} selected={selected} />
+                  <PaymentPlan id={tiers[index].id} name={tiers[index].name} price={tiers[index].price} iconPath={tiers[index].iconPath} description={tiers[index].description} handleSelect={handleSelected} points={tiers[index].points} selected={selectedTier.selectedTier} />
                 </Grid>
               );
             })}

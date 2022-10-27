@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -37,7 +38,7 @@ export function CompanyHierarchy({ shopData, warehouseData }: CompanyHierarchyPr
     <>
       <Grid sx={{ maxHeight: '800px', overflow: 'scroll' }} container rowGap={2} columnGap={2}>
         {warehouseData &&
-          warehouseData.warehouses.map((warehouse) => {
+          warehouseData.warehouse.map((warehouse) => {
             return <WarehouseCard open={open} handleOpen={handleOpen} handleClose={handleClose} warehouse={warehouse} setSelectedWarehouse={setSelectedWarehouse} />;
           })}
       </Grid>
@@ -72,7 +73,7 @@ const WarehouseCard = ({ open, handleOpen, handleClose, warehouse, setSelectedWa
           <div className="assignedShops">
             {assignedShops &&
               assignedShops.map((shop) => {
-                return <ShopSection shop={shop} warehouse_id={warehouse._id} flag={true} />;
+                return <ShopSection shop={shop} warehouse_name={warehouse.name} warehouse_id={warehouse._id} flag={true} />;
               })}
           </div>
           <Button
@@ -91,11 +92,12 @@ const WarehouseCard = ({ open, handleOpen, handleClose, warehouse, setSelectedWa
 
 type ShopSectionProp = {
   warehouse_id: any;
+  warehouse_name: any;
   shop: any;
   flag: boolean;
 };
 
-const ShopSection = ({ warehouse_id, shop, flag }: ShopSectionProp) => {
+const ShopSection = ({ warehouse_id, warehouse_name, shop, flag }: ShopSectionProp) => {
   // console.log(shop);
 
   return (
@@ -110,7 +112,7 @@ const ShopSection = ({ warehouse_id, shop, flag }: ShopSectionProp) => {
         {!flag && (
           <>
             <span>{shop.name}</span>
-            <button onClick={() => assignShop(warehouse_id, shop.shop_id)}>Assign</button>
+            <button onClick={() => assignShop(warehouse_id, warehouse_name, shop._id, shop.name)}>Assign</button>
           </>
         )}
       </div>
@@ -134,7 +136,7 @@ const AssignShopModal = ({ open, handleClose, shopData, selectedWarehouse }) => 
         });
       })
     : [];
-  // open && console.log(unassignedShopList);
+  open && console.log(unassignedShopList);
 
   return (
     <>
@@ -157,7 +159,7 @@ const AssignShopModal = ({ open, handleClose, shopData, selectedWarehouse }) => 
             <div className="unassignedShops">
               {unassignedShopList.length !== 0 &&
                 unassignedShopList.map((unassignedShop) => {
-                  return <ShopSection shop={unassignedShop} warehouse_id={selectedWarehouse._id} flag={false} />;
+                  return <ShopSection shop={unassignedShop} warehouse_name={selectedWarehouse.name} warehouse_id={selectedWarehouse._id} flag={false} />;
                 })}
               {/* {shopData &&
             shopData.shop.map((shop) => {
@@ -172,9 +174,17 @@ const AssignShopModal = ({ open, handleClose, shopData, selectedWarehouse }) => 
 };
 
 async function unassignShop(warehouse_id: any, shop_id: any) {
+  const response = await axios.post(`http://localhost:1234/api/warehouses/unAssignShop/${warehouse_id}/${shop_id}`);
   console.log(`Unassigning ${shop_id} from ${warehouse_id}`);
 }
 
-async function assignShop(warehouse_id: any, shop_id: any) {
+async function assignShop(warehouse_id: any, warehouse_name: any, shop_id: any, shop_name: any) {
   console.log(`Assigning ${shop_id} to ${warehouse_id}`);
+  let body = {
+    shop_id: shop_id,
+    shop_name: shop_name,
+  };
+  console.log(body);
+
+  const response = await axios.post(`http://localhost:1234/api/warehouses/assignShop/${warehouse_id}`, body);
 }
