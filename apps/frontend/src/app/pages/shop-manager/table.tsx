@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
+import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { items } from '../../../data/items';
 import CustomTable from '../../components/custom-table/custom-table';
 import Header from '../../components/header/header';
-import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent } from '@mui/material';
-import WMlowStocksTable from '../../components/wmlow-stocks-table/wmlow-stocks-table';
+import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent, Skeleton } from '@mui/material';
 import axios from 'axios';
+import SMLowStocksTable from '../../components/smlow-stocks-table/smlow-stocks-table';
 
+import SMAllItemsTable from '../../components/small-items-table/small-items-table';
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -35,13 +38,11 @@ function a11yProps(index: number) {
 }
 
 const table = () => {
-  const [itemInfo, setItemInfo] = useState<any>([]);
-  const [value, setValue] = useState(0);
-  const [orderData, setOrderData] = useState<any>([]);
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(-1); //selected Warehouse
-  const [selectedItem, setSelectedItem] = useState(''); //selected Item
-  const [sentRequest, setSentRequest] = useState<any>([]);
+  const [value, setValue] = React.useState(0);
+  const [orderData, setOrderData] = React.useState<any>([]);
+  const [selected, setSelected] = React.useState(-1); //selected Warehouse
+  const [selectedItem, setSelectedItem] = React.useState(''); //selected Item
+  const [sentRequest, setSentRequest] = React.useState<any>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -68,31 +69,43 @@ const table = () => {
     //SentRequest -> backend object
   };
 
-  const getRequestInfo = () => {
-    axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllDev').then((res) => {
-      console.log(res.data);
+  const { id } = useParams(); //holds the category name
+  const [allGoods, setAllGoods] = React.useState<any>([]); // items from inventory
+  const [lowStocks, setLowStocks] = React.useState<any>([]); // items from inventory
+  const [filteredAllGoods, setFilteredAllGoods] = React.useState<any>(null); // filtered items from inventory
+  const [filteredLowStocks, setFilteredLowStocks] = React.useState<any>(null); // filtered items from inventory
 
-      setOrderData(res.data);
+
+  const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
+  // const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
+  const managing_id = JSON.parse(localStorage.getItem('userData') || '').managing_id; //owner_id
+  // const managing_id = JSON.parse(localStorage.getItem('userData') || '').managing_id;
+  // const companyID = 'acdf214124 ';
+  // // const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
+  // const managing_id = 'qwerty';
+
+  const getItemsFromAPI = () => {
+    axios.get('http://localhost:7000/api/inventoryAPI/items/' + companyID + '/' + managing_id).then((res) => {
+      console.log(res.data);
+      setAllGoods([...res.data.allItems]);
+      setLowStocks([...res.data.lowStockItems]);
     });
   };
 
-  useEffect(() => {
-    getRequestInfo();
+  React.useEffect(() => {
+    getItemsFromAPI();
   }, []);
 
-  // const getItemInfo = () => {
-  //   axios.get('http://localhost:7000/api/procurement/item/findAll').then((res) => {
-  //     setItemInfo(res.data.items);
-  //     console.log(res.data.items);
-  //   });
-  // };
+  React.useEffect(() => {
+    const filterAllGoods = allGoods.filter((item) => (item.category_name ? item.category_name.toLowerCase() === id?.toLowerCase() : false));
+    setFilteredAllGoods(filterAllGoods);
+  }, [allGoods, id]);
 
-  // React.useEffect(() => {
-  //   getItemInfo();
-  // }, []);
+  React.useEffect(() => {
+    const filterLowStocks = lowStocks.filter((item) => (item.category_name ? item.category_name.toLowerCase() === id?.toLowerCase() : false));
+    setFilteredLowStocks(filterLowStocks);
+  }, [lowStocks, id]);
 
-  const { id } = useParams();
-  let data = items.filter((item) => id !== undefined && item.category.toLowerCase() === id.toLowerCase());
   return (
     <>
       <Header title="Inventory" />
@@ -106,11 +119,14 @@ const table = () => {
           </Box>
 
           <TabPanel value={value} index={0}>
-            <WMlowStocksTable orders={orderData} handleStatusChange={() => handleStatusChange2(selected, selectedItem)} selected={selected} setSelected={setSelected} handleSelected={handleSelected} selectedItem={selectedItem} setSelectedItem={setSelectedItem} addSentRequest={addSentRequest} />
+            <SMLowStocksTable orders={lowStocks} handleStatusChange={() => handleStatusChange2(selected, selectedItem)} selected={selected} setSelected={setSelected} handleSelected={handleSelected} selectedItem={selectedItem} setSelectedItem={setSelectedItem} addSentRequest={addSentRequest} />
           </TabPanel>
 
           <TabPanel value={value} index={1}>
-            <CustomTable headerNames={['Name', 'Minimum Limit', 'Maximum Limit', 'Brand', 'Available Units', 'More Info', 'Reorder']} rows={data} />
+
+            {/* <CustomTable headerNames={['Name', 'Minimum Limit', 'Maximum Limit', 'Brand', 'Available Units', 'More Info', 'Reorder']} rows={filteredAllGoods} /> */}
+            <SMAllItemsTable headerNames={['Name', 'Minimum Limit', 'Maximum Limit', 'Brand', 'Available Units', 'More Info', 'Reorder', 'Distribute']} rows={filteredAllGoods} />
+
           </TabPanel>
         </Box>
       </div>

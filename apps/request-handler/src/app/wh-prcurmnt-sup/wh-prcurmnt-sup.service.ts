@@ -8,7 +8,11 @@ import { WhPrcurmntSupReqDto } from './dto/wh-prcurmnt-sup-req.dto';
 export class WhPrcurmntSupService {
   constructor(@InjectModel(WhPrcurmntSupReq.name) private WhPrcurmntSupReqModel: Model<WhPrcurmntSupReqDocument>) {}
 
+  async findByRequestID(id: string): Promise<any> {
+    return this.WhPrcurmntSupReqModel.findById(id).exec();
+  }
   async createRequest(WhPrcurmntSupReqDto: WhPrcurmntSupReqDto): Promise<WhPrcurmntSupReq> {
+    console.log(WhPrcurmntSupReqDto);
     const createdRequest = await this.WhPrcurmntSupReqModel.create(WhPrcurmntSupReqDto);
     return createdRequest;
   }
@@ -17,8 +21,62 @@ export class WhPrcurmntSupService {
     return this.WhPrcurmntSupReqModel.find({ warehouse_id: warehouse_id }).exec();
   }
 
-  async findAllBySupplierID(supplier_id: string): Promise<WhPrcurmntSupReq[]> {
-    return this.WhPrcurmntSupReqModel.find({ supplier_id: supplier_id }).exec();
+  async findAllBySupplierIDAndCompany(supplier_id: string, company_id: string): Promise<WhPrcurmntSupReq[]> {
+    return this.WhPrcurmntSupReqModel.find({
+      company_id: company_id,
+      suppliers: {
+        $elemMatch: {
+          _id: supplier_id,
+        },
+      },
+    }).exec();
+    // return this.WhPrcurmntSupReqModel.aggregate([
+    //   {
+    //     $match: {
+    //       company_id: company_id,
+
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: '$brand',
+    //       count: { $sum: 1 },
+    //     },
+    //   },
+    // ]).exec();
+  }
+
+  async findBySupplierIDGroupedToCompany(supplier_id: string): Promise<WhPrcurmntSupReq[]> {
+    // return this.WhPrcurmntSupReqModel.find({
+    //   company_name: 'ABDEF company',
+    //   suppliers: {
+    //     $elemMatch: {
+    //       _id: supplier_id,
+    //     },
+    //   },
+    // }).exec();
+    return this.WhPrcurmntSupReqModel.aggregate([
+      {
+        $match: {
+          suppliers: {
+            $elemMatch: {
+              _id: supplier_id,
+            },
+          },
+        },
+      },
+      {
+        $group: {
+          _id: '$company_id',
+          count: { $sum: 1 },
+          company_name: { $push: '$company_name' },
+        },
+      },
+    ]).exec();
+  }
+
+  async findAllByCompanyID(company_id: string): Promise<WhPrcurmntSupReq[]> {
+    return this.WhPrcurmntSupReqModel.find({ company_id: company_id }).exec();
   }
 
   async findAllByAny(searchParamObj: any): Promise<WhPrcurmntSupReq[]> {

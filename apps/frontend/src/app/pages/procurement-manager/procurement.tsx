@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../../components/header/header';
 import { useTheme } from '@mui/material/styles';
 
-import { Tabs, Tab, Typography, Box, Grid, Card, Table, TableRow, IconButton, TableContainer, TableHead, TableCell, TableBody, Button, TableFooter, TablePagination, Paper } from '@mui/material';
+import { Tabs, Tab, Typography, Box, Grid, Card, Table, TableRow, IconButton, TableContainer, TableHead, TableCell, TableBody, Button, TableFooter, TablePagination, Paper, Modal } from '@mui/material';
 import { receivedQuotations, requestedQuotations, acceptedPO, placedPO } from '../../../data/PMProcurement';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import goodRequests from './goodRequests';
+import axios from 'axios';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -36,14 +38,46 @@ function a11yProps(index: number) {
   };
 }
 function procurement() {
+  let req_goods = [];
   const [value, setValue] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
   const [open, setOpen] = useState(false);
+  const [requestGoods, setRequestGoods] = useState([]);
+  const [quotationReqs, setQuotationReqs] = useState([]); // quotation array
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const extractQuotaions = (goodsRequests) => {
+    console.log(goodsRequests);
+    // goodsRequests.map((goodsRequest) => console.log(goodsRequest));
+    return goodsRequests.filter((goodRequest) => goodRequest.status === 1);
+  };
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/wh-prcurmnt-sup/findAllDev').then((res) => {
+      setRequestGoods(res.data);
+    });
+    // const reorderGoods = localStorage.getItem('reorderRequests');
+
+    // if (reorderGoods !== null) setRequestGoods(JSON.parse(reorderGoods));
+    // console.log(requestGoods);
+
+    //console.log(quotationReqs);
+  }, []);
+
+  useEffect(() => {
+    //req_goods = extractQuotaions(requestGoods);
+    setQuotationReqs(requestGoods.length !== 0 ? requestGoods.filter((requestGood: any) => requestGood?.status === 1 && requestGood?.proc_id === JSON.parse(localStorage.getItem('userData') || '')?.user_id) : []);
+    console.log(quotationReqs);
+  }, [requestGoods]);
+
   return (
     <>
       <Header title="Procurement" />
@@ -52,18 +86,36 @@ function procurement() {
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
               <Tab label="Requested Quotations" {...a11yProps(0)} />
-              <Tab label="Received Quotations" {...a11yProps(1)} />
+              {/* <Tab label="Received Quotations" {...a11yProps(1)} /> */}
               <Tab label="Placed Purchase Orders" {...a11yProps(2)} />
               <Tab label="Accepted Purchase Orders" {...a11yProps(3)} />
             </Tabs>
           </Box>
           {/* Requested Quotations*/}
           <TabPanel value={value} index={0}>
-            <GeneralTable data={requestedQuotations} headers={['Item code', 'Item', 'Required By']} />
+            <GeneralTable
+              data={requestGoods.length !== 0 ? requestGoods.filter((requestGood: any) => requestGood?.status === 1 && requestGood?.proc_id === JSON.parse(localStorage.getItem('userData') || '')?.user_id) : []}
+              displayFields={['_id', 'requiredQuantity', 'requiredDate']}
+              requiredButton={true}
+              noOfButtons={1}
+              buttonDetails={[
+                {
+                  name: 'View',
+                  color: 'primary',
+                  action: (index) => {
+                    setSelectedIndex(index);
+                    handleOpenModal();
+                    console.log(index);
+                    //console.log('white white white');
+                  },
+                },
+              ]}
+              headers={['Order ID', 'Required Quantity', 'Required By']}
+            />
           </TabPanel>
 
           {/* Received Quotations*/}
-          <TabPanel value={value} index={1}>
+          {/* <TabPanel value={value} index={1}>
             <GeneralTable
               data={receivedQuotations}
               headers={['Item code', 'Item', 'Brand', 'Required By', 'Qunatity', 'Unit Price', 'Supplier']}
@@ -74,18 +126,19 @@ function procurement() {
                 { name: 'Discard', color: 'error' },
               ]}
             />
-          </TabPanel>
+          </TabPanel> */}
 
           {/* Placed Purchase Orders*/}
-          <TabPanel value={value} index={2}>
+          {/* <TabPanel value={value} index={2}>
             <GeneralTable data={placedPO} headers={['Item code', 'Item', 'Brand', 'Required By', 'Qunatity', 'Unit Price', 'Supplier', 'Placed Date']} requiredButton={true} buttonDetails={[{ name: 'Cancel', color: 'error' }]} noOfButtons={1} />
-          </TabPanel>
+          </TabPanel> */}
 
           {/* Accepted Purchase Orders*/}
-          <TabPanel value={value} index={3}>
+          {/* <TabPanel value={value} index={3}>
             <GeneralTable data={acceptedPO} headers={['Item code', 'Item', 'Brand', 'Required By', 'Qunatity', 'Unit Price', 'Supplier', 'Placed Date', 'Accepted Date', 'Status']} />
-          </TabPanel>
+          </TabPanel> */}
         </Box>
+        <BasicModal goodRequest={quotationReqs[selectedIndex]} open={openModal} handleClose={handleCloseModal} />
       </div>
     </>
   );
@@ -144,9 +197,10 @@ type GeneralTableProps = {
   requiredButton?: boolean;
   noOfButtons?: number;
   buttonDetails?: any[];
+  displayFields?: any[];
 };
 
-const GeneralTable = ({ data, headers, requiredButton = false, noOfButtons = 0, buttonDetails = [{}] }: GeneralTableProps) => {
+const GeneralTable = ({ data, headers, displayFields, requiredButton = false, noOfButtons = 0, buttonDetails = [{}] }: GeneralTableProps) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const noOfAttr = requiredButton ? headers.length + noOfButtons : headers.length;
@@ -177,15 +231,16 @@ const GeneralTable = ({ data, headers, requiredButton = false, noOfButtons = 0, 
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((d) => (
-            <TableRow key={d.item_code}>
-              {Object.keys(d).map((key) => (
+          {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((d, index) => (
+            <TableRow key={d._id}>
+              {/* {Object.keys(d).map((key) => (
                 <TableCell key={key}>{d[key]}</TableCell>
-              ))}
+              ))} */}
+              {displayFields && displayFields.map((key) => <TableCell key={key}>{d[key]}</TableCell>)}
               {requiredButton &&
                 buttonDetails.map((detail) => (
                   <TableCell component="th">
-                    <Button variant="contained" color={detail.color}>
+                    <Button variant="contained" color={detail.color} onClick={() => detail.action(index)}>
                       {detail.name}
                     </Button>
                   </TableCell>
@@ -222,3 +277,188 @@ const GeneralTable = ({ data, headers, requiredButton = false, noOfButtons = 0, 
     </TableContainer>
   );
 };
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 900,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+function BasicModal({ goodRequest, open, handleClose }) {
+  console.log(goodRequest);
+
+  const placeOrder = (supplier, index) => {
+    console.log(supplier);
+    console.log(index);
+    const updatedGoodsRequest = goodRequest;
+    updatedGoodsRequest.suppliers[index] = { ...supplier, status: 3 };
+    console.log(updatedGoodsRequest);
+    axios.post(`http://localhost:5000/api/wh-prcurmnt-sup/update`, updatedGoodsRequest).then((res) => console.log('updated'));
+  };
+
+  return (
+    <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Order Summary
+        </Typography>
+        <Grid sx={{ display: 'flex', gap: '30px' }}>
+          <Grid>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Item Name:
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+              {goodRequest?.item?.item_name}
+            </Typography>
+          </Grid>
+
+          <Grid>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Brand:
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+              {goodRequest?.item?.brand_name}
+            </Typography>
+          </Grid>
+          <Grid>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Required Quantity:
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+              {goodRequest?.requiredQuantity}
+            </Typography>
+          </Grid>
+          <Grid>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Required Date:
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+              {goodRequest?.requiredDate}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Typography sx={{ mt: 3 }} id="modal-modal-title" variant="h6" component="h2">
+          Available Suppliers
+        </Typography>
+        <Grid>
+          <Table stickyHeader sx={{ minWidth: 500, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }} aria-label="custom pagination table">
+            <TableHead>
+              <TableRow>
+                <TableCell component="th">Supplier ID</TableCell>
+                <TableCell component="th">Required Date</TableCell>
+
+                <TableCell component="th">Suppliable Amount</TableCell>
+                <TableCell component="th">Unit Price</TableCell>
+                <TableCell component="th">Total</TableCell>
+                <TableCell component="th">Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {goodRequest?.suppliers &&
+                goodRequest?.suppliers.map((supplier, index) => (
+                  <TableRow>
+                    <TableCell component="th">{supplier._id}</TableCell>
+                    <TableCell component="th">{goodRequest.requiredDate}</TableCell>
+                    {supplier?.status === 2 || supplier?.status === 3 ? (
+                      <>
+                        <TableCell component="th">
+                          {supplier.suppliableQuantity}/{goodRequest.requiredQuantity}
+                        </TableCell>
+                        <TableCell component="th">Rs. {supplier.price}</TableCell>
+                        <TableCell component="th">Rs. {supplier.suppliableQuantity * supplier.price}</TableCell>
+                        {supplier?.status === 2 ? (
+                          <TableCell component="th">
+                            <Button onClick={() => placeOrder(supplier, index)} variant="contained" color={'primary'}>
+                              Place Order
+                            </Button>
+                          </TableCell>
+                        ) : (
+                          supplier?.status === 3 && (
+                            <TableCell component="th">
+                              <Button variant="contained" color={'success'}>
+                                Completed
+                              </Button>
+                            </TableCell>
+                          )
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <TableCell component="th">N/A</TableCell>
+                        <TableCell component="th">N/A</TableCell>
+                        <TableCell component="th">N/A</TableCell>
+                        <TableCell component="th">N/A</TableCell>
+                      </>
+                    )}
+                  </TableRow>
+                ))}
+              {/* <TableRow>
+                <TableCell component="th">6sddsd233434dsddfd</TableCell>
+                <TableCell component="th">40/50</TableCell>
+                <TableCell component="th">Rs. 300</TableCell>
+                <TableCell component="th">Rs. 12000</TableCell>
+                <TableCell component="th">
+                  <Button variant="contained" color={'primary'}>
+                    Accept
+                  </Button>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th">6sddsd233434dsddfd</TableCell>
+                <TableCell component="th">40/50</TableCell>
+                <TableCell component="th">Rs. 300</TableCell>
+                <TableCell component="th">Rs. 12000</TableCell>
+                <TableCell component="th">
+                  <Button variant="contained" color={'primary'}>
+                    Accept
+                  </Button>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th">6sddsd233434dsddfd</TableCell>
+                <TableCell component="th">40/50</TableCell>
+                <TableCell component="th">Rs. 300</TableCell>
+                <TableCell component="th">Rs. 12000</TableCell>
+                <TableCell component="th">
+                  <Button variant="contained" color={'primary'}>
+                    Accept
+                  </Button>
+                </TableCell>
+              </TableRow> */}
+
+              {/* <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={noOfAttr} />
+                </TableRow> */}
+            </TableBody>
+            {/* <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  colSpan={noOfAttr}
+                  count={data.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'rows per page',
+                    },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter> */}
+          </Table>
+        </Grid>
+      </Box>
+    </Modal>
+  );
+}

@@ -9,7 +9,7 @@ const dashboardCards = [
   { title: 'Procurement Managers', value: 5, top: 5, imgPath: '../../assets/svg/users-gray.svg' },
   { title: 'No of Shops', value: 45, top: 5, imgPath: '../../assets/svg/shop-gray.svg' },
   { title: 'No of Warehouses', value: 5, top: 5, imgPath: '../../assets/svg/warehouse-gray.svg' },
-  { title: 'No of Warehouses', value: 5, top: 5, imgPath: '../../assets/svg/warehouse-gray.svg' },
+  // { title: 'No of Warehouses', value: 5, top: 5, imgPath: '../../assets/svg/warehouse-gray.svg' },
 ];
 
 function dashboard() {

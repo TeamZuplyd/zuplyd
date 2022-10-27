@@ -70,7 +70,7 @@ export class ShopService {
     }
 
     async updateItem(id, storeitem: StoreItem): Promise<StoreItem> {
-        return await this.storeitemModel.findByIdAndUpdate(id, storeitem, {new: true})
+        return await this.storeitemModel.findOneAndUpdate({item_code:id}, storeitem, {new: true})
     }
 
     async deleteItem(id): Promise<any> {

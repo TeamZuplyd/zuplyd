@@ -90,7 +90,9 @@ function orders() {
   const [sentData, setSentData] = useState<any>([]);
 
   const getRequestInfo = () => {
-    const warehouseID = 'W0001';
+    const warehouseID = JSON.parse(localStorage.getItem('userData') || '').managing_id;
+    // const warehouseID = 'W0001';
+
     axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllByWarehouseID/' + warehouseID).then((res) => {
       setItemData(res.data);
       console.log(res.data);

@@ -47,7 +47,9 @@ function addCategory({ itemInfo }: addCategoryProps) {
   };
 
   const addNewCategory = () => {
-    const company_id = 'qwerty';
+    const company_id = JSON.parse(localStorage.getItem('userData') || '').company_id;
+    // const company_id = 'qwerty';
+
     const body = {
       company_id: company_id,
       categoryArr: changeCateogryName,

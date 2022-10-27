@@ -8,7 +8,7 @@
     "test": "nx test",
     "proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps",
     "userMgmt:proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps && nx run user-mgmt:proto-user-mgmt && nx run api-gateway:proto-user-mgmt",
-    "procurement:proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps && nx run procurement:proto-procurement && nx run api-gateway:proto-procurement"
+    "procurement:proto:install": "npm i git+https://github.com/TeamZuplyd/zuplyd-proto.git --legacy-peer-deps && npx nx run procurement:proto-procurement && npx nx run api-gateway:proto-procurement"
   },
   "private": true,
   "devDependencies": {
@@ -66,6 +66,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.98",
     "@mui/material": "^5.9.1",
+    "@mui/x-data-grid": "^5.17.1",
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.2.0",
