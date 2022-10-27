@@ -236,6 +236,7 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
   const handleSubmit = (event) => {
     event.preventDefault();
     sendLowStrockRequest();
+    handleClose();
     // const orderRequest = [
     //   {
     //     ...order,
@@ -358,9 +359,9 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
     const request = {
       item: {
         _id: '34343fdfefe2343',
-        item_name: 'Testing3',
-        category_name: 'Food',
-        brand_name: 'memdizzz',
+        item_name: 'Soap',
+        category_name: 'Personal Goods',
+        brand_name: 'Dettol',
       },
       requiredQuantity: requiredQuantity,
       requiredDate: requiredDate,
@@ -379,12 +380,12 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
         },
         {
           _id: '3435efee34234',
-          name: 'Decim',
+          name: 'Devim',
           status: 1,
         },
         {
           _id: '3436efee34234',
-          name: 'Kashum',
+          name: 'Kasun',
           status: 1,
         },
       ],
@@ -455,7 +456,7 @@ function BasicModal({ open, handleClose, data, handleSelect, selected, handleSta
               <Grid item sx={{ mt: 0.5, mb: 0.5 }}>
                 <span className="secondaryText">Please select your priority</span>
               </Grid>
-              <TextField fullWidth size="small" id="outlined-select-currency" value={'low'} select onChange={handleChange}>
+              <TextField fullWidth size="small" id="outlined-select-currency" value={priority} select onChange={handleChange}>
                 {prioritySet.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
