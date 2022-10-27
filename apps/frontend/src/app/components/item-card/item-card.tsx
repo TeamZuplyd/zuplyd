@@ -23,7 +23,7 @@ export function ItemCard({ goodsRequest }) {
       assigned: true,
     };
 
-    await axios.post('http://localhost:5000/api/wh-prcurmnt-sup/update', assignedGoodsRequest);
+    await axios.post('http://localhost:5000/api/wh-prcurmnt-sup/update', assignedGoodsRequest).then((res) => location.reload());
 
     // const response = localStorage.getItem('reorderRequests');
 
@@ -52,7 +52,7 @@ export function ItemCard({ goodsRequest }) {
       status: 1,
     };
 
-    await axios.post('http://localhost:5000/api/wh-prcurmnt-sup/update', quotationGoodsRequest).then((res) => console.log('Updated!'));
+    await axios.post('http://localhost:5000/api/wh-prcurmnt-sup/update', quotationGoodsRequest).then((res) => location.reload());
   };
 
   return (

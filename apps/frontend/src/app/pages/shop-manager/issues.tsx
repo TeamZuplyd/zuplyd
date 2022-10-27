@@ -71,9 +71,11 @@ function issues() {
   };
 
   const getRequestInfo = () => {
-    const companyID = 'qwerty';
-    const userID = 123;
+    const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
+    const userID = JSON.parse(localStorage.getItem('userData') || '').user_id;
 
+    // const companyID = 'qwerty';
+    // const userID = 123;
     axios.get('http://localhost:5001/api/issues/userIssue/' + companyID + '/' + userID).then((res) => {
       setItemData(res.data);
     });

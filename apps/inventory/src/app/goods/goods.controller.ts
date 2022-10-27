@@ -86,7 +86,7 @@ export class GoodsController {
     return this.goodsService.itemTransfer(transferGoodsDto.transferFromEntity, transferGoodsDto.transferToEntity, transferGoodsDto.transferQty, transferGoodsDto.itemType);
   }
 
-  @Get('releaseGoods')
+  @Post('releaseGoods')
   releaseGoods(@Body() releaseGoodsDto: any) {
     /*
     releaseGoodsDto structure that should be sent form the frontend

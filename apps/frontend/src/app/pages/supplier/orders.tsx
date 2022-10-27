@@ -27,14 +27,6 @@ const columns: GridColDef[] = [
   { field: 'col1', headerName: 'Item Name', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
   { field: 'col2', headerName: 'Required Quantity', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
   { field: 'col3', headerName: 'Required Date', width: 150, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
-  {
-    field: 'col5',
-    headerName: 'Delivery Status',
-    width: 150,
-    headerClassName: 'super-app-theme--header',
-    cellClassName: 'super-app-theme--cell',
-    renderCell: (params) => <Chip variant="outlined" label="Cancelled" color="error" />,
-  },
 ];
 
 function orders() {

@@ -39,6 +39,9 @@ export class WhPrcurmntSupReq {
   @Prop({ required: false })
   assigned: boolean;
 
+  @Prop({ required: false })
+  priority: string;
+
   @Prop({ required: true })
   sentRequest: boolean;
 

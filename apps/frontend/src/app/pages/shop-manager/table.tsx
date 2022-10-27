@@ -8,6 +8,7 @@ import Header from '../../components/header/header';
 import { TextField, Grid, Button, Tabs, Tab, Typography, Box, Modal, Card, CardContent, Skeleton } from '@mui/material';
 import axios from 'axios';
 import SMLowStocksTable from '../../components/smlow-stocks-table/smlow-stocks-table';
+import SMAllItemsTable from '../../components/small-items-table/small-items-table';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -74,16 +75,18 @@ const table = () => {
   const [filteredAllGoods, setFilteredAllGoods] = React.useState<any>(null); // filtered items from inventory
   const [filteredLowStocks, setFilteredLowStocks] = React.useState<any>(null); // filtered items from inventory
 
-  const companyID = 'acdf214124 ';
+  const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
   // const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
-  const managing_id = 'qwerty'; //owner_id
+  const managing_id = JSON.parse(localStorage.getItem('userData') || '').managing_id; //owner_id
   // const managing_id = JSON.parse(localStorage.getItem('userData') || '').managing_id;
- 
+  // const companyID = 'acdf214124 ';
+  // // const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
+  // const managing_id = 'qwerty';
   const getItemsFromAPI = () => {
     axios.get('http://localhost:7000/api/inventoryAPI/items/' + companyID + '/' + managing_id).then((res) => {
       console.log(res.data);
-    setAllGoods([...res.data.allItems]);
-    setLowStocks([...res.data.lowStockItems]);
+      setAllGoods([...res.data.allItems]);
+      setLowStocks([...res.data.lowStockItems]);
     });
   };
 
@@ -92,15 +95,14 @@ const table = () => {
   }, []);
 
   React.useEffect(() => {
-    const filterAllGoods = allGoods.filter((item) =>  item.category_name ?  item.category_name.toLowerCase() === id?.toLowerCase() :false); 
+    const filterAllGoods = allGoods.filter((item) => (item.category_name ? item.category_name.toLowerCase() === id?.toLowerCase() : false));
     setFilteredAllGoods(filterAllGoods);
-  }, [allGoods ,id]);
+  }, [allGoods, id]);
 
   React.useEffect(() => {
-    const filterLowStocks = lowStocks.filter((item) =>  item.category_name ?  item.category_name.toLowerCase() === id?.toLowerCase() :false); 
+    const filterLowStocks = lowStocks.filter((item) => (item.category_name ? item.category_name.toLowerCase() === id?.toLowerCase() : false));
     setFilteredLowStocks(filterLowStocks);
-  }, [lowStocks ,id]);
-
+  }, [lowStocks, id]);
 
   return (
     <>
@@ -119,7 +121,8 @@ const table = () => {
           </TabPanel>
 
           <TabPanel value={value} index={1}>
-            <CustomTable headerNames={['Name', 'Minimum Limit', 'Maximum Limit', 'Brand', 'Available Units', 'More Info', 'Reorder']} rows={filteredAllGoods} />
+            {/* <CustomTable headerNames={['Name', 'Minimum Limit', 'Maximum Limit', 'Brand', 'Available Units', 'More Info', 'Reorder']} rows={filteredAllGoods} /> */}
+            <SMAllItemsTable headerNames={['Name', 'Minimum Limit', 'Maximum Limit', 'Brand', 'Available Units', 'More Info', 'Reorder', 'Distribute']} rows={filteredAllGoods} />
           </TabPanel>
         </Box>
       </div>
