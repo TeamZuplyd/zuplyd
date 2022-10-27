@@ -74,6 +74,7 @@ export class CompaniesController {
     if (company) {
       const body = {
         email: '',
+        name: '',
         role: '',
         company_name: company.company_name,
         company_id: managersDto.company_id,

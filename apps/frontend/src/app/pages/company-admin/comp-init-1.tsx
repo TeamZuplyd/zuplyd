@@ -35,6 +35,7 @@ const handleData = async ({ inputValues, numbers, userEmail }: any): Promise<any
   // Registering user
   const userBody = {
     email: userEmail,
+    name: '',
     role: 'comp_admin',
     company_name: inputValues.company_name,
     company_id: '',
