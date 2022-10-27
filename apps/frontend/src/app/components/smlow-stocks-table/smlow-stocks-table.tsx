@@ -18,7 +18,9 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import { Button, TableHead, Modal, Typography, Card, CardContent, CardActions, Grid, styled, Divider, TextField, CardActionArea } from '@mui/material';
 
 import { AutofpsSelectRounded, HdrOnSelectRounded, Warehouse } from '@mui/icons-material';
+
 import axios from 'axios';
+
 // import { orders } from '../../../data/orders';
 interface TablePaginationActionsProps {
   count: number;
@@ -80,6 +82,7 @@ export function SMLowStocksTable({ orders, handleStatusChange, setSelected, sele
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [currentItem, setCurrentItem] = React.useState('');
 
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
 
@@ -95,6 +98,7 @@ export function SMLowStocksTable({ orders, handleStatusChange, setSelected, sele
   //modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = (id: string) => {
+
     console.log(id);
     setOpen(true);
     setCurrentItem(id);
@@ -104,6 +108,7 @@ export function SMLowStocksTable({ orders, handleStatusChange, setSelected, sele
     setOpen(false);
     setSelected(-1);
     setCurrentItem('');
+
   };
 
   return (
@@ -120,7 +125,9 @@ export function SMLowStocksTable({ orders, handleStatusChange, setSelected, sele
           </TableRow>
         </TableHead>
         <TableBody>
+
           {(rowsPerPage > 0 ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : orders).map((order) => (
+
             <TableRow key={order.item_code}>
               <TableCell style={{}}>{order.item_name}</TableCell>
               <TableCell style={{}}>{order.brand_name}</TableCell>
@@ -129,10 +136,12 @@ export function SMLowStocksTable({ orders, handleStatusChange, setSelected, sele
               <TableCell style={{}}>{order.max}</TableCell>
               <TableCell style={{}}>
                 {/* <Button variant="contained" onClick={handleStatusChange}> */}
+
                 <Button variant="contained" onClick={() => handleOpen(order._id)}>
                   Request
                 </Button>
                 <BasicModal open={open} handleClose={handleClose} handleSelect={handleSelected} selected={selected} handleStatusChange={handleStatusChange} selectedItem={selectedItem} order={order} addSentRequest={addSentRequest} currentItem={currentItem} />
+
               </TableCell>
             </TableRow>
           ))}
@@ -187,11 +196,13 @@ type BasicModalProps = {
   selectedItem: string;
   order: any;
   addSentRequest: (obj: any) => void;
+
   currentItem: string;
   // setSelectedItem: (item: string) => void;
 };
 
 function BasicModal({ open, handleClose, handleSelect, selected, handleStatusChange, selectedItem, order, addSentRequest, currentItem }: BasicModalProps) {
+
   const [warehouseOne, setWarehouseOne] = React.useState(0);
   const [warehouseTwo, setWarehouseTwo] = React.useState(0);
   const [requiredDate, setRequiredDate] = React.useState('');
@@ -287,6 +298,7 @@ function BasicModal({ open, handleClose, handleSelect, selected, handleStatusCha
   );
   return (
     <Modal open={currentItem === order._id} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h5" sx={{ fontWeight: 700 }}>
           Resupply Request
@@ -366,6 +378,7 @@ function BasicModal({ open, handleClose, handleSelect, selected, handleStatusCha
           </Table>
         </TableContainer>
 
+
         <Grid container item>
           <Grid item xs={2} sx={{ mt: 0.5, mb: 0.5 }}>
             <span className="secondaryText">Required Date</span>
@@ -376,7 +389,9 @@ function BasicModal({ open, handleClose, handleSelect, selected, handleStatusCha
 
           <Grid item xs>
             <div className="secondaryText">Requesting Quantity</div>
+
             <TextField id="outlined-basic" size="small" type="number" value={inputs.reduce((partialSum, acc) => partialSum + acc, 0)} disabled={true} />
+
           </Grid>
         </Grid>
         <CardActions>

@@ -8,6 +8,7 @@ import axios from 'axios';
 function inventory() {
   const [categories, setCategories] = useState<any>([]);
   // TODO: get company ID from the local storage
+
   // const companyID = 'qwerty';
   const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
   const getCategories = () => {
@@ -17,6 +18,7 @@ function inventory() {
       if (res.data.error === undefined) {
         setCategories(res.data.itemCategory.categoryArr);
       }
+
       console.log(res.data);
     });
   };

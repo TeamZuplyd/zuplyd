@@ -86,8 +86,8 @@ function addItem() {
       for (let j = 0; j < supNames.length; j++) {
         if (personName[i] == supNames[j].company_name) {
           allSupNames.push({
-            id: supNames[j]._id,
-            sup_name: supNames[j].company_name,
+            _id: supNames[j]._id,
+            suppierName: supNames[j].company_name,
           });
         }
       }
@@ -121,7 +121,9 @@ function addItem() {
   const [supNames, setSupNames] = React.useState<any>([]);
 
   const getItemInfo = () => {
-    const company_ID = 'qwerty';
+    const company_ID = JSON.parse(localStorage.getItem('userData') || '').company_id;
+    // const company_ID = 'qwerty';
+
     axios.get('http://localhost:7000/api/procurement/item-category/findByCompanyID/' + company_ID).then((res) => {
       setCategories(res.data.itemCategory.categoryArr);
       console.log(res.data.itemCategory.categoryArr);

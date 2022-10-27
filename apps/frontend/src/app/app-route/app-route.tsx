@@ -63,6 +63,7 @@ import axios from 'axios';
 import SignupButton from '../components/signup-button/signup-button';
 import LogoutButton from '../components/logout-button/logout-button';
 import ProfileSetup from '../pages/procurement-manager/initialization/profileSetUp';
+import RequestProg from '../pages/supplier/request';
 import { setLoggedInUserData } from '../utils';
 
 export interface AppRouteProps {}
@@ -251,18 +252,18 @@ export function AppRoute(props: AppRouteProps) {
       </Route>
       {/* </Route> */}
 
-      <Route element={<ProtectedRoute user={user} role={'supl'} />}>
-        <Route path="/supplier" element={<Supplier />}>
-          <Route index element={<Navigate to={'dashboard'} replace />} />
-          <Route path="dashboard" element={<SupDashboard />} />
-          <Route path="products" element={<SupProducts />} />
-          <Route path="orders" element={<SupOrders />} />
-          <Route path="quotations" element={<SupQuotations />} />
-          <Route path="companies" element={<SupCompanies />} />
-          <Route path="reports" element={<SupReports />} />
-          <Route path="settings" element={<SupSettings />} />
-        </Route>
+      {/* <Route element={<ProtectedRoute user={user} role={'supl'} />}> */}
+      <Route path="/supplier" element={<Supplier />}>
+        <Route index element={<Navigate to={'dashboard'} replace />} />
+        <Route path="dashboard" element={<SupDashboard />} />
+        <Route path="products" element={<SupProducts />} />
+        <Route path="companies" element={<SupCompanies />} />
+        <Route path="orders/:id" element={<SupOrders />} />
+        <Route path="reports/:id" element={<RequestProg />} />
+        <Route path="quotations" element={<SupQuotations />} />
+        <Route path="settings" element={<SupSettings />} />
       </Route>
+      {/* </Route> */}
       {/* Catch all route */}
       <Route path="*" element={<PageNotFound />} />
     </Routes>
