@@ -18,6 +18,8 @@
 
 @import './assets/css/initPages.css';
 
+@import './assets/css/warehouseCards.css';
+
 :root {
   --white: #ffffff;
   --theme-orange: #fd8f02;

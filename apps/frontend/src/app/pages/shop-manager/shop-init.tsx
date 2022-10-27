@@ -27,28 +27,12 @@ const postData = {
 const handleData = async ({ inputValues, numbers, userEmail }: any): Promise<any> => {
   // Registering company
   inputValues.contact_nums = numbers;
-  postData.comp_data = inputValues;
-  postData.comp_id = '';
+  // postData.comp_data = inputValues;
+  // postData.comp_id = '';
 
-  const response1 = await axios.post(`http://localhost:2525/api/companies/register`, postData);
+  const response = await axios.post(`http://localhost:4321/api/shops/updateShop`, postData);
 
-  // Registering user
-  const userBody = {
-    email: userEmail,
-    name: '',
-    role: 'comp_admin',
-    company_name: inputValues.company_name,
-    company_id: '',
-    managing_id: '',
-  };
-
-  userBody.company_id = response1.data.comp_id;
-
-  const response2 = await axios.post(`http://localhost:7000/api/user-mgmt/register`, userBody);
-
-  localStorage.setItem('comp_id', response1.data.comp_id);
-
-  return response1 && response2;
+  return response;
 };
 
 function compInit1() {
@@ -99,7 +83,7 @@ function compInit1() {
   const methods = useForm({
     mode: 'onBlur',
     defaultValues: {
-      company_name: '',
+      name: '',
       address: '',
     },
   });
@@ -109,7 +93,7 @@ function compInit1() {
     setLoading(true);
     let state = await handleData({ inputValues, numbers, userEmail });
     setLoading(false);
-    if (state) navigate('/comp-init-2');
+    if (state) navigate('/shop-manager');
     else {
       alert('Select an option');
     }
@@ -124,7 +108,7 @@ function compInit1() {
           <Grid className="init-container">
             <div className="size-mini">
               <Typography variant="h4" mb={6} align={'center'} sx={{ fontWeight: 700, fontSize: 40 }} className="init-title">
-                Tell us a bit about your company
+                Initialize shop details
               </Typography>
 
               <FormProvider {...methods}>
@@ -132,7 +116,7 @@ function compInit1() {
                   <Grid container rowGap={5}>
                     {/* Comp Name Input */}
                     <Grid item xs={13}>
-                      <TextField {...methods.register('company_name', { required: true })} label="Company Name" variant="standard" sx={{ width: '100%' }} />
+                      <TextField {...methods.register('name', { required: true })} label="Shop Name" variant="standard" sx={{ width: '100%' }} />
                     </Grid>
 
                     {/* Address Input */}

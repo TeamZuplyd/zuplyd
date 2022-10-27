@@ -56,15 +56,13 @@ interface company {
 function company() {
   const [fetching, setFetching] = React.useState(true);
   const [value, setValue] = React.useState(0);
-  const [companyData, setCompanyData] = React.useState(null);
+  const [companyData, setCompanyData] = React.useState<any>({});
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   async function getData(email: any): Promise<void> {
-    console.log('serching', email);
-
     let compData = await axios
       .get('http://localhost:2525/api/companies/findByMail/' + email, { responseType: 'json' })
       .then((result) => {
@@ -72,14 +70,12 @@ function company() {
         setCompanyData(result.data);
       })
       .catch((err) => {});
-    // console.log(compData.data);
     setFetching(false);
-    // return compData.data;
   }
 
   // Retrieving email
-  const auth = useAuth0();
-  const userEmail = auth.user?.email || '2019cs041@stu.ucsc.cmb.ac.lk';
+  let userData = localStorage.getItem('userData') || null;
+  const userEmail = userData ? JSON.parse(userData).email : ''; // TODO : check this
 
   React.useEffect(() => {
     getData(userEmail);
@@ -103,11 +99,11 @@ function company() {
               <TabPanel value={value} index={0}>
                 <FormComponent companyName={companyData && companyData['company_name']} companyAddress={companyData && companyData['address']} />
 
-                <ContactDetailsFormComponent email={companyData && companyData['email']} phoneNumbers={companyData && companyData['contact_nums']} />
+                <ContactDetailsFormComponent email={userEmail} phoneNumbers={companyData && companyData['contact_nums']} />
               </TabPanel>
 
               <TabPanel value={value} index={1}>
-                <BillingPage />
+                <BillingPage selectedTier={companyData && companyData.tier} />
               </TabPanel>
             </>
           )}

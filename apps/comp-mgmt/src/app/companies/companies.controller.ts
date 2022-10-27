@@ -74,6 +74,7 @@ export class CompaniesController {
     if (company) {
       const body = {
         email: '',
+        name: '',
         role: '',
         company_name: company.company_name,
         company_id: managersDto.company_id,
@@ -82,18 +83,22 @@ export class CompaniesController {
 
       const warehouseBody = {
         company_id: managersDto.company_id,
+        name: '',
         location: '',
         manager_id: '',
         contact_no: [],
         address: '',
+        assigned_shops: [],
       };
 
       const shopBody = {
         company_id: managersDto.company_id,
+        name: '',
         location: '',
         manager_id: '',
         contact_no: [],
         address: '',
+        assigned_shops: [],
       };
 
       const errBody = {

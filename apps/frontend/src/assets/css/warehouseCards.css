@@ -1,0 +1,88 @@
+.warehouseCard {
+  min-width: 330px;
+  height: 400px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px;
+  box-shadow: 0px 7px 30px rgba(90, 114, 123, 0.1) !important;
+}
+
+.warehouseCard .whName {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.warehouseCard h2 {
+  margin: 10px 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.shop {
+  color: #6b7280;
+  font-weight: 600;
+  margin: 2px;
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.shop span {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.assignedShops {
+  padding: 10px;
+  padding-top: 0;
+  height: 250px;
+  overflow: scroll;
+}
+
+.shop button {
+  font-size: 13px;
+  font-weight: 500;
+  /* max-height: 30px; */
+  background-color: white;
+  color: red;
+  padding: 1px 10px;
+  border-radius: 6px;
+  border: 2px solid red;
+}
+
+.shop button:hover {
+  background-color: rgb(239, 239, 239);
+}
+
+.shop {
+  border-bottom: 1px solid black;
+}
+.shop:last-child {
+  border-bottom: 0;
+}
+
+.unassignedShopss .shop {
+  color: #6b7280;
+  font-weight: 600;
+  /* background-color: coral; */
+  margin: 2px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.unassignedShops .shop button {
+  font-size: 14px;
+  font-weight: 500;
+  max-height: 30px;
+  background-color: white;
+  color: green;
+  padding: 1px 10px;
+  border-radius: 6px;
+  border: 2px solid green;
+}
+
+.unassignedShops .shop button:hover {
+  background-color: rgb(239, 239, 239);
+}
