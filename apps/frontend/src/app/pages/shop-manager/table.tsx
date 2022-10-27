@@ -75,11 +75,13 @@ const table = () => {
   const [filteredAllGoods, setFilteredAllGoods] = React.useState<any>(null); // filtered items from inventory
   const [filteredLowStocks, setFilteredLowStocks] = React.useState<any>(null); // filtered items from inventory
 
-  const companyID = 'acdf214124 ';
+  const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
   // const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
-  const managing_id = 'qwerty'; //owner_id
+  const managing_id = JSON.parse(localStorage.getItem('userData') || '').managing_id; //owner_id
   // const managing_id = JSON.parse(localStorage.getItem('userData') || '').managing_id;
-
+  // const companyID = 'acdf214124 ';
+  // // const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
+  // const managing_id = 'qwerty';
   const getItemsFromAPI = () => {
     axios.get('http://localhost:7000/api/inventoryAPI/items/' + companyID + '/' + managing_id).then((res) => {
       console.log(res.data);

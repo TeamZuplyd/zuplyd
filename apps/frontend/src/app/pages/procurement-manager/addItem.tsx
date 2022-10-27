@@ -121,7 +121,9 @@ function addItem() {
   const [supNames, setSupNames] = React.useState<any>([]);
 
   const getItemInfo = () => {
-    const company_ID = 'qwerty';
+    const company_ID = JSON.parse(localStorage.getItem('userData') || '').company_id;
+    // const company_ID = 'qwerty';
+
     axios.get('http://localhost:7000/api/procurement/item-category/findByCompanyID/' + company_ID).then((res) => {
       setCategories(res.data.itemCategory.categoryArr);
       console.log(res.data.itemCategory.categoryArr);

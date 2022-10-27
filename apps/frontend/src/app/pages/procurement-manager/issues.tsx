@@ -95,7 +95,9 @@ function issues() {
   };
 
   const getRequestInfo = () => {
-    const companyName = 'qwerty';
+    const companyName = JSON.parse(localStorage.getItem('userData') || '').company_id;
+    // const companyName = 'qwerty';
+
     axios.get('http://localhost:5001/api/issues/allUnsolvedIssues/' + companyName).then((res) => {
       setUnsolvedItemData(res.data);
     });
