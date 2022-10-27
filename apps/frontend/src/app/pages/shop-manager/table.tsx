@@ -74,16 +74,16 @@ const table = () => {
   const [filteredAllGoods, setFilteredAllGoods] = React.useState<any>(null); // filtered items from inventory
   const [filteredLowStocks, setFilteredLowStocks] = React.useState<any>(null); // filtered items from inventory
 
-  const companyID = 'acdf214124 ';
-  // const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
-  const managing_id = 'qwerty'; //owner_id
-  // const managing_id = JSON.parse(localStorage.getItem('userData') || '').managing_id;
- 
+  // const companyID = 'acdf214124 ';
+  const companyID = JSON.parse(localStorage.getItem('userData') || '').company_id;
+  // const managing_id = 'qwerty'; //owner_id
+  const managing_id = JSON.parse(localStorage.getItem('userData') || '').managing_id;
+
   const getItemsFromAPI = () => {
     axios.get('http://localhost:7000/api/inventoryAPI/items/' + companyID + '/' + managing_id).then((res) => {
       console.log(res.data);
-    setAllGoods([...res.data.allItems]);
-    setLowStocks([...res.data.lowStockItems]);
+      setAllGoods([...res.data.allItems]);
+      setLowStocks([...res.data.lowStockItems]);
     });
   };
 
@@ -92,15 +92,14 @@ const table = () => {
   }, []);
 
   React.useEffect(() => {
-    const filterAllGoods = allGoods.filter((item) =>  item.category_name ?  item.category_name.toLowerCase() === id?.toLowerCase() :false); 
+    const filterAllGoods = allGoods.filter((item) => (item.category_name ? item.category_name.toLowerCase() === id?.toLowerCase() : false));
     setFilteredAllGoods(filterAllGoods);
-  }, [allGoods ,id]);
+  }, [allGoods, id]);
 
   React.useEffect(() => {
-    const filterLowStocks = lowStocks.filter((item) =>  item.category_name ?  item.category_name.toLowerCase() === id?.toLowerCase() :false); 
+    const filterLowStocks = lowStocks.filter((item) => (item.category_name ? item.category_name.toLowerCase() === id?.toLowerCase() : false));
     setFilteredLowStocks(filterLowStocks);
-  }, [lowStocks ,id]);
-
+  }, [lowStocks, id]);
 
   return (
     <>
