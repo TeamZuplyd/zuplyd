@@ -81,7 +81,9 @@ function orders() {
   };
 
   const getRequestInfo = () => {
-    const shopID = 'S0002';
+    const shopID = JSON.parse(localStorage.getItem('userData') || '').managing_id;
+    // const shopID = 'S0002';
+
     axios.get('http://localhost:5000/api/shopWarehouseRequest/findAllByShopID/' + shopID).then((res) => {
       setItemData(res.data);
       console.log(res.data);
